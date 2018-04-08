@@ -1,10 +1,10 @@
-CC := clang++
+CC := g++
 CFLAGS := -Wall -std=c++11
 
 SRCFILES := $(wildcard src/*.cpp)
 
 all: $(SRCFILES:src/%.cpp=obj/%.o)
-	$(CC) $(CFLAGS) obj/*.o -o bin/main
+	$(CC) $(CFLAGS) obj/*.o -o bin/app
 
 obj/%.o: src/%.cpp
 	$(CC) $(CFLAGS) -c $< -o $@ -I./inc
@@ -15,6 +15,6 @@ clean:
 	rm -rf bin/*
 
 run:
-	bin/main
+	bin/app
 
 
