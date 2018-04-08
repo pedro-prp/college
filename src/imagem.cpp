@@ -33,8 +33,15 @@ string Imagem::getCamArquivo(){
 
 void Imagem::abrirArquivo(){
 
-	ifstream arquivoFile;
-
 	arquivoFile.open(camArquivo);
+}
 
+
+void Imagem::lerArquivo(){
+	char copia;
+	
+	while(!arquivoFile.eof()){
+		arquivoFile.get(copia);
+		cout << copia;
+	}
 }

@@ -10,14 +10,11 @@ int main(int argc, char ** argv){
 
 
 	Imagem jose;
-	string joseArquivo;
 
-	cin >> joseArquivo;
-
-	jose.setArquivo(joseArquivo);
-
-	cout << jose.getCamArquivo() << endl;
-
+	jose.setArquivo("jose.pgm");
 	jose.abrirArquivo();
+	jose.lerArquivo();
+
+
 
 }

@@ -13,6 +13,7 @@ class Imagem {
 private:
 	string arquivo;
 	string camArquivo;
+	ifstream arquivoFile;
 
 public:
 
@@ -26,6 +27,8 @@ public:
 	string getCamArquivo();
 
 	void abrirArquivo();
+
+	void lerArquivo();
 	
 };
 
