@@ -11,7 +11,10 @@ int main(int argc, char ** argv){
 
 	Imagem jose;
 
-	jose.setArquivo("jose.pgm");
+	string arquivo;
+	cin >> arquivo;
+
+	jose.setArquivo(arquivo);
 	jose.abrirArquivo();
 	jose.lerArquivo();
 

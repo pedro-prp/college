@@ -33,15 +33,24 @@ string Imagem::getCamArquivo(){
 
 void Imagem::abrirArquivo(){
 
-	arquivoFile.open(camArquivo);
+	arquivoFile.open(camArquivo,ios::binary);
 }
+
 
 
 void Imagem::lerArquivo(){
 	char copia;
+	ofstream arquivoSaida;
+	arquivoSaida.open("./imagens/jose.pgm");
+
+	int cont=1;
 	
 	while(!arquivoFile.eof()){
-		arquivoFile.get(copia);
+		
+			arquivoFile.get(copia);
 		cout << copia;
+		arquivoSaida << copia;
+		cont++;
 	}
+	cout << endl;
 }
