@@ -29,7 +29,6 @@ public:
 	void abrirArquivo();
 
 	void lerArquivo();
-	
 };
 
 #endif

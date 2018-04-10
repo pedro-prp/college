@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+//#include <stdlib.h>
 
 using namespace std;
 
@@ -41,8 +42,8 @@ void Imagem::abrirArquivo(){
 void Imagem::lerArquivo(){
 
 	string inicioCrip,tamCrip,cifra,tipo;
-	char comentario,copia[10000000000000000000];
-	int i=1,j=1;
+	char comentario,copia[10000000];
+	int i=1;
 
 
 	getline(arquivoFile,tipo,'\n');
@@ -55,30 +56,43 @@ void Imagem::lerArquivo(){
 	arquivoSaida.open("./imagens/jose.pgm");
 
 	ofstream arquivoDaCrip;
-	arquivoDaCrip.open("./txt/crip.txt");
+	arquivoDaCrip.open("./imagens/crip.txt");
 
 	arquivoSaida << tipo << endl;
 	arquivoSaida << comentario << inicioCrip << " " << tamCrip << " " << cifra << endl;
+/*
+	int jose;
+	string teste = "56";
+	jose = stoi(inicioCrip);
+	cout << jose << endl;
 
+*/
 	while(!arquivoFile.eof()){
 		
 		arquivoFile.get(copia[i]);
 
-		cout << (int)copia[i];
-		arquivoSaida << (int)copia[i];
+		//cout << (int)copia[i];
+		arquivoSaida << copia[i];
 		i++;
-
-		if(i==(int)inicioCrip){
+		
+		if(i==stoi(inicioCrip)){
 			arquivoDaCrip << copia[i];
-			for(i=inicioCripInt;j<=(incioCripInt+tamCripInt);i++){
-				arquivoFile.get(copia[i]);
+			
+			int inicioCripInt,tamCripInt;
+			inicioCripInt = stoi(inicioCrip);
+			tamCripInt = stoi(tamCrip);
 
+
+
+			for(i=inicioCripInt; i<=(inicioCripInt+tamCripInt); i++){
+				arquivoFile.get(copia[i]);
+			
 				arquivoSaida << copia[i];
 				arquivoDaCrip << copia[i];
 			}
 		}
+		
 	}
 	cout << endl;
 
 }
-
