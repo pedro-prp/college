@@ -45,7 +45,6 @@ void Imagem::lerArquivo(){
 	char comentario,copia[10000000];
 	int i=1;
 
-
 	getline(arquivoFile,tipo,'\n');
 	arquivoFile.get(comentario);
 	getline(arquivoFile,inicioCrip,' ');
@@ -60,29 +59,18 @@ void Imagem::lerArquivo(){
 
 	arquivoSaida << tipo << endl;
 	arquivoSaida << comentario << inicioCrip << " " << tamCrip << " " << cifra << endl;
-/*
-	int jose;
-	string teste = "56";
-	jose = stoi(inicioCrip);
-	cout << jose << endl;
 
-*/
+	int inicioCripInt = stoi(inicioCrip);
+	int tamCripInt = stoi(tamCrip);
+
 	while(!arquivoFile.eof()){
 		
 		arquivoFile.get(copia[i]);
 
-		//cout << (int)copia[i];
 		arquivoSaida << copia[i];
-		i++;
 		
-		if(i==stoi(inicioCrip)){
+		if(i==inicioCripInt){
 			arquivoDaCrip << copia[i];
-			
-			int inicioCripInt,tamCripInt;
-			inicioCripInt = stoi(inicioCrip);
-			tamCripInt = stoi(tamCrip);
-
-
 
 			for(i=inicioCripInt; i<=(inicioCripInt+tamCripInt); i++){
 				arquivoFile.get(copia[i]);
@@ -91,8 +79,10 @@ void Imagem::lerArquivo(){
 				arquivoDaCrip << copia[i];
 			}
 		}
+		i++;
 		
 	}
 	cout << endl;
 
 }
+
