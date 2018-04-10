@@ -13,6 +13,8 @@ obj/%.o: src/%.cpp
 clean:
 	rm -rf obj/*
 	rm -rf bin/*
+	rm -rf imagens/jose.pgm
+	rm -rf imagens/crip.txt
 
 run:
 	bin/app
