@@ -15,6 +15,7 @@ clean:
 	rm -rf bin/*
 	rm -rf imagens/jose.pgm
 	rm -rf imagens/crip.txt
+	rm -rf imagens/descrip.txt
 
 run:
 	bin/app

@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <stdlib.h>
+#include <vector>
 
 using namespace std;
 
@@ -40,10 +41,11 @@ void Imagem::abrirArquivo(){
 
 
 void Imagem::lerArquivo(){
-
+	
 	string inicioCrip,tamCrip,cifra,tipo,largura,altura,maxCor;
-	char comentario,copia[10000000];
-	int i=1;
+	char comentario,copiaChar;
+	vector<char> copiaVector;
+	int i=0;
 
 	getline(arquivoFile,tipo,'\n');
 	arquivoFile.get(comentario);
@@ -71,19 +73,59 @@ void Imagem::lerArquivo(){
 
 	while(!arquivoFile.eof()){
 		
-		arquivoFile.get(copia[i]);
-		arquivoSaida << (copia[i]);
+		arquivoFile.get(copiaChar);
+		copiaVector.push_back(copiaChar);
+		arquivoSaida << copiaVector[i];
 		
 		i++;
 		
 	}
 	cout << endl;
 	int j;
-	for(j=(inicioCripInt+1);j <=(inicioCripInt+tamCripInt); j++){
-		arquivoDaCrip << (copia[j]+cifraInt) << " ";
+	arquivoDaCrip << cifraInt << endl;
+	for(j=(inicioCripInt);j<(inicioCripInt+tamCripInt); j++){
+		arquivoDaCrip << (copiaVector[j]);
 	}
+	arquivoFile.close();
+	arquivoSaida.close();
+	arquivoDaCrip.close();
 
 }
+/*
+void Imagem::descriptografar(){
+	char crip[10000];
+	string cifraChar="";
+	int cifraInt=0,i=0;
+	char semcrip;
+
+	ifstream arquivoDaCrip;
+	arquivoDaCrip.open("./imagens/crip.txt");
+
+	ofstream arquivoDescrip;
+	arquivoDescrip.open("./imagens/descrip.txt");
+
+	getline(arquivoDaCrip,cifraChar,'\n');
+	cifraInt = stoi(cifraChar);
+
+	cout << cifraInt << endl;
+
+	while(!arquivoDaCrip.eof()){
+		arquivoDaCrip.get(crip[i]);
+		
+		cout << crip[i];
+		cout << cifraInt;
+		
+		if((crip[i]-cifraInt)<65)
+			semcrip=(crip[i]-cifraInt)+26;
+		else
+			semcrip=crip[i]-cifraInt;
+
+		cout << semcrip;
+	}
+	cout << endl;
+}
+*/
+
 
 
 
