@@ -40,7 +40,7 @@ void Imagem::abrirArquivo(){
 }
 
 
-void Imagem::lerArquivo(){
+int Imagem::lerArquivo(){
 	
 	string inicioCrip,tamCrip,cifra,tipo,largura,altura,maxCor;
 	char comentario,copiaChar;
@@ -82,7 +82,7 @@ void Imagem::lerArquivo(){
 	}
 	cout << endl;
 	int j;
-	arquivoDaCrip << cifraInt << endl;
+	//arquivoDaCrip << cifraInt << endl;
 	for(j=(inicioCripInt);j<(inicioCripInt+tamCripInt); j++){
 		arquivoDaCrip << (copiaVector[j]);
 	}
@@ -90,41 +90,46 @@ void Imagem::lerArquivo(){
 	arquivoSaida.close();
 	arquivoDaCrip.close();
 
+	return cifraInt;
+
 }
 
-void Imagem::descriptografar(){
+void Imagem::descriptografar(int cifraInt){
 	char crip;
 	vector<char> cripVector;
 	string cifraChar="";
-	int cifraInt=0,i=0;
-	char semcrip;
+	//int i=0;
+	int semcrip;
 
 	ifstream arquivoDaCrip;
 	arquivoDaCrip.open("./imagens/crip.txt");
 
 	ofstream arquivoDescrip;
-	arquivoDescrip.open("./imagens/descrip.txt");
-
-	getline(arquivoDaCrip,cifraChar,'\n');
-	cifraInt = stoi(cifraChar);
+	arquivoDescrip.open("./imagens/descrip.txt");;
 
 	cout << cifraInt << endl;
-/*
-	while(!arquivoDaCrip.eof()){
-		arquivoDaCrip.get(crip[i]);
-		
-		cout << crip[i];
-		cout << cifraInt;
-		
-		if((crip[i]-cifraInt)<65)
-			semcrip=(crip[i]-cifraInt)+26;
-		else
-			semcrip=crip[i]-cifraInt;
 
-		cout << semcrip;
+	while(!arquivoDaCrip.eof()){
+		
+		arquivoDaCrip.get(crip);
+		if(crip == ' ' || crip =='.' || crip == '-'){
+			semcrip = (int)crip;
+			cout << "jose";
+		}
+		else{
+
+			if(((int)crip-cifraInt)<65){
+				semcrip=((int)crip-cifraInt)+26;
+			}
+			else{
+				semcrip=(int)crip-cifraInt;
+			}
+		}
+		cout << semcrip << " ";
+		arquivoDescrip << (char)semcrip;
 	}
+	
 	cout << endl;
-*/
 }
 
 

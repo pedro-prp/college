@@ -18,7 +18,7 @@ int main(int argc, char ** argv){
 
 	jose.setArquivo(arquivo);
 	jose.abrirArquivo();
-	jose.lerArquivo();
-	jose.descriptografar();
+	int cifra = jose.lerArquivo();
+	jose.descriptografar(cifra);
 
 }
