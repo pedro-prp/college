@@ -1,9 +1,12 @@
 #ifndef IMAGEM_HPP
 #define IMAGEM_HPP
 
+#include "imagem.hpp"
 #include <iostream>
-#include <fstream>
 #include <string>
+#include <fstream>
+#include <stdlib.h>
+#include <vector>
 
 using namespace std;
 
@@ -29,6 +32,8 @@ public:
 	void abrirArquivo();
 
 	void lerArquivo();
+
+	//void descriptografar();
 };
 
 #endif

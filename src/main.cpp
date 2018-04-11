@@ -1,7 +1,9 @@
-#include <iostream>
-#include <fstream>
-#include <string>
 #include "imagem.hpp"
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <stdlib.h>
+#include <vector>
 
 
 using namespace std;
@@ -17,5 +19,6 @@ int main(int argc, char ** argv){
 	jose.setArquivo(arquivo);
 	jose.abrirArquivo();
 	jose.lerArquivo();
+	//jose.descriptografar();
 
 }
