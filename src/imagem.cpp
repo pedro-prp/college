@@ -4,6 +4,7 @@
 #include <fstream>
 #include <stdlib.h>
 #include <vector>
+#include <ctype.h>
 
 using namespace std;
 
@@ -114,18 +115,27 @@ void Imagem::descriptografar(int cifraInt){
 		arquivoDaCrip.get(crip);
 		if(crip == ' ' || crip =='.' || crip == '-'){
 			semcrip = (int)crip;
-			cout << "jose";
 		}
 		else{
+			if(islower(crip)){
 
-			if(((int)crip-cifraInt)<65){
-				semcrip=((int)crip-cifraInt)+26;
+				if(((int)crip-cifraInt)<97){
+					semcrip=((int)crip-cifraInt)+26;
+				}
+				else{
+					semcrip=(int)crip-cifraInt;
+				}
 			}
 			else{
-				semcrip=(int)crip-cifraInt;
+				if(((int)crip-cifraInt)<65){
+					semcrip=((int)crip-cifraInt)+26;
+				}
+				else{
+					semcrip=(int)crip-cifraInt;
+				}
 			}
 		}
-		cout << semcrip << " ";
+		cout << (char)semcrip;
 		arquivoDescrip << (char)semcrip;
 	}
 	
