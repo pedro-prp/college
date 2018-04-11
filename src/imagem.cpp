@@ -9,13 +9,12 @@
 using namespace std;
 
 Imagem::Imagem(){
-	cout << "construtor de Imagem" << endl;
 	string arquivo = "";
 	string camArquivo = "";
 }
 
 Imagem::~Imagem(){
-	cout << "Destrutor de Imagem" << endl;
+
 }
 
 
@@ -97,22 +96,19 @@ int Imagem::lerArquivo(){
 
 void Imagem::descriptografar(int cifraInt){
 	char crip;
-	vector<char> cripVector;
-	string cifraChar="";
-	//int i=0;
 	int semcrip;
 
 	ifstream arquivoDaCrip;
 	arquivoDaCrip.open("./imagens/crip.txt");
 
 	ofstream arquivoDescrip;
-	arquivoDescrip.open("./imagens/descrip.txt");;
-
-	cout << cifraInt << endl;
+	arquivoDescrip.open("./imagens/descrip.txt");
 
 	while(!arquivoDaCrip.eof()){
 		
 		arquivoDaCrip.get(crip);
+		
+
 		if(crip == ' ' || crip =='.' || crip == '-'){
 			semcrip = (int)crip;
 		}
@@ -139,7 +135,7 @@ void Imagem::descriptografar(int cifraInt){
 		arquivoDescrip << (char)semcrip;
 	}
 	
-	cout << endl;
+	cout << endl << endl;
 }
 
 
