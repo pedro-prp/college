@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-//#include <stdlib.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -35,13 +35,13 @@ string Imagem::getCamArquivo(){
 
 void Imagem::abrirArquivo(){
 
-	arquivoFile.open(camArquivo,ios::binary);
+	arquivoFile.open(camArquivo,ios::in);
 }
 
 
 void Imagem::lerArquivo(){
 
-	string inicioCrip,tamCrip,cifra,tipo;
+	string inicioCrip,tamCrip,cifra,tipo,largura,altura,maxCor;
 	char comentario,copia[10000000];
 	int i=1;
 
@@ -51,38 +51,39 @@ void Imagem::lerArquivo(){
 	getline(arquivoFile,tamCrip,' ');
 	getline(arquivoFile,cifra,'\n');
 
+	getline(arquivoFile,largura,' ');
+	getline(arquivoFile,altura,'\n');
+	getline(arquivoFile,maxCor,'\n');
+
 	ofstream arquivoSaida;
-	arquivoSaida.open("./imagens/jose.pgm");
+	arquivoSaida.open("./imagens/jose.pgm",ios::out);
 
 	ofstream arquivoDaCrip;
-	arquivoDaCrip.open("./imagens/crip.txt");
+	arquivoDaCrip.open("./imagens/crip.txt",ios::out);
 
 	arquivoSaida << tipo << endl;
 	arquivoSaida << comentario << inicioCrip << " " << tamCrip << " " << cifra << endl;
+	arquivoSaida << largura << " " << altura << endl << maxCor << endl;
 
 	int inicioCripInt = stoi(inicioCrip);
 	int tamCripInt = stoi(tamCrip);
+	int cifraInt = stoi(cifra);
 
 	while(!arquivoFile.eof()){
 		
 		arquivoFile.get(copia[i]);
-
-		arquivoSaida << copia[i];
+		arquivoSaida << (copia[i]);
 		
-		if(i==inicioCripInt){
-			arquivoDaCrip << copia[i];
-
-			for(i=inicioCripInt; i<=(inicioCripInt+tamCripInt); i++){
-				arquivoFile.get(copia[i]);
-			
-				arquivoSaida << copia[i];
-				arquivoDaCrip << copia[i];
-			}
-		}
 		i++;
 		
 	}
 	cout << endl;
+	int j;
+	for(j=(inicioCripInt+1);j <=(inicioCripInt+tamCripInt); j++){
+		arquivoDaCrip << (copia[j]+cifraInt) << " ";
+	}
 
 }
+
+
 
