@@ -91,9 +91,10 @@ void Imagem::lerArquivo(){
 	arquivoDaCrip.close();
 
 }
-/*
+
 void Imagem::descriptografar(){
-	char crip[10000];
+	char crip;
+	vector<char> cripVector;
 	string cifraChar="";
 	int cifraInt=0,i=0;
 	char semcrip;
@@ -108,7 +109,7 @@ void Imagem::descriptografar(){
 	cifraInt = stoi(cifraChar);
 
 	cout << cifraInt << endl;
-
+/*
 	while(!arquivoDaCrip.eof()){
 		arquivoDaCrip.get(crip[i]);
 		
@@ -123,8 +124,9 @@ void Imagem::descriptografar(){
 		cout << semcrip;
 	}
 	cout << endl;
-}
 */
+}
+
 
 
 
