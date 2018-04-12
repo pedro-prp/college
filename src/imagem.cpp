@@ -40,7 +40,7 @@ void Imagem::abrirArquivo(){
 }
 
 
-int Imagem::lerArquivo(){
+void Imagem::lerArquivo(){
 	
 	string inicioCrip,tamCrip,cifra,tipo,largura,altura,maxCor;
 	char comentario,copiaChar;
@@ -81,8 +81,9 @@ int Imagem::lerArquivo(){
 		
 	}
 	cout << endl;
+	
 	int j;
-	//arquivoDaCrip << cifraInt << endl;
+	arquivoDaCrip << cifraInt << " " << tamCripInt << endl;
 	for(j=(inicioCripInt);j<(inicioCripInt+tamCripInt); j++){
 		arquivoDaCrip << (copiaVector[j]);
 	}
@@ -90,13 +91,13 @@ int Imagem::lerArquivo(){
 	arquivoSaida.close();
 	arquivoDaCrip.close();
 
-	return cifraInt;
-
 }
 
-void Imagem::descriptografar(int cifraInt){
+void Imagem::descriptografar(){
 	char crip;
-	int semcrip;
+	int semcrip=0,i=0;
+	string cifra,tamCrip;
+	int cifraInt,tamCripInt;
 
 	ifstream arquivoDaCrip;
 	arquivoDaCrip.open("./imagens/crip.txt");
@@ -104,7 +105,13 @@ void Imagem::descriptografar(int cifraInt){
 	ofstream arquivoDescrip;
 	arquivoDescrip.open("./imagens/descrip.txt");
 
-	while(!arquivoDaCrip.eof()){
+	getline(arquivoDaCrip,cifra,' ');
+	getline(arquivoDaCrip,tamCrip,'\n');
+
+	cifraInt = stoi(cifra);
+	tamCripInt = stoi(tamCrip);
+
+	while(i<tamCripInt){
 		
 		arquivoDaCrip.get(crip);
 		
@@ -133,6 +140,8 @@ void Imagem::descriptografar(int cifraInt){
 		}
 		cout << (char)semcrip;
 		arquivoDescrip << (char)semcrip;
+		semcrip = 0;
+		i++;
 	}
 	
 	cout << endl << endl;

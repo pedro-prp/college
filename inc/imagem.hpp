@@ -31,9 +31,9 @@ public:
 
 	void abrirArquivo();
 
-	int lerArquivo();
+	void lerArquivo();
 
-	void descriptografar(int cifraInt);
+	void descriptografar();
 };
 
 #endif
