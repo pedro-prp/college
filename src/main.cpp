@@ -1,4 +1,4 @@
-#include "imagem.hpp"
+#include "imagem_pgm.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -11,7 +11,7 @@ using namespace std;
 int main(int argc, char ** argv){
 
 
-	Imagem jose;
+	ImagemPgm jose;
 
 	string arquivo = "exemplo.pgm";
 	//cin >> arquivo;

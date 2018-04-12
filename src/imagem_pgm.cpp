@@ -1,4 +1,4 @@
-#include "imagem.hpp"
+#include "imagem_pgm.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -8,39 +8,39 @@
 
 using namespace std;
 
-Imagem::Imagem(){
+ImagemPgm::ImagemPgm(){
 	string arquivo = "";
 	string camArquivo = "";
 }
 
-Imagem::~Imagem(){
+ImagemPgm::~ImagemPgm(){
 
 }
 
 
 
-void Imagem::setArquivo(string arquivo){
+void ImagemPgm::setArquivo(string arquivo){
 	this->arquivo = arquivo;
 	camArquivo = "./imagens/" + arquivo;
 }
 
-string Imagem::getArquivo(){
+string ImagemPgm::getArquivo(){
 	return this->arquivo;
 }
 
-string Imagem::getCamArquivo(){
+string ImagemPgm::getCamArquivo(){
 	return camArquivo;
 }
 
 
 
-void Imagem::abrirArquivo(){
+void ImagemPgm::abrirArquivo(){
 
 	arquivoFile.open(camArquivo,ios::in);
 }
 
 
-void Imagem::lerArquivo(){
+void ImagemPgm::lerArquivo(){
 	
 	string inicioCrip,tamCrip,cifra,tipo,largura,altura,maxCor;
 	char comentario,copiaChar;
@@ -93,7 +93,7 @@ void Imagem::lerArquivo(){
 
 }
 
-void Imagem::descriptografar(){
+void ImagemPgm::descriptografar(){
 	char crip;
 	int semcrip=0,i=0;
 	string cifra,tamCrip;

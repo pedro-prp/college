@@ -1,7 +1,6 @@
-#ifndef IMAGEM_HPP
-#define IMAGEM_HPP
+#ifndef IMAGEM_PGM_HPP
+#define IMAGEM_PGM_HPP
 
-#include "imagem.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -11,7 +10,7 @@
 using namespace std;
 
 
-class Imagem {
+class ImagemPgm {
 
 private:
 	string arquivo;
@@ -20,8 +19,8 @@ private:
 
 public:
 
-	Imagem();
-	~Imagem();
+	ImagemPgm();
+	~ImagemPgm();
 
 
 	void setArquivo(string arquivo);
