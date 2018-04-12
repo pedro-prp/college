@@ -1,4 +1,5 @@
 #include "imagem_pgm.hpp"
+#include "Imagem_ppm.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -20,5 +21,11 @@ int main(int argc, char ** argv){
 	jose.abrirArquivo();
 	jose.lerArquivo();
 	jose.descriptografar();
+
+	ImagemPpm joao;
+	string arquivoPpm = "exemplo.ppm";
+
+	joao.setArquivo(arquivoPpm);
+	joao.abrirArquivo();
 
 }

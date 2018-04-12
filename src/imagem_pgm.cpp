@@ -36,7 +36,7 @@ string ImagemPgm::getCamArquivo(){
 
 void ImagemPgm::abrirArquivo(){
 
-	arquivoFile.open(camArquivo,ios::in);
+	arquivoFilePgm.open(camArquivo,ios::in);
 }
 
 
@@ -47,15 +47,15 @@ void ImagemPgm::lerArquivo(){
 	vector<char> copiaVector;
 	int i=0;
 
-	getline(arquivoFile,tipo,'\n');
-	arquivoFile.get(comentario);
-	getline(arquivoFile,inicioCrip,' ');
-	getline(arquivoFile,tamCrip,' ');
-	getline(arquivoFile,cifra,'\n');
+	getline(arquivoFilePgm,tipo,'\n');
+	arquivoFilePgm.get(comentario);
+	getline(arquivoFilePgm,inicioCrip,' ');
+	getline(arquivoFilePgm,tamCrip,' ');
+	getline(arquivoFilePgm,cifra,'\n');
 
-	getline(arquivoFile,largura,' ');
-	getline(arquivoFile,altura,'\n');
-	getline(arquivoFile,maxCor,'\n');
+	getline(arquivoFilePgm,largura,' ');
+	getline(arquivoFilePgm,altura,'\n');
+	getline(arquivoFilePgm,maxCor,'\n');
 
 	ofstream arquivoSaida;
 	arquivoSaida.open("./imagens/jose.pgm",ios::out);
@@ -71,9 +71,9 @@ void ImagemPgm::lerArquivo(){
 	int tamCripInt = stoi(tamCrip);
 	int cifraInt = stoi(cifra);
 
-	while(!arquivoFile.eof()){
+	while(!arquivoFilePgm.eof()){
 		
-		arquivoFile.get(copiaChar);
+		arquivoFilePgm.get(copiaChar);
 		copiaVector.push_back(copiaChar);
 		arquivoSaida << copiaVector[i];
 		
@@ -87,7 +87,7 @@ void ImagemPgm::lerArquivo(){
 	for(j=(inicioCripInt);j<(inicioCripInt+tamCripInt); j++){
 		arquivoDaCrip << (copiaVector[j]);
 	}
-	arquivoFile.close();
+	arquivoFilePgm.close();
 	arquivoSaida.close();
 	arquivoDaCrip.close();
 
@@ -145,6 +145,8 @@ void ImagemPgm::descriptografar(){
 	}
 	
 	cout << endl << endl;
+	arquivoDaCrip.close();
+	arquivoDescrip.close();
 }
 
 

@@ -1,6 +1,7 @@
-#ifndef IMAGEM_PGM_HPP
-#define IMAGEM_PGM_HPP
+#ifndef IMAGEM_PPM_HPP
+#define IMAGEM_PPM_HPP
 
+#include "imagem_ppm.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -9,18 +10,16 @@
 
 using namespace std;
 
-
-class ImagemPgm {
-
+class ImagemPpm{
 private:
 	string arquivo;
 	string camArquivo;
-	ifstream arquivoFilePgm;
+	ifstream arquivoFilePpm;
 
 public:
 
-	ImagemPgm();
-	~ImagemPgm();
+	ImagemPpm();
+	~ImagemPpm();
 
 
 	void setArquivo(string arquivo);
@@ -29,10 +28,6 @@ public:
 	string getCamArquivo();
 
 	void abrirArquivo();
-
-	void lerArquivo();
-
-	void descriptografar();
 };
 
 #endif
