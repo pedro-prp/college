@@ -108,7 +108,6 @@ void ImagemPpm::lerArquivo(){
 
 	}
 	// salva no cripPrim Ex.: R G B
-	cout << getRedVector(10) << endl;
 	int j=0;
 	for(j=(inicioCripInt);j<(inicioCripInt+tamCripInt); j++){
 		arquivoDaCripPrim << getRedVector(j) << " " << getGreenVector(j) << " " <<getBlueVector(j) << endl;
@@ -121,20 +120,46 @@ void ImagemPpm::lerArquivo(){
 
 }
 
+
 void ImagemPpm::separaUltimoNumDaCrip(){
 	char numeroChar;
 	string tamChar;
 	int i,j;
+	string redLast,greenLast,blueLast;
 	vector<char> numero;
 	ifstream arquivoDaCripPrim;
-	arquivoDaCripPrim.open("./imagens/cripPrim");
+	arquivoDaCripPrim.open("./imagens/cripPpmPrim.txt");
+
+	ofstream arquivoDaCripSec;
+	arquivoDaCripSec.open("./imagens/cripPpmSec.txt");
 	
 	for(i=1;i<=tamCripInt; i++){
+		
 		getline(arquivoDaCripPrim,tamChar,' ');
-		for(j=1;j<=strlen(tamChar);j++){
-			cout << 
+		for(j=1;j<(tamChar.size());j++){
+				numeroChar = tamChar[j];
 		}
+		redLast = numeroChar;
+
+		
+		getline(arquivoDaCripPrim,tamChar,' ');
+		for(j=1;j<(tamChar.size());j++){
+			numeroChar = tamChar[j];
+		}
+		greenLast = (int)numeroChar;
+
+
+		getline(arquivoDaCripPrim,tamChar,'\n');
+		for(j=1;j<(tamChar.size());j++){
+			numeroChar = tamChar[j];
+		}
+		blueLast = (int)numeroChar;
+
+		arquivoDaCripSec << (stoi(redLast) + stoi(greenLast) + stoi(blueLast)) << " ";
+		
 	}
+	arquivoDaCripPrim.close();
+	arquivoDaCripSec.close();
 }
 
 

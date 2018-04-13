@@ -43,7 +43,7 @@ public:
 
 	void lerArquivo();
 
-	//void separaUltimoNumDaCrip();
+	void separaUltimoNumDaCrip();
 };
 
 #endif
