@@ -18,7 +18,6 @@ ImagemPpm::~ImagemPpm(){
 }
 
 
-
 void ImagemPpm::setArquivo(string arquivo){
 	this->arquivo = arquivo;
 	camArquivo = "./imagens/" + arquivo;
@@ -104,13 +103,10 @@ void ImagemPpm::lerArquivo(){
 		setBlue(copiaChar);
 		arquivoSaida << getBlue();
 
-		i++;
-
 	}
 	// salva no cripPrim Ex.: R G B
-	int j=0;
-	for(j=(inicioCripInt);j<(inicioCripInt+tamCripInt); j++){
-		arquivoDaCripPrim << getRedVector(j) << " " << getGreenVector(j) << " " <<getBlueVector(j) << endl;
+	for(i=(inicioCripInt);i<(inicioCripInt+tamCripInt); i++){
+		arquivoDaCripPrim << getRedVector(i) << " " << getGreenVector(i) << " " <<getBlueVector(i) << endl;
 	}
 
 	arquivoFilePpm.close();
@@ -160,6 +156,45 @@ void ImagemPpm::separaUltimoNumDaCrip(){
 	}
 	arquivoDaCripPrim.close();
 	arquivoDaCripSec.close();
+}
+
+void ImagemPpm::criaVetorDeDescriptografia(){
+
+	int i=0,flag=0,j=0;
+	
+	ifstream arquivoDaCripSec;
+	arquivoDaCripSec.open("./imagens/cripPpmSec.txt");
+
+	vector<char> alfabetoDaCifra;
+	char letraLeitura,letra;
+	string cifra;
+	cifra = getCifra();
+
+	for(i=0;i<cifra.size();i++){
+		letraLeitura = cifra[i];
+		alfabetoDaCifra.push_back(letraLeitura);
+		cout << letraLeitura;
+	}
+	cout << endl;
+
+	for(i=1; i<27 ;i++){
+		letra = (i+96);
+
+		for(j=0;j<cifra.size();j++){
+			letraLeitura = cifra[j];
+			if(letra == letraLeitura){
+				flag = 1;
+			}
+		}
+
+
+		if(flag == 0) {
+			alfabetoDaCifra.push_back(letra);
+		}
+		flag=0;
+
+	}
+
 }
 
 

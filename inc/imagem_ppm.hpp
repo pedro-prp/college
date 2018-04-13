@@ -44,6 +44,9 @@ public:
 	void lerArquivo();
 
 	void separaUltimoNumDaCrip();
+
+	void criaVetorDeDescriptografia();
+
 };
 
 #endif
