@@ -13,19 +13,19 @@ int main(int argc, char ** argv){
 
 
 	ImagemPgm jose;
-
 	string arquivo = "exemplo.pgm";
-	//cin >> arquivo;
-
 	jose.setArquivo(arquivo);
 	jose.abrirArquivo();
 	jose.lerArquivo();
 	jose.descriptografar();
 
-	//ImagemPpm joao;
-	//string arquivoPpm = "exemplo.ppm";
+	
 
-	//joao.setArquivo(arquivoPpm);
-	//joao.abrirArquivo();
+	ImagemPpm joao;
+	string arquivoPpm = "exemplo.ppm";
+	joao.setArquivo(arquivoPpm);
+	joao.abrirArquivo();
+	//joao.lerArquivo();
+	//joao.descriptografar();
 
 }

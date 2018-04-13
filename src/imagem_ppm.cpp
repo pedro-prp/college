@@ -28,10 +28,29 @@ string ImagemPpm::getArquivo(){
 	return this->arquivo;
 }
 
-string ImagemPpm::getCamArquivo(){
-	return camArquivo;
+int ImagemPpm::getInicioCrip(){
+	return inicioCripInt;
 }
 
+int ImagemPpm::getTamCrip(){
+	return tamCripInt;
+}
+
+int ImagemPpm::getCifra(){
+	return cifraInt;
+}
+
+void ImagemPpm::setInicioCrip(int inicioCripInt){
+	this->inicioCripInt = inicioCripInt;
+}
+
+void ImagemPpm::setTamCrip(int tamCripInt){
+	this->tamCripInt = tamCripInt;	
+}
+
+void ImagemPpm::setCifra(int cifraInt){
+	this->cifraInt = cifraInt;
+}
 
 
 void ImagemPpm::abrirArquivo(){
