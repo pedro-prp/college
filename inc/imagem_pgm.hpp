@@ -16,6 +16,9 @@ private:
 	string arquivo;
 	string camArquivo;
 	ifstream arquivoFilePgm;
+	int tamCripInt;
+	int inicioCripInt;
+	int cifraInt;
 
 public:
 
@@ -25,6 +28,14 @@ public:
 
 	void setArquivo(string arquivo);
 	string getArquivo();
+
+	void setInicioCrip(int inicioCripInt);
+	void setTamCrip(int tamCripInt);
+	void setCifra(int cifraInt);
+
+	int getInicioCrip();
+	int getTamCrip();
+	int getCifra();
 	
 	string getCamArquivo();
 

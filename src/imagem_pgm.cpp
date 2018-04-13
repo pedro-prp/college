@@ -32,6 +32,30 @@ string ImagemPgm::getCamArquivo(){
 	return camArquivo;
 }
 
+int ImagemPgm::getInicioCrip(){
+	return inicioCripInt;
+}
+
+int ImagemPgm::getTamCrip(){
+	return tamCripInt;
+}
+
+int ImagemPgm::getCifra(){
+	return cifraInt;
+}
+
+void ImagemPgm::setInicioCrip(int inicioCripInt){
+	this->inicioCripInt = inicioCripInt;
+}
+
+void ImagemPgm::setTamCrip(int tamCripInt){
+	this->tamCripInt = tamCripInt;	
+}
+
+void ImagemPgm::setCifra(int cifraInt){
+	this->cifraInt = cifraInt;
+}
+
 
 
 void ImagemPgm::abrirArquivo(){
@@ -67,9 +91,9 @@ void ImagemPgm::lerArquivo(){
 	arquivoSaida << comentario << inicioCrip << " " << tamCrip << " " << cifra << endl;
 	arquivoSaida << largura << " " << altura << endl << maxCor << endl;
 
-	int inicioCripInt = stoi(inicioCrip);
-	int tamCripInt = stoi(tamCrip);
-	int cifraInt = stoi(cifra);
+	setInicioCrip(stoi(inicioCrip));
+	setTamCrip(stoi(tamCrip));
+	setCifra(stoi(cifra));
 
 	while(!arquivoFilePgm.eof()){
 		
@@ -83,7 +107,6 @@ void ImagemPgm::lerArquivo(){
 	cout << endl;
 	
 	int j;
-	arquivoDaCrip << cifraInt << " " << tamCripInt << endl;
 	for(j=(inicioCripInt);j<(inicioCripInt+tamCripInt); j++){
 		arquivoDaCrip << (copiaVector[j]);
 	}
@@ -96,8 +119,7 @@ void ImagemPgm::lerArquivo(){
 void ImagemPgm::descriptografar(){
 	char crip;
 	int semcrip=0,i=0;
-	string cifra,tamCrip;
-	int cifraInt,tamCripInt;
+	int cifraDescrip,tamCripDescrip;
 
 	ifstream arquivoDaCrip;
 	arquivoDaCrip.open("./imagens/crip.txt");
@@ -105,13 +127,10 @@ void ImagemPgm::descriptografar(){
 	ofstream arquivoDescrip;
 	arquivoDescrip.open("./imagens/descrip.txt");
 
-	getline(arquivoDaCrip,cifra,' ');
-	getline(arquivoDaCrip,tamCrip,'\n');
+	cifraDescrip = getCifra();
+	tamCripDescrip = getTamCrip();
 
-	cifraInt = stoi(cifra);
-	tamCripInt = stoi(tamCrip);
-
-	while(i<tamCripInt){
+	while(i<tamCripDescrip){
 		
 		arquivoDaCrip.get(crip);
 		
@@ -122,19 +141,19 @@ void ImagemPgm::descriptografar(){
 		else{
 			if(islower(crip)){
 
-				if(((int)crip-cifraInt)<97){
-					semcrip=((int)crip-cifraInt)+26;
+				if(((int)crip-cifraDescrip)<97){
+					semcrip=((int)crip-cifraDescrip)+26;
 				}
 				else{
-					semcrip=(int)crip-cifraInt;
+					semcrip=(int)crip-cifraDescrip;
 				}
 			}
 			else{
-				if(((int)crip-cifraInt)<65){
-					semcrip=((int)crip-cifraInt)+26;
+				if(((int)crip-cifraDescrip)<65){
+					semcrip=((int)crip-cifraDescrip)+26;
 				}
 				else{
-					semcrip=(int)crip-cifraInt;
+					semcrip=(int)crip-cifraDescrip;
 				}
 			}
 		}
