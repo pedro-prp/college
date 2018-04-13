@@ -17,8 +17,6 @@ ImagemPgm::~ImagemPgm(){
 
 }
 
-
-
 void ImagemPgm::setArquivo(string arquivo){
 	this->arquivo = arquivo;
 	camArquivo = "./imagens/" + arquivo;
@@ -85,7 +83,7 @@ void ImagemPgm::lerArquivo(){
 	arquivoSaida.open("./imagens/jose.pgm",ios::out);
 
 	ofstream arquivoDaCrip;
-	arquivoDaCrip.open("./imagens/crip.txt",ios::out);
+	arquivoDaCrip.open("./imagens/cripPgm.txt",ios::out);
 
 	arquivoSaida << tipo << endl;
 	arquivoSaida << comentario << inicioCrip << " " << tamCrip << " " << cifra << endl;
@@ -122,10 +120,10 @@ void ImagemPgm::descriptografar(){
 	int cifraDescrip,tamCripDescrip;
 
 	ifstream arquivoDaCrip;
-	arquivoDaCrip.open("./imagens/crip.txt");
+	arquivoDaCrip.open("./imagens/cripPgm.txt");
 
 	ofstream arquivoDescrip;
-	arquivoDescrip.open("./imagens/descrip.txt");
+	arquivoDescrip.open("./imagens/descripPgm.txt");
 
 	cifraDescrip = getCifra();
 	tamCripDescrip = getTamCrip();

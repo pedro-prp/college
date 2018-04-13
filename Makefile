@@ -14,8 +14,11 @@ clean:
 	rm -rf obj/*
 	rm -rf bin/*
 	rm -rf imagens/jose.pgm
-	rm -rf imagens/crip.txt
-	rm -rf imagens/descrip.txt
+	rm -rf imagens/jose.ppm
+	rm -rf imagens/cripPgm.txt
+	rm -rf imagens/cripPpmPrim.txt
+	rm -rf imagens/cripPpmSec.txt
+	rm -rf imagens/descripPgm.txt
 
 run:
 	bin/app

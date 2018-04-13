@@ -1,7 +1,7 @@
 #ifndef IMAGEM_PPM_HPP
 #define IMAGEM_PPM_HPP
 
-#include "imagem_ppm.hpp"
+#include "pixel.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -10,14 +10,15 @@
 
 using namespace std;
 
-class ImagemPpm{
+class ImagemPpm : public Pixel{
 private:
+	
 	string arquivo;
 	string camArquivo;
 	ifstream arquivoFilePpm;
 	int inicioCripInt;
 	int tamCripInt;
-	int cifraInt;
+	string cifra;
 
 public:
 
@@ -30,16 +31,19 @@ public:
 
 	void setInicioCrip(int inicioCripInt);
 	void setTamCrip(int tamCripInt);
-	void setCifra(int cifraInt);
+	void setCifra(string cifra);
 
 	int getInicioCrip();
 	int getTamCrip();
-	int getCifra();
+	string getCifra();
 	
 	string getCamArquivo();
 
 	void abrirArquivo();
 
+	void lerArquivo();
+
+	//void separaUltimoNumDaCrip();
 };
 
 #endif

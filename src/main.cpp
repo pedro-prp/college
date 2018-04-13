@@ -25,7 +25,8 @@ int main(int argc, char ** argv){
 	string arquivoPpm = "exemplo.ppm";
 	joao.setArquivo(arquivoPpm);
 	joao.abrirArquivo();
-	//joao.lerArquivo();
+	joao.lerArquivo();
+	joao.separaUltimoNumDaCrip();
 	//joao.descriptografar();
 
 }
