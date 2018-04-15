@@ -28,6 +28,6 @@ int main(int argc, char ** argv){
 	joao.lerArquivo();
 	joao.separaUltimoNumDaCrip();
 	joao.criaVetorDeDescriptografia();
-	//joao.descriptografar();
+	joao.descriptografar();
 
 }

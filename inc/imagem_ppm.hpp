@@ -19,6 +19,8 @@ private:
 	int inicioCripInt;
 	int tamCripInt;
 	string cifra;
+	vector<char> alfabetoDaCifra;
+
 
 public:
 
@@ -46,6 +48,12 @@ public:
 	void separaUltimoNumDaCrip();
 
 	void criaVetorDeDescriptografia();
+
+	void setAlfabetoDaCifra(char letra);
+
+	char getAlfabetoDaCifra(int i);
+
+	void descriptografar();
 
 };
 

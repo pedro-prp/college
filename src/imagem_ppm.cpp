@@ -51,6 +51,14 @@ void ImagemPpm::setCifra(string cifra){
 	this->cifra = cifra;
 }
 
+void ImagemPpm::setAlfabetoDaCifra(char letra){
+	this->alfabetoDaCifra.push_back(letra);
+}
+
+char ImagemPpm::getAlfabetoDaCifra(int i){
+	return alfabetoDaCifra[i];
+}
+
 
 void ImagemPpm::abrirArquivo(){
 
@@ -135,7 +143,7 @@ void ImagemPpm::separaUltimoNumDaCrip(){
 		for(j=1;j<(tamChar.size());j++){
 				numeroChar = tamChar[j];
 		}
-		redLast = numeroChar;
+		redLast = (int)numeroChar;
 
 		
 		getline(arquivoDaCripPrim,tamChar,' ');
@@ -165,19 +173,20 @@ void ImagemPpm::criaVetorDeDescriptografia(){
 	ifstream arquivoDaCripSec;
 	arquivoDaCripSec.open("./imagens/cripPpmSec.txt");
 
-	vector<char> alfabetoDaCifra;
 	char letraLeitura,letra;
 	string cifra;
 	cifra = getCifra();
 
+	setAlfabetoDaCifra(' ');
+
 	for(i=0;i<cifra.size();i++){
 		letraLeitura = cifra[i];
-		alfabetoDaCifra.push_back(letraLeitura);
+		setAlfabetoDaCifra(letraLeitura);
 		cout << letraLeitura;
 	}
 	cout << endl;
 
-	for(i=1; i<27 ;i++){
+	for(i=1; i<=27 ;i++){
 		letra = (i+96);
 
 		for(j=0;j<cifra.size();j++){
@@ -189,12 +198,53 @@ void ImagemPpm::criaVetorDeDescriptografia(){
 
 
 		if(flag == 0) {
-			alfabetoDaCifra.push_back(letra);
+			setAlfabetoDaCifra(letra);
 		}
 		flag=0;
 
+		cout << letra;
+		cout << i;
+
 	}
+
+	cout << endl;
+	
+	for(int a=0;a<=27;a++){
+		cout << getAlfabetoDaCifra(a);
+		cout << a;
+	}
+	cout << endl;
+
+	arquivoDaCripSec.close();
 
 }
 
+void ImagemPpm::descriptografar(){
+
+	ifstream arquivoDaCripSec;
+	arquivoDaCripSec.open("./imagens/CripPpmSec.txt");
+
+	string num;
+	int tamCrip = getTamCrip();
+	cout << endl;
+	
+
+	for(int i=1;i<tamCrip;i++){
+		
+		getline(arquivoDaCripSec,num,' ');
+
+		if(stoi(num)==0){
+			cout << " ";
+		}
+		else {
+			cout << num;
+			cout << getAlfabetoDaCifra(stoi(num)) << endl;
+		}
+		num="";
+	}
+	cout << endl;
+
+	arquivoDaCripSec.close();
+
+}
 
