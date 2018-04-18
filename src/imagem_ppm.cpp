@@ -209,7 +209,6 @@ void ImagemPpm::criaVetorDeDescriptografia(){
 	
 	for(int a=0;a<27;a++){
 		cout << getAlfabetoDaCifra(a);
-		cout << a;
 	}
 	cout << endl;
 
@@ -225,13 +224,26 @@ void ImagemPpm::descriptografar(){
 	string num;
 	int tamCrip = getTamCrip();
 	cout << endl;
+
+	vector<char> alfabetoComum;
+
+	alfabetoComum.push_back(' ');
+	int i;
+	cout << " ";
+	for(i=1;i<=26;i++){
+		char letra = (i+96);
+		alfabetoComum.push_back(letra);
+		cout << letra;
+	}
 	
 
 	for(int i=1;i<=tamCrip;i++){
 		
 		getline(arquivoDaCripSec,num,' ');
 
-			cout << getAlfabetoDaCifra(stoi(num)) << " ";
+		int numero = stoi(num);
+
+			cout << getAlfabetoDaCifra(numero) << " ";
 		num="";
 	}
 	cout << endl;
