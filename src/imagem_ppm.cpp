@@ -113,7 +113,7 @@ void ImagemPpm::lerArquivo(){
 
 	}
 	// salva no cripPrim Ex.: R G B
-	for(i=(inicioCripInt);i<(inicioCripInt+tamCripInt); i++){
+	for(i=((inicioCripInt)/3);i<((inicioCripInt/3)+tamCripInt); i++){
 		arquivoDaCripPrim << getRedVector(i) << " " << getGreenVector(i) << " " <<getBlueVector(i) << endl;
 	}
 
@@ -182,11 +182,11 @@ void ImagemPpm::criaVetorDeDescriptografia(){
 	for(i=0;i<cifra.size();i++){
 		letraLeitura = cifra[i];
 		setAlfabetoDaCifra(letraLeitura);
-		cout << letraLeitura;
 	}
+
 	cout << endl;
 
-	for(i=1; i<=27 ;i++){
+	for(i=1; i<27 ;i++){
 		letra = (i+96);
 
 		for(j=0;j<cifra.size();j++){
@@ -200,16 +200,14 @@ void ImagemPpm::criaVetorDeDescriptografia(){
 		if(flag == 0) {
 			setAlfabetoDaCifra(letra);
 		}
+		
 		flag=0;
-
-		cout << letra;
-		cout << i;
 
 	}
 
 	cout << endl;
 	
-	for(int a=0;a<=27;a++){
+	for(int a=0;a<27;a++){
 		cout << getAlfabetoDaCifra(a);
 		cout << a;
 	}
@@ -229,17 +227,11 @@ void ImagemPpm::descriptografar(){
 	cout << endl;
 	
 
-	for(int i=1;i<tamCrip;i++){
+	for(int i=1;i<=tamCrip;i++){
 		
 		getline(arquivoDaCripSec,num,' ');
 
-		if(stoi(num)==0){
-			cout << " ";
-		}
-		else {
-			cout << num;
-			cout << getAlfabetoDaCifra(stoi(num)) << endl;
-		}
+			cout << getAlfabetoDaCifra(stoi(num)) << " ";
 		num="";
 	}
 	cout << endl;
