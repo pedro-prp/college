@@ -16,8 +16,8 @@ private:
 	string arquivo;
 	string camArquivo;
 	ifstream arquivoFilePpm;
-	int inicioCripInt;
-	int tamCripInt;
+	unsigned int inicioCripInt;
+	unsigned int tamCripInt;
 	string cifra;
 	vector<char> alfabetoDaCifra;
 

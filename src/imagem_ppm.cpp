@@ -70,7 +70,7 @@ void ImagemPpm::lerArquivo(){
 	string inicioCrip,tamCrip,cifra,tipo,largura,altura,maxCor;
 	char comentario,copiaChar;
 	vector<char> copiaVector;
-	int i=0;
+	unsigned int i=0;
 
 	ofstream arquivoSaida;
 	arquivoSaida.open("./imagens/jose.ppm",ios::out);
@@ -128,7 +128,7 @@ void ImagemPpm::lerArquivo(){
 void ImagemPpm::separaUltimoNumDaCrip(){
 	char numeroChar;
 	string tamChar;
-	int i,j;
+	unsigned int i,j;
 	string redLast,greenLast,blueLast;
 	vector<char> numero;
 	ifstream arquivoDaCripPrim;
@@ -168,7 +168,7 @@ void ImagemPpm::separaUltimoNumDaCrip(){
 
 void ImagemPpm::criaVetorDeDescriptografia(){
 
-	int i=0,flag=0,j=0;
+	unsigned int i=0,flag=0,j=0;
 	
 	ifstream arquivoDaCripSec;
 	arquivoDaCripSec.open("./imagens/cripPpmSec.txt");
