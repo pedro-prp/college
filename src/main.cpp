@@ -13,7 +13,7 @@ int main(int argc, char ** argv){
 
 
 	ImagemPgm jose;
-	string arquivo = "exemplo.pgm";
+	string arquivo = "blocks.pgm";
 	jose.setArquivo(arquivo);
 	jose.abrirArquivo();
 	jose.lerArquivo();

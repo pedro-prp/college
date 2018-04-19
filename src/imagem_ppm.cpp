@@ -208,14 +208,14 @@ void ImagemPpm::criaVetorDeDescriptografia(){
 	cout << endl;
 	
 	for(int a=0;a<27;a++){
-		cout << getAlfabetoDaCifra(a);
+		//cout << getAlfabetoDaCifra(a);
 	}
-	cout << endl;
+	//cout << endl;
 
 	arquivoDaCripSec.close();
 
 }
-
+/*
 void ImagemPpm::descriptografar(){
 
 	ifstream arquivoDaCripSec;
@@ -235,6 +235,7 @@ void ImagemPpm::descriptografar(){
 		alfabetoComum.push_back(letra);
 		cout << letra;
 	}
+	cout << endl;
 	
 
 	for(int i=1;i<=tamCrip;i++){
@@ -243,12 +244,54 @@ void ImagemPpm::descriptografar(){
 
 		int numero = stoi(num);
 
-			cout << getAlfabetoDaCifra(numero) << " ";
+			cout << getAlfabetoDaCifra(numero);
 		num="";
 	}
 	cout << endl;
 
 	arquivoDaCripSec.close();
+
+}
+*/
+
+void ImagemPpm::descriptografar(){
+	ifstream arquivoDaCripSec;
+	arquivoDaCripSec.open("./imagens/cripPpmSec.txt");
+
+
+
+	string num;
+	char letra;
+	int tamCrip = getTamCrip();
+	cout << endl;
+
+	vector<char> alfabetoComum;
+	alfabetoComum.push_back(' ');
+
+	int i,j;
+	//cout << " ";
+	for(i=1;i<=26;i++){
+		char letra = (i+96);
+		alfabetoComum.push_back(letra);
+		//cout << letra;
+	}
+	//cout << endl << endl;
+
+	for(int i=1;i<=tamCrip;i++){
+		
+		getline(arquivoDaCripSec,num,' ');
+
+		letra = alfabetoComum[atoi(num.c_str())];
+
+		for(j=0;j<27;j++){
+			
+			if(getAlfabetoDaCifra(j)==letra){
+				cout << alfabetoComum[j];
+			}
+		}
+
+	}
+	cout << endl;
 
 }
 
