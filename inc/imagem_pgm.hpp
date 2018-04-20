@@ -1,6 +1,7 @@
 #ifndef IMAGEM_PGM_HPP
 #define IMAGEM_PGM_HPP
 
+#include "imagem.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -10,36 +11,14 @@
 using namespace std;
 
 
-class ImagemPgm {
+class ImagemPgm : public Imagem{
 
 private:
-	string arquivo;
-	string camArquivo;
-	ifstream arquivoFilePgm;
-	int tamCripInt;
-	int inicioCripInt;
-	int cifraInt;
 
 public:
 
 	ImagemPgm();
 	~ImagemPgm();
-
-
-	void setArquivo(string arquivo);
-	string getArquivo();
-
-	void setInicioCrip(int inicioCripInt);
-	void setTamCrip(int tamCripInt);
-	void setCifra(int cifraInt);
-
-	int getInicioCrip();
-	int getTamCrip();
-	int getCifra();
-	
-	string getCamArquivo();
-
-	void abrirArquivo();
 
 	void lerArquivo();
 

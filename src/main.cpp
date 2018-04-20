@@ -1,4 +1,5 @@
 #include "imagem_pgm.hpp"
+#include "user_interface.hpp"
 #include "imagem_ppm.hpp"
 #include <iostream>
 #include <string>
@@ -11,16 +12,19 @@ using namespace std;
 
 int main(int argc, char ** argv){
 
+	UserInterface josezin;
+	josezin.printarBoasVindas();
+
 
 	ImagemPgm jose;
-	string arquivo = "blocks.pgm";
+	string arquivo = "exemplo.pgm";
 	jose.setArquivo(arquivo);
 	jose.abrirArquivo();
 	jose.lerArquivo();
 	jose.descriptografar();
 
 	
-
+/*
 	ImagemPpm joao;
 	string arquivoPpm = "exemplo.ppm";
 	joao.setArquivo(arquivoPpm);
@@ -29,5 +33,6 @@ int main(int argc, char ** argv){
 	joao.separaUltimoNumDaCrip();
 	joao.criaVetorDeDescriptografia();
 	joao.descriptografar();
+	*/
 
 }

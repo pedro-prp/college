@@ -1,4 +1,5 @@
 #include "imagem_ppm.hpp"
+#include "imagem.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -9,46 +10,11 @@
 using namespace std;
 
 ImagemPpm::ImagemPpm(){
-	string arquivo = "";
-	string camArquivo = "";
+	
 }
 
 ImagemPpm::~ImagemPpm(){
 
-}
-
-
-void ImagemPpm::setArquivo(string arquivo){
-	this->arquivo = arquivo;
-	camArquivo = "./imagens/" + arquivo;
-}
-
-string ImagemPpm::getArquivo(){
-	return this->arquivo;
-}
-
-int ImagemPpm::getInicioCrip(){
-	return inicioCripInt;
-}
-
-int ImagemPpm::getTamCrip(){
-	return tamCripInt;
-}
-
-string ImagemPpm::getCifra(){
-	return cifra;
-}
-
-void ImagemPpm::setInicioCrip(int inicioCripInt){
-	this->inicioCripInt = inicioCripInt;
-}
-
-void ImagemPpm::setTamCrip(int tamCripInt){
-	this->tamCripInt = tamCripInt;	
-}
-
-void ImagemPpm::setCifra(string cifra){
-	this->cifra = cifra;
 }
 
 void ImagemPpm::setAlfabetoDaCifra(char letra){
@@ -93,8 +59,8 @@ void ImagemPpm::lerArquivo(){
 	arquivoSaida << comentario << inicioCrip << " " << tamCrip << " " << cifra << endl;
 	arquivoSaida << largura << " " << altura << endl << maxCor << endl;
 
-	setInicioCrip(stoi(inicioCrip));
-	setTamCrip(stoi(tamCrip));
+	setInicioCrip(inicioCrip);
+	setTamCrip(tamCrip);
 	setCifra(cifra);
 
 	while(!arquivoFilePpm.eof()){
@@ -112,7 +78,7 @@ void ImagemPpm::lerArquivo(){
 		arquivoSaida << getBlue();
 
 	}
-	// salva no cripPrim Ex.: R G B
+	
 	for(i=((inicioCripInt)/3);i<((inicioCripInt/3)+tamCripInt); i++){
 		arquivoDaCripPrim << getRedVector(i) << " " << getGreenVector(i) << " " <<getBlueVector(i) << endl;
 	}
@@ -226,19 +192,16 @@ void ImagemPpm::descriptografar(){
 	alfabetoComum.push_back(' ');
 
 	int i,j;
-	//cout << " ";
 	for(i=1;i<=26;i++){
 		char letra = (i+96);
 		alfabetoComum.push_back(letra);
-		//cout << letra;
 	}
-	//cout << endl << endl;
 
 	for(int i=1;i<=tamCrip;i++){
 		
 		getline(arquivoDaCripSec,num,' ');
 
-		letra = alfabetoComum[atoi(num.c_str())];
+		letra = alfabetoComum[stoi(num)];
 
 		for(j=0;j<27;j++){
 			

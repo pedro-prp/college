@@ -10,15 +10,9 @@
 
 using namespace std;
 
-class ImagemPpm : public Pixel{
+class ImagemPpm : public Pixel, public Imagem{
 private:
 	
-	string arquivo;
-	string camArquivo;
-	ifstream arquivoFilePpm;
-	unsigned int inicioCripInt;
-	unsigned int tamCripInt;
-	string cifra;
 	vector<char> alfabetoDaCifra;
 
 
@@ -26,22 +20,6 @@ public:
 
 	ImagemPpm();
 	~ImagemPpm();
-
-
-	void setArquivo(string arquivo);
-	string getArquivo();
-
-	void setInicioCrip(int inicioCripInt);
-	void setTamCrip(int tamCripInt);
-	void setCifra(string cifra);
-
-	int getInicioCrip();
-	int getTamCrip();
-	string getCifra();
-	
-	string getCamArquivo();
-
-	void abrirArquivo();
 
 	void lerArquivo();
 
