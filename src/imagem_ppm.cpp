@@ -10,7 +10,7 @@
 using namespace std;
 
 ImagemPpm::ImagemPpm(){
-	
+
 }
 
 ImagemPpm::~ImagemPpm(){
@@ -23,13 +23,6 @@ void ImagemPpm::setAlfabetoDaCifra(char letra){
 
 char ImagemPpm::getAlfabetoDaCifra(int i){
 	return alfabetoDaCifra[i];
-}
-
-
-void ImagemPpm::abrirArquivo(){
-
-	arquivoFilePpm.open(camArquivo,ios::in);
-	
 }
 
 void ImagemPpm::lerArquivo(){
@@ -46,14 +39,14 @@ void ImagemPpm::lerArquivo(){
 	arquivoDaCripPrim.open("./imagens/cripPpmPrim.txt",ios::out);
 	arquivoDaCripSec.open("./imagens/cripPpmSec.txt",ios::out);
 
-	getline(arquivoFilePpm,tipo,'\n');
-	arquivoFilePpm.get(comentario);
-	getline(arquivoFilePpm,inicioCrip,' ');
-	getline(arquivoFilePpm,tamCrip,' ');
-	getline(arquivoFilePpm,cifra,'\n');
-	getline(arquivoFilePpm,largura,' ');
-	getline(arquivoFilePpm,altura,'\n');
-	getline(arquivoFilePpm,maxCor,'\n');
+	getline(arquivo,tipo,'\n');
+	arquivo.get(comentario);
+	getline(arquivo,inicioCrip,' ');
+	getline(arquivo,tamCrip,' ');
+	getline(arquivo,cifra,'\n');
+	getline(arquivo,largura,' ');
+	getline(arquivo,altura,'\n');
+	getline(arquivo,maxCor,'\n');
 
 	arquivoSaida << tipo << endl;
 	arquivoSaida << comentario << inicioCrip << " " << tamCrip << " " << cifra << endl;
@@ -63,27 +56,27 @@ void ImagemPpm::lerArquivo(){
 	setTamCrip(tamCrip);
 	setCifra(cifra);
 
-	while(!arquivoFilePpm.eof()){
+	while(!arquivo.eof()){
 
-		arquivoFilePpm.get(copiaChar);
+		arquivo.get(copiaChar);
 		setRed(copiaChar);
 		arquivoSaida << getRed();
 
-		arquivoFilePpm.get(copiaChar);
+		arquivo.get(copiaChar);
 		setGreen(copiaChar);
 		arquivoSaida << getGreen();
 
-		arquivoFilePpm.get(copiaChar);
+		arquivo.get(copiaChar);
 		setBlue(copiaChar);
 		arquivoSaida << getBlue();
 
 	}
 	
-	for(i=((inicioCripInt)/3);i<((inicioCripInt/3)+tamCripInt); i++){
+	for(i=(getInicioCrip()/3);i<((getInicioCrip()/3)+getTamCrip()); i++){
 		arquivoDaCripPrim << getRedVector(i) << " " << getGreenVector(i) << " " <<getBlueVector(i) << endl;
 	}
 
-	arquivoFilePpm.close();
+	arquivo.close();
 	arquivoSaida.close();
 	arquivoDaCripPrim.close();
 	arquivoDaCripSec.close();
@@ -103,7 +96,7 @@ void ImagemPpm::separaUltimoNumDaCrip(){
 	ofstream arquivoDaCripSec;
 	arquivoDaCripSec.open("./imagens/cripPpmSec.txt");
 	
-	for(i=1;i<=tamCripInt; i++){
+	for(i=1;i<=getTamCrip(); i++){
 		
 		getline(arquivoDaCripPrim,tamChar,' ');
 		for(j=1;j<(tamChar.size());j++){

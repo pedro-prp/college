@@ -2,6 +2,7 @@
 #define IMAGEM_PPM_HPP
 
 #include "pixel.hpp"
+#include "imagem.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>

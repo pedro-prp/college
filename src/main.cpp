@@ -24,15 +24,14 @@ int main(int argc, char ** argv){
 	jose.descriptografar();
 
 	
-/*
+
 	ImagemPpm joao;
-	string arquivoPpm = "exemplo.ppm";
+	string arquivoPpm = "lena.ppm";
 	joao.setArquivo(arquivoPpm);
 	joao.abrirArquivo();
 	joao.lerArquivo();
 	joao.separaUltimoNumDaCrip();
 	joao.criaVetorDeDescriptografia();
 	joao.descriptografar();
-	*/
 
 }
