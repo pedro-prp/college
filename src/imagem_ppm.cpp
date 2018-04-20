@@ -206,53 +206,10 @@ void ImagemPpm::criaVetorDeDescriptografia(){
 	}
 
 	cout << endl;
-	
-	for(int a=0;a<27;a++){
-		//cout << getAlfabetoDaCifra(a);
-	}
-	//cout << endl;
 
 	arquivoDaCripSec.close();
 
 }
-/*
-void ImagemPpm::descriptografar(){
-
-	ifstream arquivoDaCripSec;
-	arquivoDaCripSec.open("./imagens/CripPpmSec.txt");
-
-	string num;
-	int tamCrip = getTamCrip();
-	cout << endl;
-
-	vector<char> alfabetoComum;
-
-	alfabetoComum.push_back(' ');
-	int i;
-	cout << " ";
-	for(i=1;i<=26;i++){
-		char letra = (i+96);
-		alfabetoComum.push_back(letra);
-		cout << letra;
-	}
-	cout << endl;
-	
-
-	for(int i=1;i<=tamCrip;i++){
-		
-		getline(arquivoDaCripSec,num,' ');
-
-		int numero = stoi(num);
-
-			cout << getAlfabetoDaCifra(numero);
-		num="";
-	}
-	cout << endl;
-
-	arquivoDaCripSec.close();
-
-}
-*/
 
 void ImagemPpm::descriptografar(){
 	ifstream arquivoDaCripSec;
