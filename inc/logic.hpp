@@ -14,6 +14,8 @@ public:
 	void aplicacaoPGM();
 	void aplicacaoPPM();
 	void menu();
+	string pegarCaminhoDaImagem();
+	void aplicacao();
 
 
 };

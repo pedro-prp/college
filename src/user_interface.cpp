@@ -21,6 +21,7 @@ void UserInterface::printarMenu(){
 	cout << "|x| 2.Descriptografar uma imagem PPM            |x|" << endl;
 	cout << "|x| 3.Sair                                      |x|" << endl;
 	cout << "|x|_____________________________________________|x|" << endl;
+	cout << "   opção:";
 }
 
 void UserInterface::printarFinalizacao(){

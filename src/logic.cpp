@@ -1,4 +1,7 @@
 #include "logic.hpp"
+#include <string>
+
+using namespace std;
 
 Logic::Logic(){}
 
@@ -7,8 +10,7 @@ Logic::~Logic(){}
 void Logic::aplicacaoPGM(){
 
 	ImagemPgm jose;
-	string arquivo = "exemplo.pgm";
-	jose.setArquivo(arquivo);
+	jose.setArquivo(pegarCaminhoDaImagem());
 	jose.abrirArquivo();
 	jose.lerArquivo();
 	jose.descriptografar();
@@ -16,13 +18,20 @@ void Logic::aplicacaoPGM(){
 
 void Logic::aplicacaoPPM(){
 	ImagemPpm joao;
-	string arquivoPpm = "lena.ppm";
-	joao.setArquivo(arquivoPpm);
+	joao.setArquivo(pegarCaminhoDaImagem());
 	joao.abrirArquivo();
 	joao.lerArquivo();
 	joao.separaUltimoNumDaCrip();
 	joao.criaVetorDeDescriptografia();
 	joao.descriptografar();
+}
+
+string Logic::pegarCaminhoDaImagem(){
+	string arquivo;
+	cout <<"   caminho do arquivo:";
+	cin >> arquivo;
+	return arquivo;
+
 }
 
 void Logic::menu(){
@@ -44,7 +53,9 @@ void Logic::menu(){
 		default:
 			printarErroDeOpcao();
 	}
-	
 
+}
 
+void Logic::aplicacao(){
+	menu();
 }

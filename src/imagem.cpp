@@ -11,7 +11,7 @@ Imagem::Imagem(){}
 Imagem::~Imagem(){}
 
 void Imagem::setArquivo(string arquivo){
-	camArquivo = "./imagens/" + arquivo;
+	camArquivo = arquivo;
 }
 
 string Imagem::getCamArquivo(){
