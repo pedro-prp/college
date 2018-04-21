@@ -48,7 +48,7 @@ void Logic::menu(){
 			aplicacaoPPM();
 			break;
 		case 3:
-			printarFinalizacao();
+			setDesejaSair();
 			break;
 		default:
 			printarErroDeOpcao();
@@ -56,6 +56,46 @@ void Logic::menu(){
 
 }
 
+void Logic::desejaContinuar(){
+	printarDesejaContinuar();
+	char x;
+	cin >> x;
+	if(x=='S'){
+		setDesejaContinuar(1);
+	}
+	else{
+		setDesejaContinuar(0);
+	}
+
+}
+
+void Logic::setDesejaContinuar(int desejaContinuar){
+	this->desejaContinuarInt = desejaContinuar;
+}
+
+void Logic::setDesejaSair(){
+	printarDecisaoPraSair();
+	char x;
+	cin >> x;
+	if(x=='S'){
+		this->desejaSairInt = 1;
+	}
+	else{
+		this->desejaSairInt = 0;
+	}
+}
+
 void Logic::aplicacao(){
-	menu();
+	while(desejaContinuarInt==1){
+		
+		menu();
+		
+		if(desejaSairInt == 0){
+			desejaContinuar();
+		}
+		else{
+			setDesejaContinuar(0);
+		}
+	}
+	printarFinalizacao();
 }

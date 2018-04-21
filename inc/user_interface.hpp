@@ -14,6 +14,8 @@ public:
 	void printarMenu();
 	void printarFinalizacao();
 	void printarErroDeOpcao();
+	void printarDesejaContinuar();
+	void printarDecisaoPraSair();
 };
 
 #endif

@@ -8,6 +8,9 @@
 #include "imagem.hpp"
 
 class Logic : public UserInterface {
+private:
+	int desejaContinuarInt=1;
+	int desejaSairInt = 0;
 public:
 	Logic();
 	~Logic();
@@ -16,7 +19,9 @@ public:
 	void menu();
 	string pegarCaminhoDaImagem();
 	void aplicacao();
-
+	void desejaContinuar();
+	void setDesejaContinuar(int desejaContinuar);
+	void setDesejaSair();
 
 };
 

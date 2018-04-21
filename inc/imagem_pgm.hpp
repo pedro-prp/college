@@ -12,9 +12,7 @@ using namespace std;
 
 
 class ImagemPgm : public Imagem{
-
-private:
-
+	
 public:
 
 	ImagemPgm();

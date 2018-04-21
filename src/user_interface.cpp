@@ -25,8 +25,16 @@ void UserInterface::printarMenu(){
 }
 
 void UserInterface::printarFinalizacao(){
-	cout << "Tchau viado" << endl;
+	cout << "Tchau Amiguinho" << endl;
 }
 void UserInterface::printarErroDeOpcao(){
 	cout << "Tu errou coleguinha" << endl;
+}
+
+void UserInterface::printarDesejaContinuar(){
+	cout << "Você deseja continuar?<S/n>";
+}
+
+void UserInterface::printarDecisaoPraSair(){
+	cout << "Deseja mesmo sair?<S/n>";
 }
