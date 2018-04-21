@@ -4,13 +4,9 @@
 
 using namespace std;
 
-UserInterface::UserInterface(){
+UserInterface::UserInterface(){}
 
-}
-
-UserInterface::~UserInterface(){
-
-}
+UserInterface::~UserInterface(){}
 
 void UserInterface::printarBoasVindas(){
 	cout << "|x|---------------------------------------------|x|" << endl;
@@ -25,4 +21,11 @@ void UserInterface::printarMenu(){
 	cout << "|x| 2.Descriptografar uma imagem PPM            |x|" << endl;
 	cout << "|x| 3.Sair                                      |x|" << endl;
 	cout << "|x|_____________________________________________|x|" << endl;
+}
+
+void UserInterface::printarFinalizacao(){
+	cout << "Tchau viado" << endl;
+}
+void UserInterface::printarErroDeOpcao(){
+	cout << "Tu errou coleguinha" << endl;
 }

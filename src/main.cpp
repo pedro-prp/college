@@ -1,6 +1,7 @@
 #include "imagem_pgm.hpp"
 #include "user_interface.hpp"
 #include "imagem_ppm.hpp"
+#include "logic.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -11,7 +12,7 @@
 using namespace std;
 
 int main(int argc, char ** argv){
-
+/*
 	UserInterface josezin;
 	josezin.printarBoasVindas();
 	josezin.printarMenu();
@@ -23,16 +24,8 @@ int main(int argc, char ** argv){
 	jose.abrirArquivo();
 	jose.lerArquivo();
 	jose.descriptografar();
-
-	
-
-	ImagemPpm joao;
-	string arquivoPpm = "lena.ppm";
-	joao.setArquivo(arquivoPpm);
-	joao.abrirArquivo();
-	joao.lerArquivo();
-	joao.separaUltimoNumDaCrip();
-	joao.criaVetorDeDescriptografia();
-	joao.descriptografar();
+*/
+	Logic jose;
+	jose.menu();
 
 }

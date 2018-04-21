@@ -12,6 +12,8 @@ public:
 
 	void printarBoasVindas();
 	void printarMenu();
+	void printarFinalizacao();
+	void printarErroDeOpcao();
 };
 
 #endif
