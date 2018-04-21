@@ -13,8 +13,8 @@ UserInterface::~UserInterface(){
 }
 
 void UserInterface::printarBoasVindas(){
-	cout << "x-----------------------------------------------x" << endl;
-	cout << "x      Boas Vindas ao meu programa fudido       x" << endl;
-	cout << "x-----------------------------------------------x" << endl;
+	cout << "|x|---------------------------------------------|x|" << endl;
+	cout << "|x|     Boas Vindas ao meu programa fudido      |x|" << endl;
+	cout << "|x|---------------------------------------------|x|" << endl;
 
 }

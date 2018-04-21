@@ -29,8 +29,8 @@ void ImagemPpm::lerArquivo(){
 	string inicioCrip,tamCrip,cifra,tipo,largura,altura,maxCor;
 	char comentario,copiaChar;
 	vector<char> copiaVector;
-	vector<int> pixels;
-	unsigned int i=0,cont=0;
+	vector<unsigned int> pixels;
+	unsigned int i=0;
 
 	ofstream arquivoSaida;
 	arquivoSaida.open("./imagens/jose.ppm",ios::out);
@@ -38,7 +38,6 @@ void ImagemPpm::lerArquivo(){
 	ofstream arquivoDaCripPrim;
 	ofstream arquivoDaCripSec;
 	arquivoDaCripPrim.open("./imagens/cripPpmPrim.txt",ios::out);
-	arquivoDaCripSec.open("./imagens/cripPpmSec.txt",ios::out);
 
 	getline(arquivo,tipo,'\n');
 	arquivo.get(comentario);
@@ -58,28 +57,9 @@ void ImagemPpm::lerArquivo(){
 	setCifra(cifra);
 
 	while(!arquivo.eof()){
-
-		/*arquivo.get(copiaChar);
-		setRed(copiaChar);
-		arquivoSaida << getRed();
-
-		arquivo.get(copiaChar);
-		setGreen(copiaChar);
-		arquivoSaida << getGreen();
-
-		arquivo.get(copiaChar);
-		setBlue(copiaChar);
-		arquivoSaida << getBlue();
-		cont+=3;
-		*/
-
 		arquivo.get(copiaChar);
 		pixels.push_back((int)copiaChar);
 		arquivoSaida << copiaChar;
-
-
-
-
 	}
 
 	for(i=getInicioCrip();i<getInicioCrip()+(getTamCrip()*3); i+=3){
@@ -91,7 +71,6 @@ void ImagemPpm::lerArquivo(){
 	arquivo.close();
 	arquivoSaida.close();
 	arquivoDaCripPrim.close();
-	arquivoDaCripSec.close();
 
 }
 
