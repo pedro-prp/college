@@ -29,7 +29,8 @@ void ImagemPpm::lerArquivo(){
 	string inicioCrip,tamCrip,cifra,tipo,largura,altura,maxCor;
 	char comentario,copiaChar;
 	vector<char> copiaVector;
-	unsigned int i=0;
+	vector<int> pixels;
+	unsigned int i=0,cont=0;
 
 	ofstream arquivoSaida;
 	arquivoSaida.open("./imagens/jose.ppm",ios::out);
@@ -58,7 +59,7 @@ void ImagemPpm::lerArquivo(){
 
 	while(!arquivo.eof()){
 
-		arquivo.get(copiaChar);
+		/*arquivo.get(copiaChar);
 		setRed(copiaChar);
 		arquivoSaida << getRed();
 
@@ -69,11 +70,22 @@ void ImagemPpm::lerArquivo(){
 		arquivo.get(copiaChar);
 		setBlue(copiaChar);
 		arquivoSaida << getBlue();
+		cont+=3;
+		*/
+
+		arquivo.get(copiaChar);
+		pixels.push_back((int)copiaChar);
+		arquivoSaida << copiaChar;
+
+
+
 
 	}
-	
-	for(i=(getInicioCrip()/3);i<((getInicioCrip()/3)+getTamCrip()); i++){
-		arquivoDaCripPrim << getRedVector(i) << " " << getGreenVector(i) << " " <<getBlueVector(i) << endl;
+
+	for(i=getInicioCrip();i<getInicioCrip()+(getTamCrip()*3); i+=3){
+		arquivoDaCripPrim << pixels[i] << " ";
+		arquivoDaCripPrim << pixels[i+1] << " ";
+		arquivoDaCripPrim << pixels[i+2] << endl;
 	}
 
 	arquivo.close();
@@ -207,4 +219,5 @@ void ImagemPpm::descriptografar(){
 	cout << endl;
 
 }
+
 

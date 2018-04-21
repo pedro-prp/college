@@ -26,7 +26,7 @@ int main(int argc, char ** argv){
 	
 
 	ImagemPpm joao;
-	string arquivoPpm = "lena.ppm";
+	string arquivoPpm = "exemplo.ppm";
 	joao.setArquivo(arquivoPpm);
 	joao.abrirArquivo();
 	joao.lerArquivo();
