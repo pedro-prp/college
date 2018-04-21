@@ -182,7 +182,7 @@ void ImagemPpm::descriptografar(){
 		alfabetoComum.push_back(letra);
 	}
 
-	for(int i=1;i<=tamCrip;i++){
+	for(i=1;i<=tamCrip;i++){
 		
 		getline(arquivoDaCripSec,num,' ');
 

@@ -11,6 +11,7 @@ public:
 	~UserInterface();
 
 	void printarBoasVindas();
+	void printarMenu();
 };
 
 #endif

@@ -14,10 +14,11 @@ int main(int argc, char ** argv){
 
 	UserInterface josezin;
 	josezin.printarBoasVindas();
+	josezin.printarMenu();
 
 
 	ImagemPgm jose;
-	string arquivo = "exemplo.pgm";
+	string arquivo = "blocks.pgm";
 	jose.setArquivo(arquivo);
 	jose.abrirArquivo();
 	jose.lerArquivo();
