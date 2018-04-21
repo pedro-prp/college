@@ -1,7 +1,6 @@
 #ifndef IMAGEM_PPM_HPP
 #define IMAGEM_PPM_HPP
 
-#include "pixel.hpp"
 #include "imagem.hpp"
 #include <iostream>
 #include <string>
@@ -11,7 +10,7 @@
 
 using namespace std;
 
-class ImagemPpm : public Pixel, public Imagem{
+class ImagemPpm : public Imagem{
 private:
 	
 	vector<char> alfabetoDaCifra;
