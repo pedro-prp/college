@@ -30,7 +30,7 @@ void ImagemPpm::lerArquivo(){
 	char comentario,copiaChar;
 	vector<char> copiaVector;
 	vector<unsigned int> pixels;
-	unsigned int i=0;
+	int i;
 
 	ofstream arquivoSaida;
 	arquivoSaida.open("./imagens/jose.ppm",ios::out);
@@ -78,7 +78,8 @@ void ImagemPpm::lerArquivo(){
 void ImagemPpm::separaUltimoNumDaCrip(){
 	char numeroChar;
 	string tamChar;
-	unsigned int i,j;
+	int i;
+	unsigned int j;
 	string redLast,greenLast,blueLast;
 	vector<char> numero;
 	ifstream arquivoDaCripPrim;
