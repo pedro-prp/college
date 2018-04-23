@@ -50,3 +50,7 @@ void Imagem::abrirArquivo(){
 		throw 1;
 	}
 }
+
+//funções que serão descritas diferentes para cada imagem.(Sobrescrita)
+void lerArquivo(){} 
+void descriptografador(){}

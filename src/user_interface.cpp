@@ -47,3 +47,7 @@ void UserInterface::cabecalhoDaMensagem(){
 void UserInterface::cabecalhoDoCaminho(){
 	cout <<"   Caminho do arquivo: ";
 }
+
+void UserInterface::printarErroDeAbertura(){
+	cout << "Ocorreu um erro, o caminho não corresponde a um arquivo existente." << endl << endl;
+}

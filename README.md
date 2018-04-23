@@ -13,4 +13,4 @@ Para utilização do programa é recomendável acesso a um computador provido de
 ### Identificação
 <br/>
 Exercício Prático apresentado na matéria de OO pelo professor Renato Sampaio e produzido inteiramente em **C++**.<br/>
-<br/>**Aluno:** Pedro Rodrigues Pereia - **matrícula:**17/0062686.<br/>
+<br/>**Aluno:** Pedro Rodrigues Pereira - **matrícula:** 17/0062686.<br/>

@@ -64,7 +64,7 @@ void Logic::desejaContinuar(){
 	printarDesejaContinuar();
 	char x;
 	cin >> x;
-	if(x=='S'){
+	if(x=='S' || x=='s'){
 		setDesejaContinuar(1);
 	}
 	else{
@@ -81,7 +81,7 @@ void Logic::setDesejaSair(){
 	printarDecisaoPraSair();
 	char x;
 	cin >> x;
-	if(x=='S'){
+	if(x=='S' || x=='s'){
 		this->desejaSairInt = 1;
 	}
 	else{
@@ -102,7 +102,7 @@ void Logic::aplicacao(){
 			}
 		}
 		catch(int exception){
-			cout << "Ocorreu um erro, o caminho não corresponde a um arquivo existente." << endl << endl;
+			printarErroDeAbertura();
 		}
 	}
 	printarFinalizacao();

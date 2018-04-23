@@ -18,6 +18,7 @@ public:
 	void printarDecisaoPraSair();
 	void cabecalhoDaMensagem();
 	void cabecalhoDoCaminho();
+	void printarErroDeAbertura();
 };
 
 #endif

@@ -22,7 +22,6 @@ public:
 	void desejaContinuar();
 	void setDesejaContinuar(int desejaContinuar);
 	void setDesejaSair();
-
 };
 
 #endif
