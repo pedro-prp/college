@@ -28,7 +28,6 @@ char ImagemPpm::getAlfabetoDaCifra(int i){
 void ImagemPpm::lerArquivo(){
 	string inicioCrip,tamCrip,cifra,tipo,largura,altura,maxCor;
 	char comentario,copiaChar;
-	vector<char> copiaVector;
 	vector<unsigned int> pixels;
 	int i;
 

@@ -22,6 +22,7 @@ void UserInterface::printarMenu(){
 	cout << "|x| 3.Sair                                      |x|" << endl;
 	cout << "|x|_____________________________________________|x|" << endl;
 	cout << "   opção:";
+
 }
 
 void UserInterface::printarFinalizacao(){
