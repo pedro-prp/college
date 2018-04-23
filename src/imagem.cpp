@@ -46,4 +46,7 @@ void Imagem::setCifra(string cifra){
 void Imagem::abrirArquivo(){
 
 	arquivo.open(camArquivo,ios::in);
+	if(!arquivo.is_open()){
+		throw 1;
+	}
 }

@@ -134,8 +134,6 @@ void ImagemPpm::criaVetorDeDescriptografia(){
 		setAlfabetoDaCifra(letraLeitura);
 	}
 
-	cout << endl;
-
 	for(i=1; i<27 ;i++){
 		letra = (i+96);
 
@@ -155,8 +153,6 @@ void ImagemPpm::criaVetorDeDescriptografia(){
 
 	}
 
-	cout << endl;
-
 	arquivoDaCripSec.close();
 
 }
@@ -170,7 +166,6 @@ void ImagemPpm::descriptografar(){
 	string num;
 	char letra;
 	int tamCrip = getTamCrip();
-	cout << endl;
 
 	vector<char> alfabetoComum;
 	alfabetoComum.push_back(' ');
@@ -195,7 +190,7 @@ void ImagemPpm::descriptografar(){
 		}
 
 	}
-	cout << endl;
+	cout << endl << endl;
 
 }
 

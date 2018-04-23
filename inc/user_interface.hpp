@@ -16,6 +16,8 @@ public:
 	void printarErroDeOpcao();
 	void printarDesejaContinuar();
 	void printarDecisaoPraSair();
+	void cabecalhoDaMensagem();
+	void cabecalhoDoCaminho();
 };
 
 #endif

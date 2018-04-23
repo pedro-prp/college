@@ -13,6 +13,8 @@ void Logic::aplicacaoPGM(){
 	jose.setArquivo(pegarCaminhoDaImagem());
 	jose.abrirArquivo();
 	jose.lerArquivo();
+	
+	cabecalhoDaMensagem();
 	jose.descriptografar();
 }
 
@@ -23,12 +25,14 @@ void Logic::aplicacaoPPM(){
 	joao.lerArquivo();
 	joao.separaUltimoNumDaCrip();
 	joao.criaVetorDeDescriptografia();
+
+	cabecalhoDaMensagem();
 	joao.descriptografar();
 }
 
 string Logic::pegarCaminhoDaImagem(){
 	string arquivo;
-	cout <<"   caminho do arquivo:";
+	cabecalhoDoCaminho();
 	cin >> arquivo;
 	return arquivo;
 
@@ -87,14 +91,18 @@ void Logic::setDesejaSair(){
 
 void Logic::aplicacao(){
 	while(desejaContinuarInt==1){
+		try{
+			menu();
 		
-		menu();
-		
-		if(desejaSairInt == 0){
-			desejaContinuar();
+			if(desejaSairInt == 0){
+				desejaContinuar();
+			}
+			else{
+				setDesejaContinuar(0);
+			}
 		}
-		else{
-			setDesejaContinuar(0);
+		catch(int exception){
+			cout << "Ocorreu um erro, o caminho não corresponde a um arquivo existente." << endl << endl;
 		}
 	}
 	printarFinalizacao();

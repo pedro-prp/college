@@ -10,7 +10,7 @@ UserInterface::~UserInterface(){}
 
 void UserInterface::printarBoasVindas(){
 	cout << "|x|---------------------------------------------|x|" << endl;
-	cout << "|x|     Boas Vindas ao meu programa fudido      |x|" << endl;
+	cout << "|x|                Boas Vindas                  |x|" << endl;
 	cout << "|x|---------------------------------------------|x|" << endl;
 }
 
@@ -26,10 +26,10 @@ void UserInterface::printarMenu(){
 }
 
 void UserInterface::printarFinalizacao(){
-	cout << "Tchau Amiguinho" << endl;
+	cout << endl <<"Isso é tudo pessoal." << endl << endl;
 }
 void UserInterface::printarErroDeOpcao(){
-	cout << "Tu errou coleguinha" << endl;
+	cout << "opção inválida" << endl;
 }
 
 void UserInterface::printarDesejaContinuar(){
@@ -38,4 +38,12 @@ void UserInterface::printarDesejaContinuar(){
 
 void UserInterface::printarDecisaoPraSair(){
 	cout << "Deseja mesmo sair?<S/n>";
+}
+
+void UserInterface::cabecalhoDaMensagem(){
+	cout << endl <<"   Mensagem: ";
+}
+
+void UserInterface::cabecalhoDoCaminho(){
+	cout <<"   Caminho do arquivo: ";
 }

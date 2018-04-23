@@ -57,7 +57,6 @@ void ImagemPgm::lerArquivo(){
 		i++;
 		
 	}
-	cout << endl;
 	
 	int j;
 	for(j=getInicioCrip();j<(getInicioCrip()+getTamCrip()); j++){
