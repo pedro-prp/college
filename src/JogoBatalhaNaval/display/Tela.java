@@ -11,7 +11,7 @@ public class Tela {
 	
 	private String titulo;
 	private int largura,altura;
-	
+
 	public Tela(String titulo,int largura,int altura) {
 		this.titulo = titulo;
 		this.largura = largura;
@@ -39,4 +39,6 @@ public class Tela {
 
 		
 	}
+	
+
 }

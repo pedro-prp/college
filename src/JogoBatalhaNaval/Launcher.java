@@ -4,7 +4,7 @@ import JogoBatalhaNaval.display.Tela;
 
 public class Launcher {
 	public static void main(String[] args) {
-		new Jogo("josesaodogame",369,369);
-		
+		Jogo jogo = new Jogo("josesaodogame",369,369);
+		jogo.iniciar();
 	}
 }
