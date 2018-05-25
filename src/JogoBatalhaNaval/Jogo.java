@@ -1,6 +1,12 @@
 package JogoBatalhaNaval;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+
 import JogoBatalhaNaval.display.Tela;
+import JogoBatalhaNaval.grafico.LoadImage;
 
 public class Jogo {
 	
@@ -8,8 +14,14 @@ public class Jogo {
 	private Tela tela;
 	public int largura,altura;
 	String titulo;
+	int i=0;
 	
-	boolean jogoOn = false;
+	private boolean jogoOn = false;
+	
+	private BufferStrategy buffer;
+	private Graphics grafico; 
+	
+	private BufferedImage campo;
 	
 	public Jogo(String titulo,int largura,int altura) {
 		
@@ -21,9 +33,23 @@ public class Jogo {
 	public void rodar() {
 		iniciaObjetos();
 		
+		int fps = 60;
+		double timePerTick = 1000000000 / fps;
+		double delta = 0;
+		long now;
+		long lastTime = System.nanoTime();
+		
 		while(jogoOn) {
-			atualizaTela();
-			desenhaTela();
+			
+			now = System.nanoTime();
+			delta += (now - lastTime) / timePerTick;
+			lastTime = now;
+			
+			if(delta >= 1) {
+				atualiza();
+				desenha();
+				delta--;
+			}
 		}
 		
 		parar();
@@ -46,11 +72,33 @@ public class Jogo {
 	
 	private void iniciaObjetos() {
 		tela = new Tela(titulo,largura,altura);
+		campo = LoadImage.lerImagem("/texturas/fundo.png");
 	}
-	public void atualizaTela() {
+	
+	public void atualiza() {
+		i++;
+	}
+	public void desenha() {
 		
-	}
-	public void desenhaTela() {
+		buffer = tela.getCanvas().getBufferStrategy();
+		if(buffer == null) {
+			tela.getCanvas().createBufferStrategy(3);
+			return;
+		}
+		
+		grafico = buffer.getDrawGraphics();
+		//clean
+		grafico.clearRect(0, 0, largura, altura);
+		//draw
+		grafico.setColor(Color.GRAY);
+		grafico.fillRect(0, 0, largura, altura);
+		
+		grafico.drawImage(campo,20,20, null);
+		
+		//end Draw
+		buffer.show();
+		grafico.dispose();
+		
 		
 	}
 	
