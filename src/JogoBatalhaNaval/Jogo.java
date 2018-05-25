@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 
 import JogoBatalhaNaval.display.Tela;
 import JogoBatalhaNaval.grafico.LoadImage;
+import JogoBatalhaNaval.states.GameState;
+import JogoBatalhaNaval.states.State;
 
 public class Jogo implements Runnable{
 	
@@ -22,7 +24,10 @@ public class Jogo implements Runnable{
 	private BufferStrategy buffer;
 	private Graphics grafico; 
 	
-	private BufferedImage campo;
+	//private BufferedImage campo;
+	
+	//states
+	private State gameState;
 	
 	public Jogo(String titulo,int largura,int altura) {
 		
@@ -30,6 +35,15 @@ public class Jogo implements Runnable{
 		this.altura = altura;
 		this.titulo = titulo;
 	}
+	
+	private void iniciaObjetos() {
+		tela = new Tela(titulo,largura,altura);
+		//campo = LoadImage.lerImagem("/texturas/fundo.png");
+		
+		gameState = new GameState();
+		State.setState(gameState);
+	}
+	
 	
 	public void run() {
 		iniciaObjetos();
@@ -75,15 +89,10 @@ public class Jogo implements Runnable{
 			e.printStackTrace();
 		}
 	}
-	
-	
-	private void iniciaObjetos() {
-		tela = new Tela(titulo,largura,altura);
-		campo = LoadImage.lerImagem("/texturas/fundo.png");
-	}
-	
 	public void atualiza() {
-		i++;
+		if(State.getCurrentState() != null) {
+			State.getCurrentState().atualiza();
+		}
 	}
 	public void desenha() {
 		
@@ -96,15 +105,19 @@ public class Jogo implements Runnable{
 		grafico = buffer.getDrawGraphics();
 		//clean
 		grafico.clearRect(0, 0, largura, altura);
+		
+		if(State.getCurrentState() != null) {
+			State.getCurrentState().desenha(grafico);
+		}
+		
+		
 		//draw
-		grafico.setColor(Color.GRAY);
-		grafico.fillRect(0, 0, largura, altura);
-		
-		
-		grafico.setColor(Color.red);
-		grafico.fillRect(i, i, 20, 20);
-		grafico.fillRect(200, 100, 400, 400);
-		grafico.drawImage(campo,200,100, null);
+		//grafico.setColor(Color.GRAY);
+		//grafico.fillRect(0, 0, largura, altura);
+		//grafico.setColor(Color.red);
+		//grafico.fillRect(i, i, 20, 20);
+		//grafico.fillRect(200, 100, 400, 400);
+		//grafico.drawImage(campo,200,100, null);
 		
 		//end Draw
 		buffer.show();
