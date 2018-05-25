@@ -1,3 +1,4 @@
->DS_Store
+bin
+.DS_Store
 src/.DS_Store
 src/JogoBatalhaNaval/.DS_Store
