@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import JogoBatalhaNaval.display.Tela;
 import JogoBatalhaNaval.grafico.LoadImage;
 
-public class Jogo {
+public class Jogo implements Runnable{
 	
 	
 	private Tela tela;
@@ -17,6 +17,7 @@ public class Jogo {
 	int i=0;
 	
 	private boolean jogoOn = false;
+	private Thread thread;
 	
 	private BufferStrategy buffer;
 	private Graphics grafico; 
@@ -30,7 +31,7 @@ public class Jogo {
 		this.titulo = titulo;
 	}
 	
-	public void rodar() {
+	public void run() {
 		iniciaObjetos();
 		
 		int fps = 60;
@@ -52,21 +53,27 @@ public class Jogo {
 			}
 		}
 		
-		parar();
+		stop();
 	}
 	
-	public synchronized void iniciar() {
+	public synchronized void start() {
 		if(jogoOn) {
 			return;
 		}
 		jogoOn = true;
-		rodar();
+		thread = new Thread(this);
+		thread.start();
 	}
-	public synchronized void parar() {
+	public synchronized void stop() {
 		if(!jogoOn) {
 			return;
 		}
 		jogoOn=false;
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -93,7 +100,11 @@ public class Jogo {
 		grafico.setColor(Color.GRAY);
 		grafico.fillRect(0, 0, largura, altura);
 		
-		grafico.drawImage(campo,20,20, null);
+		
+		grafico.setColor(Color.red);
+		grafico.fillRect(i, i, 20, 20);
+		grafico.fillRect(200, 100, 400, 400);
+		grafico.drawImage(campo,200,100, null);
 		
 		//end Draw
 		buffer.show();
