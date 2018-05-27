@@ -37,12 +37,14 @@ public class Jogo implements Runnable{
 		gameState = new GameState();
 		State.setState(gameState);
 		Assets.init();
+		LoadMap.LerMapa("biblioteca/mapas/map_1.txt");
 	}
 	
 	
 	public void run() {
 		iniciaObjetos();
 		
+		//limitador de frames por segundo
 		int fps = 60;
 		double timePerTick = 1000000000 / fps;
 		double delta = 0;
