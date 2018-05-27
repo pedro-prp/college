@@ -35,8 +35,8 @@ public class Jogo implements Runnable{
 		Assets.init();
 		
 		LoadMap.LerMapa("biblioteca/mapas/map_1.txt");
-		largura = (Integer.parseInt(LoadMap.largura)*52)+300;
-		altura = (Integer.parseInt(LoadMap.altura)*52)+100;
+		largura = (Integer.parseInt(LoadMap.largura)*52)+250;
+		altura = (Integer.parseInt(LoadMap.altura)*52)+50;
 		
 		tela = new Tela(titulo,largura,altura);
 	}
