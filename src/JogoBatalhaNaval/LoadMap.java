@@ -29,8 +29,6 @@ public class LoadMap {
 				
 				lixo = lerArquivo.readLine();
 				
-				
-				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

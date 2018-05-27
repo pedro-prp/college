@@ -24,20 +24,22 @@ public class Jogo implements Runnable{
 	//states
 	private State gameState;
 	
-	public Jogo(String titulo,int largura,int altura) {
-		
-		this.largura = largura;
-		this.altura = altura;
+	public Jogo(String titulo) {
 		this.titulo = titulo;
 	}
 	
 	private void iniciaObjetos() {
-		tela = new Tela(titulo,largura,altura);
 		
 		gameState = new GameState();
 		State.setState(gameState);
 		Assets.init();
-		LoadMap.LerMapa("biblioteca/mapas/map_1.txt");
+		LoadMap.LerMapa("biblioteca/mapas/map_4.txt");
+		System.out.println(Integer.parseInt(LoadMap.largura));
+		
+		largura = (Integer.parseInt(LoadMap.largura)*52)+300;
+		altura = (Integer.parseInt(LoadMap.altura)*52)+100;
+		
+		tela = new Tela(titulo,largura,altura);
 	}
 	
 	
