@@ -35,15 +35,14 @@ public class GameState extends State{
 			boolean divisao = true;
 			int n=1;
 			while(divisao) {
-				if((500%(a-n)==0) && (500%(b-n)==0)) {
+				if((500%(a+n)==0) && (500%(b+n)==0)) {
+					tamX=500/(a+n);
+					tamY=500/(b+n);
 					divisao = false;
-					n++;
 				}
+				n++;
 			}
 		}
-		
-		//System.out.println(a);
-		//System.out.println(b);
 		
 		while(i< a) {
 			while(j< b) {
@@ -57,6 +56,6 @@ public class GameState extends State{
 			x+=tamX;
 		}
 		
-		//grafico.fillRect(0, 0, 400, 400);
+		//grafico.fillRect(50, 50, 500, 500);
 	}
 }

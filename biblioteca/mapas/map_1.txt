@@ -1,5 +1,5 @@
 # width height
-20 20
+10 10
 
 # matrix
 0000000001
