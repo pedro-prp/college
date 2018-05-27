@@ -33,9 +33,8 @@ public class Jogo implements Runnable{
 		gameState = new GameState();
 		State.setState(gameState);
 		Assets.init();
-		LoadMap.LerMapa("biblioteca/mapas/map_4.txt");
-		System.out.println(Integer.parseInt(LoadMap.largura));
 		
+		LoadMap.LerMapa("biblioteca/mapas/map_1.txt");
 		largura = (Integer.parseInt(LoadMap.largura)*52)+300;
 		altura = (Integer.parseInt(LoadMap.altura)*52)+100;
 		
@@ -46,23 +45,14 @@ public class Jogo implements Runnable{
 	public void run() {
 		iniciaObjetos();
 		
-		//limitador de frames por segundo
-		int fps = 60;
-		double timePerTick = 1000000000 / fps;
-		double delta = 0;
-		long now;
-		long lastTime = System.nanoTime();
-		
 		while(jogoOn) {
 			
-			now = System.nanoTime();
-			delta += (now - lastTime) / timePerTick;
-			lastTime = now;
+			Fps.calculaFps();
 			
-			if(delta >= 1) {
+			if(Fps.delta >= 1) {
 				atualiza();
 				desenha();
-				delta--;
+				Fps.delta--;
 			}
 		}
 		
