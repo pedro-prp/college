@@ -2,8 +2,11 @@ package JogoBatalhaNaval;
 
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+
+import JogoBatalhaNaval.Check.MatrixCampo;
 import JogoBatalhaNaval.display.Tela;
 import JogoBatalhaNaval.grafico.Assets;
+import JogoBatalhaNaval.grafico.Fps;
 import JogoBatalhaNaval.states.GameState;
 import JogoBatalhaNaval.states.State;
 
@@ -35,6 +38,8 @@ public class Jogo implements Runnable{
 		Assets.init();
 		
 		LoadMap.LerMapa("biblioteca/mapas/map_1.txt");
+		MatrixCampo.InitCampoMatrix();
+		
 		largura = (Integer.parseInt(LoadMap.largura)*52)+250;
 		altura = (Integer.parseInt(LoadMap.altura)*52)+50;
 		

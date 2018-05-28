@@ -1,4 +1,4 @@
-package JogoBatalhaNaval;
+package JogoBatalhaNaval.grafico;
 
 public class Fps {
 		public static int fps=60;

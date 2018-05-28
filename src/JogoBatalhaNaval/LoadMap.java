@@ -10,9 +10,7 @@ public class LoadMap {
 	public static String lixo="",leitura="";
 	public static String largura;
 	public static String altura;
-	public static String[][] matrix = new String[50][50];
-	public static int matrixInt[][];
-	
+	public static String[][] matrix = new String[15][15];	
 	private static BufferedReader lerArquivo;
 	
 	
