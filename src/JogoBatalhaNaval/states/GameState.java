@@ -17,16 +17,24 @@ public class GameState extends State{
 	public void atualiza() {
 		//x++;
 		//y++;
-		if(Jogo.getMouse().getBotao()==true) {
+		if(Jogo.getMouse().getBotao()) {
 			System.out.println(Jogo.getMouse().getX() + " " + Jogo.getMouse().getY());
 			int tam=52;
 			int i=(((Jogo.getMouse().getX()-25)/tam));
 			int	j=(((Jogo.getMouse().getY()-25)/tam));
 			
 			System.out.println(i);
+			
+			boolean quadradoPossivel = (i<Jogo.getAltura() && j<Jogo.getLargura());
+			boolean mouseXYNaoNegativo = ((Jogo.getMouse().getX()-25) > 0) && (Jogo.getMouse().getY()-25 > 0);
+			
+			boolean mouseNoCampo = quadradoPossivel && mouseXYNaoNegativo;
+			
+			if(mouseNoCampo) {
 		
-			if(MatrixCampo.getMatrixBoolean(j,i)) {
+				//if(MatrixCampo.getMatrixBoolean(j,i)) {
 					MatrixCampo.setMatrixBooleanPress(j, i);
+				//}
 			}
 		}
 		

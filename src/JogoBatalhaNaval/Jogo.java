@@ -15,7 +15,8 @@ public class Jogo implements Runnable{
 	
 	
 	private Tela tela;
-	public int largura,altura;
+	private static int largura;
+	private static int altura;
 	String titulo;
 	int i=0;
 	
@@ -37,7 +38,7 @@ public class Jogo implements Runnable{
 	
 	private void iniciaObjetos() {
 		Assets.init();
-		LoadMap.LerMapa("biblioteca/mapas/map_1.txt");
+		LoadMap.LerMapa("biblioteca/mapas/map_4.txt");
 		MatrixCampo.InitCampoMatrix();
 		
 		largura = (Integer.parseInt(LoadMap.largura)*52)+250;
@@ -119,8 +120,15 @@ public class Jogo implements Runnable{
 		grafico.dispose();
 	}
 	
+	//gets
 	public static Mouse getMouse() {
 		return mouseInput;
+	}
+	public static int getLargura() {
+		return largura;
+	}
+	public static int getAltura() {
+		return altura;
 	}
 	
 }
