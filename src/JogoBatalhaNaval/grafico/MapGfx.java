@@ -10,7 +10,7 @@ public class MapGfx {
 	public static void desenhaMap(Graphics grafico) {
 
 		int i = 0,j=0;
-		int tam=52;
+		int tam=47;
 		int a = Integer.parseInt(LoadMap.largura),
 			b = Integer.parseInt(LoadMap.altura);
 		int x=25,y=25;
@@ -20,13 +20,13 @@ public class MapGfx {
 				if(MatrixCampo.getMatrixBooleanPress(j,i)) {
 					if(MatrixCampo.getMatrixBoolean(j, i)) {
 						int barco = MatrixCampo.getMatrixInt(j, i);
-						grafico.drawImage(Assets.barcos[barco],x,y,null);
+						grafico.drawImage(Assets.barcos[barco],x,y,tam,tam,null);
 					}else {
-						grafico.drawImage(Assets.campoF,x,y,null);
+						grafico.drawImage(Assets.campoF,x,y,tam,tam,null);
 					}
 				
 				}else {
-					grafico.drawImage(Assets.campo, x, y,null);
+					grafico.drawImage(Assets.campo, x, y,tam,tam,null);
 				}
 				j++;
 				y+=tam;

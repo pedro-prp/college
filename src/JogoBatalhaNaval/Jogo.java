@@ -15,7 +15,8 @@ import JogoBatalhaNaval.states.State;
 public class Jogo implements Runnable{
 	
 	
-	private Tela tela;
+	private static  Tela tela;
+	private static Tela jogoTela;
 	private static int largura;
 	private static int altura;
 	String titulo;
@@ -43,10 +44,7 @@ public class Jogo implements Runnable{
 		LoadMap.LerMapa("biblioteca/mapas/map_1.txt");
 		MatrixCampo.InitCampoMatrix();
 		
-		largura = (Integer.parseInt(LoadMap.largura)*52)+250;
-		altura = (Integer.parseInt(LoadMap.altura)*52)+50;
-		
-		tela = new Tela(titulo,largura,altura);
+		tela = new Tela(titulo,955,755);
 		tela.getFrame().addMouseListener(mouseInput);
 		tela.getFrame().addMouseMotionListener(mouseInput);
 		tela.getCanvas().addMouseListener(mouseInput);
@@ -133,8 +131,18 @@ public class Jogo implements Runnable{
 	public static int getAltura() {
 		return altura;
 	}
+	public static int getLarguraCampo() {
+		return ((Integer.parseInt(LoadMap.largura))*47);
+	}
+	public static int getAlturaCampo() {
+		return ((Integer.parseInt(LoadMap.altura))*47);
+	}
+	
 	public static State getGameState(){
 		return gameState;
+	}
+	public static Tela getGameTela() {
+		return jogoTela;
 	}
 	
 }
