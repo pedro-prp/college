@@ -3,8 +3,6 @@ package JogoBatalhaNaval.states;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import JogoBatalhaNaval.Jogo;
-import JogoBatalhaNaval.Linkador;
 import JogoBatalhaNaval.LoadMap;
 import JogoBatalhaNaval.grafico.MapGfx;
 
@@ -12,16 +10,14 @@ public class GameState extends State{
 	
 	private int x=0,y=0;
 	
-	public GameState(Linkador link) {
-		super(link);
+	public GameState() {
+		
 	}
 
 	@Override
 	public void atualiza() {
 		x++;
 		y++;
-		
-		System.out.println(Linkador.getMouse().getX() + " " + Linkador.getMouse().getY());
 		
 	}
 

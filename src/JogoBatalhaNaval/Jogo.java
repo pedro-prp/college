@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import JogoBatalhaNaval.Check.MatrixCampo;
-import JogoBatalhaNaval.Check.Mouse;
 import JogoBatalhaNaval.display.Tela;
 import JogoBatalhaNaval.grafico.Assets;
 import JogoBatalhaNaval.grafico.Fps;
@@ -25,39 +24,26 @@ public class Jogo implements Runnable{
 	private BufferStrategy buffer;
 	private Graphics grafico; 
 	
-	//Input
-	private Mouse mouseInput;
-	
-	//Linker
-	private Linkador linkador;
-	
 	//states
 	private State gameState;
 	
 	public Jogo(String titulo) {
 		this.titulo = titulo;
-		mouseInput = new Mouse();
 	}
 	
 	private void iniciaObjetos() {
-		State.setState(gameState);
-		Assets.init();
 		
 		LoadMap.LerMapa("biblioteca/mapas/map_1.txt");
 		MatrixCampo.InitCampoMatrix();
-		
-		linkador = new Linkador(this);
-		
-		gameState = new GameState(linkador);
 		
 		largura = (Integer.parseInt(LoadMap.largura)*52)+250;
 		altura = (Integer.parseInt(LoadMap.altura)*52)+50;
 		
 		tela = new Tela(titulo,largura,altura);
-		tela.getFrame().addMouseListener(mouseInput);
-		tela.getFrame().addMouseMotionListener(mouseInput);
-		tela.getCanvas().addMouseListener(mouseInput);
-		tela.getCanvas().addMouseMotionListener(mouseInput);
+		
+		gameState = new GameState();
+		State.setState(gameState);
+		Assets.init();
 	}
 	
 	
@@ -77,7 +63,6 @@ public class Jogo implements Runnable{
 		
 		stop();
 	}
-	
 	public synchronized void start() {
 		if(jogoOn) {
 			return;
@@ -97,6 +82,9 @@ public class Jogo implements Runnable{
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
 	public void atualiza() {
 		if(State.getCurrentState() != null) {
 			State.getCurrentState().atualiza();
@@ -111,22 +99,17 @@ public class Jogo implements Runnable{
 		}
 		
 		grafico = buffer.getDrawGraphics();
-		//clean
+		//Clear
 		grafico.clearRect(0, 0, largura, altura);
 		
+		//Draw do State atual
 		if(State.getCurrentState() != null) {
 			State.getCurrentState().desenha(grafico);
 		}
 		
+		//visibilidade
 		buffer.show();
 		grafico.dispose();
-		
-	}
-	
-
-	public Mouse getMouse() {
-		return mouseInput;
 	}
 	
 }
-
