@@ -20,6 +20,10 @@ public class Tela {
 		criarTela();
 	}
 	
+	public JFrame getFrame() {
+		return frame;
+	}
+	
 	private void criarTela() {
 		frame = new JFrame(titulo);
 		

@@ -20,17 +20,17 @@ public class MatrixCampo {
 			while(y < Integer.parseInt(LoadMap.largura)) {
 				
 				if(Integer.parseInt(LoadMap.matrix[x][y])!=0) {
-					System.out.print("T");
+					//System.out.print("T");
 					matrixBoolean[x][y] = true;
 				}else {
-					System.out.print("F");
+					//System.out.print("F");
 					matrixBoolean[x][y] = false;
 				}
 				y++;
 			}
 			x++;
 			y=0;
-			System.out.println("");
+			//System.out.println("");
 		}
 	}
 	
