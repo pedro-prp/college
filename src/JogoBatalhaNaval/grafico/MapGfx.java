@@ -18,7 +18,13 @@ public class MapGfx {
 		while(i< a) {
 			while(j< b) {
 				if(MatrixCampo.getMatrixBooleanPress(j,i)) {
-					grafico.drawImage(Assets.campoV,x,y,null);
+					if(MatrixCampo.getMatrixBoolean(j, i)) {
+						int barco = MatrixCampo.getMatrixInt(j, i);
+						grafico.drawImage(Assets.barcos[barco],x,y,null);
+					}else {
+						grafico.drawImage(Assets.campoF,x,y,null);
+					}
+				
 				}else {
 					grafico.drawImage(Assets.campo, x, y,null);
 				}

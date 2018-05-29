@@ -9,14 +9,16 @@ import JogoBatalhaNaval.grafico.MapGfx;
 import JogoBatalhaNaval.Jogo;
 
 public class GameState extends State{	
+	int x=0;
+	int y=0;
 	public GameState() {
 		
 	}
 
 	@Override
 	public void atualiza() {
-		//x++;
-		//y++;
+		x++;
+		y++;
 		if(Jogo.getMouse().getBotao()) {
 			System.out.println(Jogo.getMouse().getX() + " " + Jogo.getMouse().getY());
 			int tam=52;
@@ -34,7 +36,7 @@ public class GameState extends State{
 		
 				//if(MatrixCampo.getMatrixBoolean(j,i)) {
 					MatrixCampo.setMatrixBooleanPress(j, i);
-				//}
+			
 			}
 		}
 		
@@ -49,6 +51,6 @@ public class GameState extends State{
 		grafico.fillRect(20,20,(Integer.parseInt(LoadMap.largura)*52)+10,(Integer.parseInt(LoadMap.altura)*52)+10);
 		grafico.setColor(Color.black);
 		MapGfx.desenhaMap(grafico);
-		//grafico.fillRect(x, y, 20, 20);
+		grafico.fillRect(x, y, 20, 20);
 	}
 }

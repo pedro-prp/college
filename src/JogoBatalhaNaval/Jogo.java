@@ -9,6 +9,7 @@ import JogoBatalhaNaval.display.Tela;
 import JogoBatalhaNaval.grafico.Assets;
 import JogoBatalhaNaval.grafico.Fps;
 import JogoBatalhaNaval.states.GameState;
+import JogoBatalhaNaval.states.MenuState;
 import JogoBatalhaNaval.states.State;
 
 public class Jogo implements Runnable{
@@ -20,8 +21,8 @@ public class Jogo implements Runnable{
 	String titulo;
 	int i=0;
 	
-	private boolean jogoOn = false;
-	private Thread thread;
+	private static boolean jogoOn = false;
+	private static Thread thread;
 	
 	private BufferStrategy buffer;
 	private Graphics grafico;
@@ -29,7 +30,8 @@ public class Jogo implements Runnable{
 	private static Mouse mouseInput;
 	
 	//states
-	private State gameState;
+	private static State gameState;
+	private State menuState;
 	
 	public Jogo(String titulo) {
 		this.titulo = titulo;
@@ -38,7 +40,7 @@ public class Jogo implements Runnable{
 	
 	private void iniciaObjetos() {
 		Assets.init();
-		LoadMap.LerMapa("biblioteca/mapas/map_4.txt");
+		LoadMap.LerMapa("biblioteca/mapas/map_1.txt");
 		MatrixCampo.InitCampoMatrix();
 		
 		largura = (Integer.parseInt(LoadMap.largura)*52)+250;
@@ -51,7 +53,8 @@ public class Jogo implements Runnable{
 		tela.getCanvas().addMouseMotionListener(mouseInput);
 		
 		gameState = new GameState();
-		State.setState(gameState);
+		menuState = new MenuState();
+		State.setState(menuState);
 	}
 	
 	
@@ -79,7 +82,7 @@ public class Jogo implements Runnable{
 		thread = new Thread(this);
 		thread.start();
 	}
-	public synchronized void stop() {
+	public static synchronized void stop() {
 		if(!jogoOn) {
 			return;
 		}
@@ -129,6 +132,9 @@ public class Jogo implements Runnable{
 	}
 	public static int getAltura() {
 		return altura;
+	}
+	public static State getGameState(){
+		return gameState;
 	}
 	
 }
