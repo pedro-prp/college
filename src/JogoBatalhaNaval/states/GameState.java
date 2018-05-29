@@ -25,9 +25,9 @@ public class GameState extends State{
 			
 			System.out.println(i);
 		
-			//if(MatrixCampo.getMatrixBoolean(j,i)) {
+			if(MatrixCampo.getMatrixBoolean(j,i)) {
 					MatrixCampo.setMatrixBooleanPress(j, i);
-			//}
+			}
 		}
 		
 	}
