@@ -3,6 +3,7 @@ package JogoBatalhaNaval.grafico;
 import java.awt.Graphics;
 
 import JogoBatalhaNaval.LoadMap;
+import JogoBatalhaNaval.Check.MatrixCampo;
 
 public class MapGfx {
 	
@@ -16,7 +17,11 @@ public class MapGfx {
 		
 		while(i< a) {
 			while(j< b) {
-				grafico.drawImage(Assets.campo, x, y,null);
+				if(MatrixCampo.getMatrixBoolean(j,i)) {
+					grafico.drawImage(Assets.campoV,x,y,null);
+				}else {
+					grafico.drawImage(Assets.campoF, x, y,null);
+				}
 				j++;
 				y+=tam;
 			}

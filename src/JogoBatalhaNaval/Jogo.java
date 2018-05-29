@@ -32,7 +32,7 @@ public class Jogo implements Runnable{
 	}
 	
 	private void iniciaObjetos() {
-		
+		Assets.init();
 		LoadMap.LerMapa("biblioteca/mapas/map_1.txt");
 		MatrixCampo.InitCampoMatrix();
 		
@@ -43,7 +43,6 @@ public class Jogo implements Runnable{
 		
 		gameState = new GameState();
 		State.setState(gameState);
-		Assets.init();
 	}
 	
 	

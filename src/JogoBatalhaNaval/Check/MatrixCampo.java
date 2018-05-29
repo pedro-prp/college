@@ -12,6 +12,10 @@ public class MatrixCampo {
 		matrixStringToBoolean();
 	}
 	
+	public static boolean getMatrixBoolean(int x,int y) {
+		return matrixBoolean[x][y];
+	}
+	
 	public static void matrixStringToBoolean() {
 		System.out.println("");
 		int x=0,y=0;
