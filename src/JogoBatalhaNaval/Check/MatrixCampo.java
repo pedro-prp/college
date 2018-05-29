@@ -5,6 +5,7 @@ import JogoBatalhaNaval.LoadMap;
 public class MatrixCampo {
 	
 	public static boolean[][] matrixBoolean = new boolean[15][15];
+	public static boolean[][] matrixBooleanPress = new boolean[15][15];
 	public static int[][] matrixInt = new int[15][15];
 	
 	public static void InitCampoMatrix() {
@@ -14,6 +15,17 @@ public class MatrixCampo {
 	
 	public static boolean getMatrixBoolean(int x,int y) {
 		return matrixBoolean[x][y];
+	}
+	
+	public static void setMatrixBooleanPress(int x,int y) {
+		matrixBooleanPress[x][y] = true;
+	}
+	public static boolean getMatrixBooleanPress(int x,int y) {
+		return matrixBooleanPress[x][y];
+	}
+	
+	public static int getMatrixInt(int x,int y) {
+		return matrixInt[x][y];
 	}
 	
 	public static void matrixStringToBoolean() {

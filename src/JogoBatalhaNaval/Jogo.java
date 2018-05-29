@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import JogoBatalhaNaval.Check.MatrixCampo;
+import JogoBatalhaNaval.Check.Mouse;
 import JogoBatalhaNaval.display.Tela;
 import JogoBatalhaNaval.grafico.Assets;
 import JogoBatalhaNaval.grafico.Fps;
@@ -22,13 +23,16 @@ public class Jogo implements Runnable{
 	private Thread thread;
 	
 	private BufferStrategy buffer;
-	private Graphics grafico; 
+	private Graphics grafico;
+	//Input
+	private static Mouse mouseInput;
 	
 	//states
 	private State gameState;
 	
 	public Jogo(String titulo) {
 		this.titulo = titulo;
+		mouseInput = new Mouse();
 	}
 	
 	private void iniciaObjetos() {
@@ -40,6 +44,10 @@ public class Jogo implements Runnable{
 		altura = (Integer.parseInt(LoadMap.altura)*52)+50;
 		
 		tela = new Tela(titulo,largura,altura);
+		tela.getFrame().addMouseListener(mouseInput);
+		tela.getFrame().addMouseMotionListener(mouseInput);
+		tela.getCanvas().addMouseListener(mouseInput);
+		tela.getCanvas().addMouseMotionListener(mouseInput);
 		
 		gameState = new GameState();
 		State.setState(gameState);
@@ -109,6 +117,10 @@ public class Jogo implements Runnable{
 		//visibilidade
 		buffer.show();
 		grafico.dispose();
+	}
+	
+	public static Mouse getMouse() {
+		return mouseInput;
 	}
 	
 }

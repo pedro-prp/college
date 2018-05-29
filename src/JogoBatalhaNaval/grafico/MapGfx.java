@@ -17,10 +17,10 @@ public class MapGfx {
 		
 		while(i< a) {
 			while(j< b) {
-				if(MatrixCampo.getMatrixBoolean(j,i)) {
+				if(MatrixCampo.getMatrixBooleanPress(j,i)) {
 					grafico.drawImage(Assets.campoV,x,y,null);
 				}else {
-					grafico.drawImage(Assets.campoF, x, y,null);
+					grafico.drawImage(Assets.campo, x, y,null);
 				}
 				j++;
 				y+=tam;
