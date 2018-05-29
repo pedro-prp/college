@@ -41,12 +41,10 @@ public class MatrixCampo {
 		while(x<Integer.parseInt(LoadMap.altura)) {
 			while(y < Integer.parseInt(LoadMap.largura)) {
 				matrixInt[x][y] = Integer.parseInt(LoadMap.matrix[x][y]);
-				System.out.print(matrixInt[x][y]);
 				y++;
 			}
 			x++;
 			y=0;
-			System.out.println("");
 		}
 	}
 }

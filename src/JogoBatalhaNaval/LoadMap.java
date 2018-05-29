@@ -58,14 +58,12 @@ public class LoadMap {
 				matrix[x][y]=leitura.substring(a,b);
 				a++;
 				b++;
-				System.out.print(matrix[x][y]);
 				y++;
 			}
 			x++;
 			y=0;
 			a=0;
 			b=1;
-			System.out.println("");
 		}
 	}
 }
