@@ -23,6 +23,7 @@ public class GameState extends State{
 
 	@Override
 	public void atualiza() {
+		
 		x++;
 		y++;
 		if(Jogo.getMouse().getBotao()) {
