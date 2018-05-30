@@ -3,7 +3,6 @@ package JogoBatalhaNaval.states;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import JogoBatalhaNaval.LoadMap;
 import JogoBatalhaNaval.Check.MatrixCampo;
 import JogoBatalhaNaval.grafico.MapGfx;
 import JogoBatalhaNaval.Jogo;
@@ -29,16 +28,17 @@ public class GameState extends State{
 			int	j=(((Jogo.getMouse().getY()-MapGfx.deltaY)/tam));
 			System.out.println("flag 1");
 			
-			System.out.println(i);
+			//System.out.println(i);
 			
-			boolean quadradoPossivel = (i<Jogo.getAlturaCampo() && j<Jogo.getLarguraCampo());
+			boolean quadradoPossivel = (i<(Jogo.getAlturaCampo()/46) && j<(Jogo.getLarguraCampo()/46));
 			boolean mouseXYNaoNegativo = ((Jogo.getMouse().getX()-MapGfx.deltaX) > 0) && ((Jogo.getMouse().getY()-MapGfx.deltaY) > 0);
+			
+			System.out.println("Flag 2");
 			
 			boolean mouseNoCampo = quadradoPossivel && mouseXYNaoNegativo;
 			
 			if(mouseNoCampo) {
-		
-				//if(MatrixCampo.getMatrixBoolean(j,i)) {
+				
 					MatrixCampo.setMatrixBooleanPress(j, i);
 			
 			}
@@ -50,13 +50,14 @@ public class GameState extends State{
 	public void desenha(Graphics grafico) {
 		
 		grafico.setColor(Color.BLACK);
-		
-		
-		grafico.setColor(Color.DARK_GRAY);
 		grafico.fillRect(0, 0, 754, 754);
 		
+		grafico.setColor(Color.DARK_GRAY);
+		grafico.fillRect(2, 2, 750, 750);
+		
 		grafico.setColor(Color.BLACK);
-		grafico.fillRect(MapGfx.deltaX-5,MapGfx.deltaY-5,Jogo.getLarguraCampo()+10,Jogo.getAlturaCampo()+10);
+		//System.out.println(MapGfx.deltaX);
+		grafico.fillRect(((MapGfx.deltaX)-5),((MapGfx.deltaY)-5),Jogo.getLarguraCampo()+10,Jogo.getAlturaCampo()+10);
 		//grafico.setColor(Color.black);
 		MapGfx.desenhaMap(grafico);
 		//grafico.fillRect(x, y, 20, 20);

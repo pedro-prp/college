@@ -41,7 +41,7 @@ public class Jogo implements Runnable{
 	
 	private void iniciaObjetos() {
 		Assets.init();
-		LoadMap.LerMapa("biblioteca/mapas/map_3.txt");
+		LoadMap.LerMapa("biblioteca/mapas/map_1.txt");
 		MatrixCampo.InitCampoMatrix();
 		
 		tela = new Tela(titulo,955,754);

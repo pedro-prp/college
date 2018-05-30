@@ -14,7 +14,7 @@ public class MapGfx {
 	public static void desenhaMap(Graphics grafico) {
 
 		int i = 0,j=0;
-		int tam=47;
+		int tam=46;
 		int a = Integer.parseInt(LoadMap.largura),
 			b = Integer.parseInt(LoadMap.altura);
 		
