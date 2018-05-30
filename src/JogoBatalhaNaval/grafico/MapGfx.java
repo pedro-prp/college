@@ -2,10 +2,14 @@ package JogoBatalhaNaval.grafico;
 
 import java.awt.Graphics;
 
+import JogoBatalhaNaval.Jogo;
 import JogoBatalhaNaval.LoadMap;
 import JogoBatalhaNaval.Check.MatrixCampo;
 
 public class MapGfx {
+	
+	public static int deltaX=(754/2)-(Jogo.getLarguraCampo()/2);
+	public static int deltaY=(754/2)-(Jogo.getAlturaCampo()/2);
 	
 	public static void desenhaMap(Graphics grafico) {
 
@@ -13,7 +17,11 @@ public class MapGfx {
 		int tam=47;
 		int a = Integer.parseInt(LoadMap.largura),
 			b = Integer.parseInt(LoadMap.altura);
-		int x=25,y=25;
+		
+		int x = deltaX,
+			y = deltaY;
+		
+		
 		
 		while(i< a) {
 			while(j< b) {
@@ -32,7 +40,7 @@ public class MapGfx {
 				y+=tam;
 			}
 			j=0;
-			y=25;
+			y=deltaY;
 			i++;
 			x+=tam;
 		}

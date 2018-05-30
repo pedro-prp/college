@@ -41,10 +41,10 @@ public class Jogo implements Runnable{
 	
 	private void iniciaObjetos() {
 		Assets.init();
-		LoadMap.LerMapa("biblioteca/mapas/map_1.txt");
+		LoadMap.LerMapa("biblioteca/mapas/map_3.txt");
 		MatrixCampo.InitCampoMatrix();
 		
-		tela = new Tela(titulo,955,755);
+		tela = new Tela(titulo,955,754);
 		tela.getFrame().addMouseListener(mouseInput);
 		tela.getFrame().addMouseMotionListener(mouseInput);
 		tela.getCanvas().addMouseListener(mouseInput);
@@ -132,10 +132,10 @@ public class Jogo implements Runnable{
 		return altura;
 	}
 	public static int getLarguraCampo() {
-		return ((Integer.parseInt(LoadMap.largura))*47);
+		return ((Integer.parseInt(LoadMap.largura))*46);
 	}
 	public static int getAlturaCampo() {
-		return ((Integer.parseInt(LoadMap.altura))*47);
+		return ((Integer.parseInt(LoadMap.altura))*46);
 	}
 	
 	public static State getGameState(){
