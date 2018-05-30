@@ -2,7 +2,6 @@ package JogoBatalhaNaval;
 
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-
 import JogoBatalhaNaval.Check.MatrixCampo;
 import JogoBatalhaNaval.Check.Mouse;
 import JogoBatalhaNaval.display.Tela;
@@ -20,6 +19,7 @@ public class Jogo implements Runnable{
 	private static int largura;
 	private static int altura;
 	String titulo;
+	public static String path;
 	int i=0;
 	
 	private static boolean jogoOn = false;
@@ -41,7 +41,7 @@ public class Jogo implements Runnable{
 	
 	private void iniciaObjetos() {
 		Assets.init();
-		LoadMap.LerMapa("biblioteca/mapas/map_1.txt");
+		LoadMap.LerMapa(path);
 		MatrixCampo.InitCampoMatrix();
 		
 		tela = new Tela(titulo,955,754);
@@ -144,5 +144,8 @@ public class Jogo implements Runnable{
 	public static Tela getGameTela() {
 		return jogoTela;
 	}
+	//public static void setPath(String path) {
+	//	this.path = path;
+	//}
 	
 }

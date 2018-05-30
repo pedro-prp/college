@@ -2,7 +2,11 @@ package JogoBatalhaNaval.states;
 
 import java.awt.Graphics;
 
+import javax.swing.JFileChooser;
+
 import JogoBatalhaNaval.Jogo;
+import JogoBatalhaNaval.LoadMap;
+import JogoBatalhaNaval.Check.MatrixCampo;
 
 public class MenuState extends State{
 
@@ -12,6 +16,10 @@ public class MenuState extends State{
 	
 	@Override
 	public void atualiza() {
+		//JFileChooser fc = new JFileChooser();
+		//fc.setDialogTitle("jose");
+		//int resposta = fc.showOpenDialog(null);
+		
 		if(Jogo.getMouse().getBotao()) {
 			State.setState(Jogo.getGameState());
 			//Thread.currentThread();
