@@ -8,6 +8,7 @@ import JogoBatalhaNaval.Check.Botao;
 import JogoBatalhaNaval.grafico.Assets;
 import JogoBatalhaNaval.grafico.MapGfx;
 import JogoBatalhaNaval.Jogo;
+import JogoBatalhaNaval.LoadMap;
 
 public class GameState extends State{	
 	int x=0;
@@ -43,14 +44,29 @@ public class GameState extends State{
 			boolean botaoTiroLinha = (Jogo.getMouse().getX() > 826 && Jogo.getMouse().getX() < 878) && 
 			   		   (Jogo.getMouse().getY() > 30 && Jogo.getMouse().getY() < 82);
 			
-			
-			
 			if(mouseNoCampo && (Botao.getBotaotiroSimplesPress() || Botao.getBotaotiroLinhaPress())) {
+					
+					//Ações dos botões
 					if(Botao.getBotaotiroSimplesPress()) {
-						MatrixCampo.setMatrixBooleanPress(j, i);
+						if(!MatrixCampo.getMatrixBooleanPress(j, i)) {
+							MatrixCampo.setMatrixBooleanPress(j, i);
+						}else {
+							return;
+						}
+					}else if(Botao.getBotaotiroLinhaPress()) {
+						if(!MatrixCampo.getMatrixBooleanPress(j, i)) {
+							int a = 0;
+							while(a < Integer.parseInt(LoadMap.largura)) {
+								MatrixCampo.setMatrixBooleanPress(j, a);
+								a++;
+							}
+							
+						}else {
+							return;
+						}
 					}
 					
-					
+					//reset de seleção dos botões 
 					Botao.setBotaoTiroSimplesPress(false);
 					Botao.setBotaoTiroLinhaPress(false);
 			}else if(botaoTiroSimples) {
@@ -68,29 +84,28 @@ public class GameState extends State{
 	@Override
 	public void desenha(Graphics grafico) {
 		
+		//desenho do background
 		grafico.setColor(Color.BLACK);
 		grafico.fillRect(0, 0, 754, 754);
+		grafico.setColor(Color.DARK_GRAY);
+		grafico.fillRect(2, 2, 750, 750);
+		grafico.setColor(Color.BLACK);
+		grafico.fillRect(((MapGfx.deltaX)-5),((MapGfx.deltaY)-5),Jogo.getLarguraCampo()+10,Jogo.getAlturaCampo()+10);
+		
+		//desenho do mapa
+		MapGfx.desenhaMap(grafico);
+		
+		//desenho dos botoes
 		if(!Botao.getBotaotiroSimplesPress()) {
 			grafico.drawImage(Assets.tiroSimples,764, 30,null);
 		}else {
 			grafico.drawImage(Assets.tiroSimplesPress,764, 30,null);
 		}
-		
+				
 		if(!Botao.getBotaotiroLinhaPress()) {
 			grafico.drawImage(Assets.tiroLinha,826,30,null);
 		}else {
 			grafico.drawImage(Assets.tiroLinhaPress,826,30,null);
 		}
-		
-		
-		grafico.setColor(Color.DARK_GRAY);
-		grafico.fillRect(2, 2, 750, 750);
-		
-		grafico.setColor(Color.BLACK);
-		//System.out.println(MapGfx.deltaX);
-		grafico.fillRect(((MapGfx.deltaX)-5),((MapGfx.deltaY)-5),Jogo.getLarguraCampo()+10,Jogo.getAlturaCampo()+10);
-		//grafico.setColor(Color.black);
-		MapGfx.desenhaMap(grafico);
-		//grafico.fillRect(x, y, 20, 20);
 	}
 }

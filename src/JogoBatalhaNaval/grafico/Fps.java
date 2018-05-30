@@ -1,7 +1,7 @@
 package JogoBatalhaNaval.grafico;
 
 public class Fps {
-		public static int fps=60;
+		public static int fps=30;
 		public static double timePerTick=1000000000 / fps;
 		public static double delta = 0;
 		public static long now=0;
