@@ -14,9 +14,12 @@ public class NavioPart {
 			}else{
 				return "vertical";
 			}
-			
-			
+		}else if(MatrixCampo.getMatrixInt(j, i) == 1) {
+			return "explodir";
+		}else if(MatrixCampo.getMatrixInt(j, i) == 1) {
+			return "agua";
+		}else {
+			return "Bug do milênio";
 		}
-		return "Bug do milênio";
 	}
 }
