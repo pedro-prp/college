@@ -40,15 +40,26 @@ public class GameState extends State{
 			boolean botaoTiroSimples = (Jogo.getMouse().getX() > 764 && Jogo.getMouse().getX() < 816) && 
 							   		   (Jogo.getMouse().getY() > 30 && Jogo.getMouse().getY() < 82);
 			
-			if(mouseNoCampo && Botao.getBotaotiroSimplesPress()) {
-					MatrixCampo.setMatrixBooleanPress(j, i);
-					Botao.setBotaoTiroSimplesPress(false);
+			boolean botaoTiroLinha = (Jogo.getMouse().getX() > 826 && Jogo.getMouse().getX() < 878) && 
+			   		   (Jogo.getMouse().getY() > 30 && Jogo.getMouse().getY() < 82);
 			
-			}
-			else if(botaoTiroSimples) {
+			
+			
+			if(mouseNoCampo && (Botao.getBotaotiroSimplesPress() || Botao.getBotaotiroLinhaPress())) {
+					if(Botao.getBotaotiroSimplesPress()) {
+						MatrixCampo.setMatrixBooleanPress(j, i);
+					}
+					
+					
+					Botao.setBotaoTiroSimplesPress(false);
+					Botao.setBotaoTiroLinhaPress(false);
+			}else if(botaoTiroSimples) {
 				
 				Botao.setBotaoTiroSimplesPress(true);
 				System.out.println("Flag do esquisofrenico");
+			}else if(botaoTiroLinha) {
+				Botao.setBotaoTiroLinhaPress(true);
+				System.out.println("Flag do Jose Playboy");
 			}
 		}
 		
@@ -63,6 +74,12 @@ public class GameState extends State{
 			grafico.drawImage(Assets.tiroSimples,764, 30,null);
 		}else {
 			grafico.drawImage(Assets.tiroSimplesPress,764, 30,null);
+		}
+		
+		if(!Botao.getBotaotiroLinhaPress()) {
+			grafico.drawImage(Assets.tiroLinha,826,30,null);
+		}else {
+			grafico.drawImage(Assets.tiroLinhaPress,826,30,null);
 		}
 		
 		
