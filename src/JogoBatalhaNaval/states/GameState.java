@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import JogoBatalhaNaval.Check.MatrixCampo;
+import JogoBatalhaNaval.Check.Botao;
+import JogoBatalhaNaval.grafico.Assets;
 import JogoBatalhaNaval.grafico.MapGfx;
 import JogoBatalhaNaval.Jogo;
 
@@ -33,16 +35,20 @@ public class GameState extends State{
 			boolean quadradoPossivel = (i<(Jogo.getLarguraCampo()/46) && j<(Jogo.getAlturaCampo()/46));
 			boolean mouseXYNaoNegativo = ((Jogo.getMouse().getX()-MapGfx.deltaX) > 0) && ((Jogo.getMouse().getY()-MapGfx.deltaY) > 0);
 			
-			if(quadradoPossivel)
-				System.out.println("flag jose");
-			if(mouseXYNaoNegativo)
-				System.out.println("flag paulo");
-			
 			boolean mouseNoCampo = quadradoPossivel && mouseXYNaoNegativo;
 			
-			if(mouseNoCampo) {
-					MatrixCampo.setMatrixBooleanPress(j, i);
+			boolean botaoTiroSimples = (Jogo.getMouse().getX() > 764 && Jogo.getMouse().getX() < 816) && 
+							   		   (Jogo.getMouse().getY() > 30 && Jogo.getMouse().getY() < 82);
 			
+			if(mouseNoCampo && Botao.getBotaotiroSimplesPress()) {
+					MatrixCampo.setMatrixBooleanPress(j, i);
+					Botao.setBotaoTiroSimplesPress(false);
+			
+			}
+			else if(botaoTiroSimples) {
+				
+				Botao.setBotaoTiroSimplesPress(true);
+				System.out.println("Flag do esquisofrenico");
 			}
 		}
 		
@@ -53,6 +59,12 @@ public class GameState extends State{
 		
 		grafico.setColor(Color.BLACK);
 		grafico.fillRect(0, 0, 754, 754);
+		if(!Botao.getBotaotiroSimplesPress()) {
+			grafico.drawImage(Assets.tiroSimples,764, 30,null);
+		}else {
+			grafico.drawImage(Assets.tiroSimplesPress,764, 30,null);
+		}
+		
 		
 		grafico.setColor(Color.DARK_GRAY);
 		grafico.fillRect(2, 2, 750, 750);

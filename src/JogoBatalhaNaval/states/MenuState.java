@@ -1,12 +1,7 @@
 package JogoBatalhaNaval.states;
 
 import java.awt.Graphics;
-
-import javax.swing.JFileChooser;
-
 import JogoBatalhaNaval.Jogo;
-import JogoBatalhaNaval.LoadMap;
-import JogoBatalhaNaval.Check.MatrixCampo;
 
 public class MenuState extends State{
 
