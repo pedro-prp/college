@@ -30,15 +30,17 @@ public class GameState extends State{
 			
 			//System.out.println(i);
 			
-			boolean quadradoPossivel = (i<(Jogo.getAlturaCampo()/46) && j<(Jogo.getLarguraCampo()/46));
+			boolean quadradoPossivel = (i<(Jogo.getLarguraCampo()/46) && j<(Jogo.getAlturaCampo()/46));
 			boolean mouseXYNaoNegativo = ((Jogo.getMouse().getX()-MapGfx.deltaX) > 0) && ((Jogo.getMouse().getY()-MapGfx.deltaY) > 0);
 			
-			System.out.println("Flag 2");
+			if(quadradoPossivel)
+				System.out.println("flag jose");
+			if(mouseXYNaoNegativo)
+				System.out.println("flag paulo");
 			
 			boolean mouseNoCampo = quadradoPossivel && mouseXYNaoNegativo;
 			
 			if(mouseNoCampo) {
-				
 					MatrixCampo.setMatrixBooleanPress(j, i);
 			
 			}
