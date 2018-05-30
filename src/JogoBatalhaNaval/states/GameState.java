@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import JogoBatalhaNaval.Check.MatrixCampo;
+import JogoBatalhaNaval.Check.NavioPart;
 import JogoBatalhaNaval.Check.Botao;
 import JogoBatalhaNaval.grafico.Assets;
 import JogoBatalhaNaval.grafico.MapGfx;
@@ -50,6 +51,7 @@ public class GameState extends State{
 					if(Botao.getBotaotiroSimplesPress()) {
 						if(!MatrixCampo.getMatrixBooleanPress(j, i)) {
 							MatrixCampo.setMatrixBooleanPress(j, i);
+							System.out.println(NavioPart.checkBarcoContinua(j, i));
 						}else {
 							return;
 						}
