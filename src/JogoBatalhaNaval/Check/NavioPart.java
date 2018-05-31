@@ -79,11 +79,8 @@ public class NavioPart {
 			while(a < MatrixCampo.getMatrixInt(j, i)) {
 				//baixo
 				if(baixo) {
-					System.out.println("zezin mafia");
 					if((j+a) < 14) {
-						System.out.println("padrin");
 						if(MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixSemiExplodeInt((j+a),i)) {
-							System.out.println("josemafioso");
 							baixoN++;
 						}
 					}
