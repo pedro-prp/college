@@ -57,6 +57,8 @@ public class GameState extends State{
 								MatrixCampo.setMatrixBooleanAgua(j,i);
 							}else if(barcoExplodiu) {
 								System.out.println("barquin afundou");
+								MatrixCampo.setMatrixBooleanExplode(j, i);
+								NavioPart.setBarcoExplodido(j,i,orientacao);
 							}else {
 								MatrixCampo.setMatrixBooleanSemiExplode(j, i);
 								MatrixCampo.setMatrixSemiExplodeInt(j, i);

@@ -103,4 +103,41 @@ public class NavioPart {
 		return false;
 			
 	}
+	public static void setBarcoExplodido(int j,int i, String orientacao) {
+		if(orientacao == "horizontal") {
+			int a = 1,b = 1;
+			//direita
+			if((i+a)<14) {
+				System.out.println(direitaN);
+				while(a <= direitaN) {
+				MatrixCampo.setMatrixBooleanExplode(j, i+a);
+				if(MatrixCampo.getMatrixBooleanExplode(j, i+a)) {
+					System.out.println(MatrixCampo.getMatrixBooleanExplode(j,i+a));
+				}
+				a++;
+				}
+			}
+			if((i-b)>0) {
+				while(b <= esquerdaN) {
+					MatrixCampo.setMatrixBooleanExplode(j, i-a); 
+					b++;
+				}
+			}
+		}else if(orientacao == "vertical") {
+			int a = 1,b = 1;
+			//direita
+			if((i+a)<14) {
+				while(a <= baixoN) {
+				MatrixCampo.setMatrixBooleanExplode((j+a), i);
+				a++;
+				}
+			}
+			if((i-b)>0) {
+				while(b <= cimaN) {
+					MatrixCampo.setMatrixBooleanExplode((j-a), i);
+					b++;
+				}
+			}
+		}
+	}
 }
