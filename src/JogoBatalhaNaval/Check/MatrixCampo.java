@@ -12,6 +12,7 @@ public class MatrixCampo {
 	public static boolean[][] matrixBooleanExplodeBarco = new boolean[15][15];
 	public static boolean[][] matrixBooleanAgua = new boolean[15][15];
 	
+	public static int[][] matrixSemiExplodeInt = new int[15][15];
 	public static int[][] matrixInt = new int[15][15];
 	
 	
@@ -64,6 +65,7 @@ public class MatrixCampo {
 		while(x<Integer.parseInt(LoadMap.altura)) {
 			while(y < Integer.parseInt(LoadMap.largura)) {
 				matrixInt[x][y] = Integer.parseInt(LoadMap.matrix[x][y]);
+				matrixSemiExplodeInt[x][y] = 0;
 				y++;
 			}
 			x++;
@@ -72,23 +74,37 @@ public class MatrixCampo {
 	}
 
 	public static void setMatrixBooleanExplode(int j, int i) {
-		
+		matrixBooleanExplode[j][i] = true;
 		
 	}
+	public static boolean getMatrixBooleanExplode(int j, int i) {
+		return matrixBooleanExplode[j][i];
+	}
+	
 
 	public static void setMatrixBooleanAgua(int j, int i) {
-		
-		
+		matrixBooleanAgua[j][i] = true;
 	}
+	public static boolean getMatrixBooleanAgua(int j,int i) {
+		return matrixBooleanAgua[j][i];
+	}
+	
 
 	public static void setMatrixBooleanSemiExplode(int j, int i) {
-		
-		
-	}
-
-	public static void setMatrixBooleanExplodeBarco(int j, int i) {
-		
+		matrixBooleanSemiExplode[j][i] = true;
 		
 	}
+	public static boolean getMatrixBooleanSemiExplode(int j,int i) {
+		return matrixBooleanSemiExplode[j][i];
+	}
+	
+	public static void setMatrixSemiExplodeInt(int j, int i) {
+		matrixSemiExplodeInt[j][i] = matrixInt[j][i];
+		
+	}
+	public static int getMatrixSemiExplodeInt(int j,int i) {
+		return matrixSemiExplodeInt[j][i];
+	}
+	
 
 }

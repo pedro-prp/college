@@ -9,6 +9,8 @@ public class NavioPart {
 	private static boolean vertical;
 	private static int[][] barcosPartAcertados = new int[15][15];
 	
+	private static int direitaN,esquerdaN,cimaN,baixoN;
+	
 	public static String checkBarcoContinua(int j,int i){
 		
 		if((MatrixCampo.getMatrixInt(j,i) != 1) && (MatrixCampo.getMatrixInt(j,i) != 0)) {
@@ -40,10 +42,34 @@ public class NavioPart {
 	}
 	
 	public static boolean checkBarcoExplodiu(int j,int i,String orientacao) {
+		//Calculo de barcos possiveis perto
 		if(orientacao == "horizontal") {
+			
+			direitaN = 0;
+			esquerdaN = 0;
+			int a = 1;
+			//direita
+			while(a < MatrixCampo.getMatrixInt(j, i)) {
+				//direita
+				if(MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixSemiExplodeInt(j,i+a)) {
+					direitaN++;
+				}
+				//esquerda
+				if(MatrixCampo.getMatrixInt(j,i) == MatrixCampo.getMatrixSemiExplodeInt(j,i-a)) {
+					esquerdaN++;
+				}
+				a++;
+			}
+			
+			if((direitaN + esquerdaN + 1) == MatrixCampo.getMatrixInt(j,i)) {
+				return true;
+			}
 			
 		}else if(orientacao == "vertical") {
 			
-		}else if(orientacao == "")
+		}
+		
+		return false;
+			
 	}
 }

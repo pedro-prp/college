@@ -12,8 +12,6 @@ import JogoBatalhaNaval.Jogo;
 import JogoBatalhaNaval.LoadMap;
 
 public class GameState extends State{	
-	int x=0;
-	int y=0;
 	public GameState() {
 		
 	}
@@ -23,9 +21,6 @@ public class GameState extends State{
 
 	@Override
 	public void atualiza() {
-		
-		x++;
-		y++;
 		if(Jogo.getMouse().getBotao()) {
 			System.out.println(Jogo.getMouse().getX() + " " + Jogo.getMouse().getY());
 			int tam=46;
@@ -54,17 +49,20 @@ public class GameState extends State{
 							
 							MatrixCampo.setMatrixBooleanPress(j, i);
 							String orientacao = NavioPart.checkBarcoContinua(j, i);
-							NavioPart.setBarcosPartAcertados(j, i);
 							
-							if(orientacao == "explodir") {
+							boolean explodiu = orientacao == "explodir";
+							boolean agua = orientacao == "agua";
+							boolean barcoExplodiu = NavioPart.checkBarcoExplodiu(j, i, orientacao);
+							
+							if(explodiu) {
 								MatrixCampo.setMatrixBooleanExplode(j, i);
-							}else if(orientacao == "agua") {
+							}else if(agua) {
 								MatrixCampo.setMatrixBooleanAgua(j,i);
-							}
-							else if(NavioPart.checkBarcoExplodiu(j, i, orientacao)) {
-								
+							}else if(barcoExplodiu) {
+								System.out.println("barquin afundou");
 							}else {
 								MatrixCampo.setMatrixBooleanSemiExplode(j, i);
+								MatrixCampo.setMatrixSemiExplodeInt(j, i);
 							}
 						}else {
 							return;
