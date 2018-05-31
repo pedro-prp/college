@@ -81,9 +81,7 @@ public class LoadMap {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			//System.out.println(leitura.substring((leitura.indexOf(' ')+1),leitura.length()));
 			barcos[a] = Integer.parseInt(leitura.substring(leitura.indexOf(' ')+1,leitura.length()));
-			System.out.println(barcos[a]);
 			a++;
 		}
 	}

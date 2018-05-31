@@ -14,7 +14,6 @@ public class NavioPart {
 	public static String checkBarcoContinua(int j,int i){
 		
 		if((MatrixCampo.getMatrixInt(j,i) != 1) && (MatrixCampo.getMatrixInt(j,i) != 0)) {
-			System.out.println("Jose" + MatrixCampo.getMatrixInt(j,i-1) + MatrixCampo.getMatrixInt(j, i+1));
 			//direita e esquerda
 			direita = MatrixCampo.getMatrixInt(j,i) == MatrixCampo.getMatrixInt(j, i+1);
 			esquerda = MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixInt(j, i-1);
@@ -50,22 +49,26 @@ public class NavioPart {
 			int a = 1;
 			//direita
 			while(a < MatrixCampo.getMatrixInt(j, i)) {
+				//System.out.println(MatrixCampo.getMatrixSemiExplodeInt(j, i+a));
+				System.out.println(MatrixCampo.getMatrixBooleanSemiExplode(j, i-a));
 				//direita
-				if(MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixSemiExplodeInt(j,i+a)) {
-					direitaN++;
+				if(direita) {
+					if(MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixSemiExplodeInt(j,(i+a))) {
+						direitaN++;
+					}
 				}
 				//esquerda
-				if(MatrixCampo.getMatrixInt(j,i) == MatrixCampo.getMatrixSemiExplodeInt(j,i-a)) {
-					esquerdaN++;
-				}
+				/*if(esquerda) {
+					if(MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixSemiExplodeInt(j,(i-a))) {
+						esquerdaN++;
+					}
+				}*/
 				a++;
 			}
-			
 			if((direitaN + esquerdaN + 1) == MatrixCampo.getMatrixInt(j,i)) {
 				return true;
 			}
 			
-		}else if(orientacao == "vertical") {
 			
 		}
 		

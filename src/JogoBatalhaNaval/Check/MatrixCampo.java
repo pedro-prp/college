@@ -18,6 +18,7 @@ public class MatrixCampo {
 	
 	public static void InitCampoMatrix() {
 		converterMatrixtoInt();
+		//initSemiExplodeInt();
 		matrixStringToBoolean();
 	}
 	
@@ -65,11 +66,21 @@ public class MatrixCampo {
 		while(x<Integer.parseInt(LoadMap.altura)) {
 			while(y < Integer.parseInt(LoadMap.largura)) {
 				matrixInt[x][y] = Integer.parseInt(LoadMap.matrix[x][y]);
-				matrixSemiExplodeInt[x][y] = 0;
 				y++;
 			}
 			x++;
 			y=0;
+		}
+	}
+	public static void initSemiExplodeInt() {
+		int a = 0,b = 0;
+		while(a < 15) {
+			while(b < 15) {
+				matrixSemiExplodeInt[a][b] = 0;
+				b++;
+			}
+			b=0;
+			a++;
 		}
 	}
 

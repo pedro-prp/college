@@ -22,13 +22,10 @@ public class GameState extends State{
 	@Override
 	public void atualiza() {
 		if(Jogo.getMouse().getBotao()) {
-			System.out.println(Jogo.getMouse().getX() + " " + Jogo.getMouse().getY());
+			
 			int tam=46;
 			int i=(((Jogo.getMouse().getX()-MapGfx.deltaX)/tam));
 			int	j=(((Jogo.getMouse().getY()-MapGfx.deltaY)/tam));
-			System.out.println("flag 1");
-			
-			//System.out.println(i);
 			
 			boolean quadradoPossivel = (i<(Jogo.getLarguraCampo()/46) && j<(Jogo.getAlturaCampo()/46));
 			boolean mouseXYNaoNegativo = ((Jogo.getMouse().getX()-MapGfx.deltaX) > 0) && ((Jogo.getMouse().getY()-MapGfx.deltaY) > 0);
