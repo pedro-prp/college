@@ -17,8 +17,8 @@ public class NavioPart {
 			//direita e esquerda
 			direita = MatrixCampo.getMatrixInt(j,i) == MatrixCampo.getMatrixInt(j, i+1);
 			esquerda = MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixInt(j, i-1);
-			cima = MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixInt(j+1, i);
-			baixo = MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixInt(j-1, i);
+			cima = MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixInt(j-1, i);
+			baixo = MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixInt(j+1, i);
 			
 			horizontal = direita || esquerda;
 			vertical = cima || baixo;
@@ -79,8 +79,11 @@ public class NavioPart {
 			while(a < MatrixCampo.getMatrixInt(j, i)) {
 				//baixo
 				if(baixo) {
+					System.out.println("zezin mafia");
 					if((j+a) < 14) {
+						System.out.println("padrin");
 						if(MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixSemiExplodeInt((j+a),i)) {
+							System.out.println("josemafioso");
 							baixoN++;
 						}
 					}
