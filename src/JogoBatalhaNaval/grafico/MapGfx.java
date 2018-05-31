@@ -27,7 +27,7 @@ public class MapGfx {
 			while(j< b) {
 				if(MatrixCampo.getMatrixBooleanPress(j,i)) {
 					if(MatrixCampo.getMatrixBooleanExplode(j, i)) {
-						grafico.drawImage(Assets.campoF,x,y,tam,tam,null);
+						grafico.drawImage(Assets.campoX,x,y,tam,tam,null);
 					}else if(MatrixCampo.getMatrixBooleanAgua(j, i)){
 						grafico.drawImage(Assets.campoF,x,y,tam,tam,null);
 					}else if(MatrixCampo.getMatrixBooleanSemiExplode(j, i)) {

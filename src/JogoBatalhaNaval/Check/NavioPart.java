@@ -75,7 +75,7 @@ public class NavioPart {
 			cimaN = 0;
 			baixoN = 0;
 			int a = 1;
-			//direita
+			//baixo
 			while(a < MatrixCampo.getMatrixInt(j, i)) {
 				//baixo
 				if(baixo) {
@@ -112,10 +112,6 @@ public class NavioPart {
 				while(a <= direitaN) {
 				MatrixCampo.setMatrixBooleanExplode(j, i+a);
 				MatrixCampo.setMatrixBooleanSemiExplode(j, i+a,false);
-				
-				if(MatrixCampo.getMatrixBooleanExplode(j, i+a)) {
-					System.out.println(MatrixCampo.getMatrixBooleanExplode(j,i+a));
-				}
 				a++;
 				}
 			}
