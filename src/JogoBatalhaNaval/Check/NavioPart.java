@@ -3,26 +3,27 @@ package JogoBatalhaNaval.Check;
 public class NavioPart {
 	private static boolean direita = false;
 	private static boolean esquerda = false;
-	private static boolean horizontal = false;
 	private static boolean cima = false;
 	private static boolean baixo = false;
-	private static int i = 0;
-	private static int j = 0;
+	private static boolean horizontal;
+	private static boolean vertical;
+	private static int[][] barcosPartAcertados = new int[15][15];
 	
 	public static String checkBarcoContinua(int j,int i){
-		NavioPart.i = i;
-		NavioPart.j = j;
 		
-		if(MatrixCampo.getMatrixInt(j,i) != 1) {
+		if((MatrixCampo.getMatrixInt(j,i) != 1) && (MatrixCampo.getMatrixInt(j,i) != 0)) {
 			System.out.println("Jose" + MatrixCampo.getMatrixInt(j,i-1) + MatrixCampo.getMatrixInt(j, i+1));
 			//direita e esquerda
 			direita = MatrixCampo.getMatrixInt(j,i) == MatrixCampo.getMatrixInt(j, i+1);
 			esquerda = MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixInt(j, i-1);
+			cima = MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixInt(j+1, i);
+			baixo = MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixInt(j-1, i);
 			
 			horizontal = direita || esquerda;
+			vertical = cima || baixo;
 			if(horizontal) {
 				return "horizontal";
-			}else{
+			}else if(vertical){
 				return "vertical";
 			}
 		}else if(MatrixCampo.getMatrixInt(j, i) == 1) {
@@ -32,33 +33,17 @@ public class NavioPart {
 		}else {
 			return "Bug do milênio";
 		}
+		return null;
+	}
+	public static void setBarcosPartAcertados(int j,int i) {
+		barcosPartAcertados[j][i] = MatrixCampo.getMatrixInt(j, i);
 	}
 	
-	public static String setBarcoEmVolta(String orientacao) {
+	public static boolean checkBarcoExplodiu(int j,int i,String orientacao) {
 		if(orientacao == "horizontal") {
-			if(direita) {
-				int a =1,b=(i+1),direitaN=0;
-				while(a < MatrixCampo.getMatrixInt(j, i)) {
-					if(MatrixCampo.getMatrixInt(j, i)==MatrixCampo.getMatrixInt(j, b)) {
-						direitaN++;
-						b++;
-					}
-					a++;
-				}
-			}
-			else if(esquerda) {
-				int a =1,b=(i-1),esquerdaN=0;
-				while(a < MatrixCampo.getMatrixInt(j, i)) {
-					if(MatrixCampo.getMatrixInt(j, i)==MatrixCampo.getMatrixInt(j, b)) {
-						esquerdaN++;
-						b--;
-					}
-					a++;
-				}
-			}
-		}
-		
-		
-		return "zezin playboy";
+			
+		}else if(orientacao == "vertical") {
+			
+		}else if(orientacao == "")
 	}
 }

@@ -6,7 +6,14 @@ public class MatrixCampo {
 	
 	public static boolean[][] matrixBoolean = new boolean[15][15];
 	public static boolean[][] matrixBooleanPress = new boolean[15][15];
+	
+	public static boolean[][] matrixBooleanExplode = new boolean[15][15];
+	public static boolean[][] matrixBooleanSemiExplode = new boolean[15][15];
+	public static boolean[][] matrixBooleanExplodeBarco = new boolean[15][15];
+	public static boolean[][] matrixBooleanAgua = new boolean[15][15];
+	
 	public static int[][] matrixInt = new int[15][15];
+	
 	
 	public static void InitCampoMatrix() {
 		converterMatrixtoInt();
@@ -63,4 +70,25 @@ public class MatrixCampo {
 			y=0;
 		}
 	}
+
+	public static void setMatrixBooleanExplode(int j, int i) {
+		
+		
+	}
+
+	public static void setMatrixBooleanAgua(int j, int i) {
+		
+		
+	}
+
+	public static void setMatrixBooleanSemiExplode(int j, int i) {
+		
+		
+	}
+
+	public static void setMatrixBooleanExplodeBarco(int j, int i) {
+		
+		
+	}
+
 }

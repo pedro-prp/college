@@ -51,8 +51,21 @@ public class GameState extends State{
 					//Ações dos botões
 					if(Botao.getBotaotiroSimplesPress()) {
 						if(!MatrixCampo.getMatrixBooleanPress(j, i)) {
+							
 							MatrixCampo.setMatrixBooleanPress(j, i);
-							System.out.println(NavioPart.checkBarcoContinua(j, i));
+							String orientacao = NavioPart.checkBarcoContinua(j, i);
+							NavioPart.setBarcosPartAcertados(j, i);
+							
+							if(orientacao == "explodir") {
+								MatrixCampo.setMatrixBooleanExplode(j, i);
+							}else if(orientacao == "agua") {
+								MatrixCampo.setMatrixBooleanAgua(j,i);
+							}
+							else if(NavioPart.checkBarcoExplodiu(j, i, orientacao)) {
+								
+							}else {
+								MatrixCampo.setMatrixBooleanSemiExplode(j, i);
+							}
 						}else {
 							return;
 						}
