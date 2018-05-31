@@ -18,7 +18,7 @@ public class MatrixCampo {
 	
 	public static void InitCampoMatrix() {
 		converterMatrixtoInt();
-		//initSemiExplodeInt();
+		initSemiExplodeInt();
 		matrixStringToBoolean();
 	}
 	

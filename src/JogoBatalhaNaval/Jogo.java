@@ -1,18 +1,7 @@
 package JogoBatalhaNaval;
 
-import java.applet.Applet;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
-import com.sun.media.jfxmedia.AudioClip;
 
 import JogoBatalhaNaval.Audio.AudioAssets;
 import JogoBatalhaNaval.Check.MatrixCampo;
