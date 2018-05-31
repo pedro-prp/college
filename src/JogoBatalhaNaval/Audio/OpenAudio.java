@@ -12,7 +12,7 @@ public class OpenAudio {
 
 	public static Clip loadAudio(String path) {
 		
-		File audio = new File(path);
+		File audio = new File("biblioteca/audio/" + path);
 		
 		try {
 			Clip clip = AudioSystem.getClip();

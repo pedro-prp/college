@@ -71,6 +71,7 @@ public class Jogo implements Runnable{
 		State.setState(menuState);
 		
 		AudioAssets.abrirJogo.start();
+		AudioAssets.musicaDeFundo.start();
 	}
 	
 	
