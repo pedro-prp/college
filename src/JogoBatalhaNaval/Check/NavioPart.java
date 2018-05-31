@@ -49,20 +49,22 @@ public class NavioPart {
 			int a = 1;
 			//direita
 			while(a < MatrixCampo.getMatrixInt(j, i)) {
-				//System.out.println(MatrixCampo.getMatrixSemiExplodeInt(j, i+a));
-				System.out.println(MatrixCampo.getMatrixBooleanSemiExplode(j, i-a));
 				//direita
 				if(direita) {
-					if(MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixSemiExplodeInt(j,(i+a))) {
-						direitaN++;
+					if((i+a) < 14) {
+						if(MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixSemiExplodeInt(j,(i+a))) {
+							direitaN++;
+						}
 					}
 				}
 				//esquerda
-				/*if(esquerda) {
-					if(MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixSemiExplodeInt(j,(i-a))) {
-						esquerdaN++;
+				if(esquerda) {
+					if((i-a ) > 0) {
+						if(MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixSemiExplodeInt(j,(i-a))) {
+							esquerdaN++;
+						}
 					}
-				}*/
+				}
 				a++;
 			}
 			if((direitaN + esquerdaN + 1) == MatrixCampo.getMatrixInt(j,i)) {

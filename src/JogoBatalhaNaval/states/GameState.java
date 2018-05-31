@@ -81,12 +81,9 @@ public class GameState extends State{
 					Botao.setBotaoTiroSimplesPress(false);
 					Botao.setBotaoTiroLinhaPress(false);
 			}else if(botaoTiroSimples) {
-				
 				Botao.setBotaoTiroSimplesPress(true);
-				System.out.println("Flag do esquisofrenico");
 			}else if(botaoTiroLinha) {
 				Botao.setBotaoTiroLinhaPress(true);
-				System.out.println("Flag do Jose Playboy");
 			}
 		}
 		
