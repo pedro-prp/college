@@ -111,6 +111,8 @@ public class NavioPart {
 				System.out.println(direitaN);
 				while(a <= direitaN) {
 				MatrixCampo.setMatrixBooleanExplode(j, i+a);
+				MatrixCampo.setMatrixBooleanSemiExplode(j, i+a,false);
+				
 				if(MatrixCampo.getMatrixBooleanExplode(j, i+a)) {
 					System.out.println(MatrixCampo.getMatrixBooleanExplode(j,i+a));
 				}
@@ -119,7 +121,8 @@ public class NavioPart {
 			}
 			if((i-b)>0) {
 				while(b <= esquerdaN) {
-					MatrixCampo.setMatrixBooleanExplode(j, i-a); 
+					MatrixCampo.setMatrixBooleanExplode(j, i-b);
+					MatrixCampo.setMatrixBooleanSemiExplode(j, i-b,false);
 					b++;
 				}
 			}
@@ -129,12 +132,14 @@ public class NavioPart {
 			if((i+a)<14) {
 				while(a <= baixoN) {
 				MatrixCampo.setMatrixBooleanExplode((j+a), i);
+				MatrixCampo.setMatrixBooleanSemiExplode((j+a), i,false);
 				a++;
 				}
 			}
 			if((i-b)>0) {
 				while(b <= cimaN) {
-					MatrixCampo.setMatrixBooleanExplode((j-a), i);
+					MatrixCampo.setMatrixBooleanExplode((j-b), i);
+					MatrixCampo.setMatrixBooleanSemiExplode((j-b), i,false);
 					b++;
 				}
 			}

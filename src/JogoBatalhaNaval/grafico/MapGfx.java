@@ -26,13 +26,13 @@ public class MapGfx {
 		while(i< a) {
 			while(j< b) {
 				if(MatrixCampo.getMatrixBooleanPress(j,i)) {
-					if(MatrixCampo.getMatrixBooleanSemiExplode(j, i)) {
-						int barco = MatrixCampo.getMatrixInt(j, i);
-						grafico.drawImage(Assets.barcos[barco],x,y,tam,tam,null);
+					if(MatrixCampo.getMatrixBooleanExplode(j, i)) {
+						grafico.drawImage(Assets.campoF,x,y,tam,tam,null);
 					}else if(MatrixCampo.getMatrixBooleanAgua(j, i)){
 						grafico.drawImage(Assets.campoF,x,y,tam,tam,null);
-					}else if(MatrixCampo.getMatrixBooleanExplode(j, i)) {
-						grafico.drawImage(Assets.campoF,x,y,tam,tam,null);
+					}else if(MatrixCampo.getMatrixBooleanSemiExplode(j, i)) {
+						int barco = MatrixCampo.getMatrixInt(j, i);
+						grafico.drawImage(Assets.barcos[barco],x,y,tam,tam,null);
 					}
 				
 				}else {

@@ -101,8 +101,8 @@ public class MatrixCampo {
 	}
 	
 
-	public static void setMatrixBooleanSemiExplode(int j, int i) {
-		matrixBooleanSemiExplode[j][i] = true;
+	public static void setMatrixBooleanSemiExplode(int j, int i,boolean D) {
+		matrixBooleanSemiExplode[j][i] = D;
 		
 	}
 	public static boolean getMatrixBooleanSemiExplode(int j,int i) {
