@@ -79,15 +79,37 @@ public class GameState extends State{
 							return;
 						}
 					}else if(Botao.getBotaotiroLinhaPress()) {
-						if(!MatrixCampo.getMatrixBooleanPress(j, i)) {
-							int a = 0;
-							while(a < Integer.parseInt(LoadMap.largura)) {
+						int a = 0;
+						while(a < 15) {
+							if(!MatrixCampo.getMatrixBooleanPress(j, a)) {
+								
 								MatrixCampo.setMatrixBooleanPress(j, a);
-								a++;
+								String orientacao = NavioPart.checkBarcoContinua(j, a);
+								
+								boolean explodiu = orientacao == "explodir";
+								boolean agua = orientacao == "agua";
+								boolean barcoExplodiu = NavioPart.checkBarcoExplodiu(j, a, orientacao);
+								
+								if(explodiu) {
+									MatrixCampo.setMatrixBooleanExplode(j, a);
+									barcoAfundou.start();
+									somAtivo = true;
+									
+								}else if(agua) {
+									MatrixCampo.setMatrixBooleanAgua(j,a);
+								}else if(barcoExplodiu) {
+									System.out.println("barquin afundou");
+									MatrixCampo.setMatrixBooleanExplode(j, a);
+									MatrixCampo.setMatrixBooleanSemiExplode(j, a,false);
+									NavioPart.setBarcoExplodido(j,a,orientacao);
+									barcoAfundou.start();
+									somAtivo = true;
+								}else {
+									MatrixCampo.setMatrixBooleanSemiExplode(j, a,true);
+									MatrixCampo.setMatrixSemiExplodeInt(j, a);
+								}
 							}
-							
-						}else {
-							return;
+							a++;
 						}
 					}
 					
