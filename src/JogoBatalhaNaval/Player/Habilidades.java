@@ -1,6 +1,6 @@
 package JogoBatalhaNaval.Player;
 
-import JogoBatalhaNaval.Check.Botao;
+import JogoBatalhaNaval.Audio.AudioAssets;
 import JogoBatalhaNaval.Check.MatrixCampo;
 import JogoBatalhaNaval.Check.NavioPart;
 import JogoBatalhaNaval.states.GameState;
@@ -18,7 +18,7 @@ public class Habilidades {
 				
 				if(explodiu) {
 					MatrixCampo.setMatrixBooleanExplode(j, i);
-					GameState.barcoAfundou.start();
+					AudioAssets.barcoAfundou.start();
 					GameState.somAtivo = true;
 					
 				}else if(agua) {
@@ -28,7 +28,7 @@ public class Habilidades {
 					MatrixCampo.setMatrixBooleanExplode(j, i);
 					MatrixCampo.setMatrixBooleanSemiExplode(j, i,false);
 					NavioPart.setBarcoExplodido(j,i,orientacao);
-					GameState.barcoAfundou.start();
+					AudioAssets.barcoAfundou.start();
 					GameState.somAtivo = true;
 				}else {
 					MatrixCampo.setMatrixBooleanSemiExplode(j, i,true);
@@ -53,7 +53,7 @@ public class Habilidades {
 				
 				if(explodiu) {
 					MatrixCampo.setMatrixBooleanExplode(j, i);
-					GameState.barcoAfundou.start();
+					AudioAssets.barcoAfundou.start();
 					GameState.somAtivo = true;
 					
 				}else if(agua) {
@@ -63,7 +63,7 @@ public class Habilidades {
 					MatrixCampo.setMatrixBooleanExplode(j, i);
 					MatrixCampo.setMatrixBooleanSemiExplode(j, i,false);
 					NavioPart.setBarcoExplodido(j,a,orientacao);
-					GameState.barcoAfundou.start();
+					AudioAssets.barcoAfundou.start();
 					GameState.somAtivo = true;
 				}else {
 					MatrixCampo.setMatrixBooleanSemiExplode(j, i,true);
@@ -82,14 +82,12 @@ public class Habilidades {
 					while(b <= 1) {
 						if(!MatrixCampo.getMatrixBooleanPress(j+a, i+b)) {
 							
-							MatrixCampo.setMatrixBooleanMostrar(j+a, i+b);
 							String orientacao = NavioPart.checkBarcoContinua(j+a, i+b);
 							
 							boolean agua = orientacao == "agua";
 							
-							if(agua) {
-								MatrixCampo.setMatrixBooleanAgua(j+a,i+b);
-								MatrixCampo.setMatrixBooleanPress(j+a, i+b);
+							if(!agua) {
+								MatrixCampo.setMatrixBooleanMostrar(j+a, i+b);
 							}
 						}
 						b++;

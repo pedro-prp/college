@@ -2,23 +2,18 @@ package JogoBatalhaNaval.states;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
-import javax.sound.sampled.Clip;
-
-import JogoBatalhaNaval.Check.MatrixCampo;
-import JogoBatalhaNaval.Check.NavioPart;
 import JogoBatalhaNaval.Player.Habilidades;
 import JogoBatalhaNaval.Check.Botao;
+import JogoBatalhaNaval.Check.GanhouJogo;
 import JogoBatalhaNaval.grafico.Assets;
 import JogoBatalhaNaval.grafico.MapGfx;
 import JogoBatalhaNaval.Jogo;
-import JogoBatalhaNaval.LoadMap;
 import JogoBatalhaNaval.Audio.AudioAssets;
 import JogoBatalhaNaval.Audio.OpenAudio;
 
 public class GameState extends State{
 	public static boolean somAtivo=false;
-	public static Clip barcoAfundou;
+	//public static Clip barcoAfundou;
 	public GameState() {
 		
 	}
@@ -28,8 +23,8 @@ public class GameState extends State{
 
 	@Override
 	public void atualiza() {
-		barcoAfundou = OpenAudio.loadAudio("smw_1-up.wav");
-	
+		AudioAssets.barcoAfundou = OpenAudio.loadAudio("smw_1-up.wav");
+		 
 		if(Jogo.getMouse().getBotao()) {
 			int tam=46;
 			int i=(((Jogo.getMouse().getX()-MapGfx.deltaX)/tam));
@@ -63,9 +58,9 @@ public class GameState extends State{
 					Botao.setBotaoTiroSimplesPress(false);
 					Botao.setBotaoTiroLinhaPress(false);
 					Botao.setBotaoRadar2x2Press(false);
-					if((barcoAfundou.getFramePosition() >= barcoAfundou.getFrameLength()) && somAtivo) {
+					if((AudioAssets.barcoAfundou.getFramePosition() >= AudioAssets.barcoAfundou.getFrameLength()) && somAtivo) {
 						System.out.println("flag 1");
-						barcoAfundou.close();
+						AudioAssets.barcoAfundou.close();
 						somAtivo = false;
 					
 					}
@@ -84,6 +79,7 @@ public class GameState extends State{
 			}
 		}
 		
+		
 	}
 
 	@Override
@@ -99,7 +95,6 @@ public class GameState extends State{
 		
 		//desenho do mapa
 		MapGfx.desenhaMap(grafico);
-		
 		//desenho dos botoes
 		if(!Botao.getBotaotiroSimplesPress()) {
 			grafico.drawImage(Assets.tiroSimples,764, 30,null);

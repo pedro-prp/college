@@ -35,6 +35,7 @@ public class Jogo implements Runnable{
 	//states
 	private static State gameState;
 	private State menuState;
+	private static State finalState;
 	
 	public Jogo(String titulo) {
 		this.titulo = titulo;
@@ -151,6 +152,9 @@ public class Jogo implements Runnable{
 	}
 	public static Tela getGameTela() {
 		return jogoTela;
+	}
+	public static State getFinalState() {
+		return finalState;
 	}
 	//public static void setPath(String path) {
 	//	this.path = path;
