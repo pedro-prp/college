@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Assets {
 	
-	public static BufferedImage campo,campoV,campoF,campoX,tiroSimples,tiroSimplesPress,tiroLinha,tiroLinhaPress,
+	public static BufferedImage campo,campoV,campoF,campoX,campoSemi,tiroSimples,tiroSimplesPress,tiroLinha,tiroLinhaPress,
 								radar2x2,radar2x2Press;
 	public static BufferedImage[] barcos = new BufferedImage[6];
 	
@@ -18,6 +18,7 @@ public class Assets {
 			campoV = sheet.crop(52,0,largura,altura);
 			campoF = sheet.crop((52*2),0, largura, altura);
 			campoX = sheet.crop((52),(52), largura, altura);
+			campoSemi = sheet.crop(52*2, 52, largura, altura);
 			
 			barcos[1] = sheet.crop((52*3), 0, largura, altura);
 			barcos[2] = sheet.crop((52*4), 0, largura, altura);

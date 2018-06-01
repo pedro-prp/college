@@ -31,10 +31,12 @@ public class MapGfx {
 					}else if(MatrixCampo.getMatrixBooleanAgua(j, i)){
 						grafico.drawImage(Assets.campoF,x,y,tam,tam,null);
 					}else if(MatrixCampo.getMatrixBooleanSemiExplode(j, i)) {
-						int barco = MatrixCampo.getMatrixInt(j, i);
-						grafico.drawImage(Assets.barcos[barco],x,y,tam,tam,null);
+						grafico.drawImage(Assets.campoSemi,x,y,tam,tam,null);
 					}
 				
+				}else if(MatrixCampo.getMatrixBooleanMostrar(j,i)) {
+					int n = MatrixCampo.getMatrixInt(j, i);
+					grafico.drawImage(Assets.barcos[n], x, y,tam,tam,null);
 				}else {
 					grafico.drawImage(Assets.campo, x, y,tam,tam,null);
 				}

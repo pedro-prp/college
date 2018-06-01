@@ -11,6 +11,7 @@ public class MatrixCampo {
 	public static boolean[][] matrixBooleanSemiExplode = new boolean[15][15];
 	public static boolean[][] matrixBooleanExplodeBarco = new boolean[15][15];
 	public static boolean[][] matrixBooleanAgua = new boolean[15][15];
+	public static boolean[][] matrixBooleanMostrar = new boolean[15][15];
 	
 	public static int[][] matrixSemiExplodeInt = new int[15][15];
 	public static int[][] matrixInt = new int[15][15];
@@ -115,6 +116,12 @@ public class MatrixCampo {
 	}
 	public static int getMatrixSemiExplodeInt(int j,int i) {
 		return matrixSemiExplodeInt[j][i];
+	}
+	public static void setMatrixBooleanMostrar(int j, int i) {
+		matrixBooleanMostrar[j][i] = true;
+	}
+	public static boolean getMatrixBooleanMostrar(int j,int i) {
+		return matrixBooleanMostrar[j][i];
 	}
 	
 

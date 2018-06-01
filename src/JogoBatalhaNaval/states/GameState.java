@@ -49,17 +49,20 @@ public class GameState extends State{
 			boolean botaoRadar2x2 = (Jogo.getMouse().getX() > 764 && Jogo.getMouse().getX() < 816) && 
 									 (Jogo.getMouse().getY() > 92 && Jogo.getMouse().getY() < 144);
 			
-			if(mouseNoCampo && (Botao.getBotaotiroSimplesPress() || Botao.getBotaotiroLinhaPress())) {
+			if(mouseNoCampo && (Botao.getBotaotiroSimplesPress() || Botao.getBotaotiroLinhaPress() || Botao.getBotaoRadar2x2Press())) {
 					//Ações dos botões
 					if(Botao.getBotaotiroSimplesPress()) {
 						Habilidades.tiroSimples(j,i);
 					}else if(Botao.getBotaotiroLinhaPress()) {
 						Habilidades.tiroEmLinha(j, i);
+					}else if(Botao.getBotaoRadar2x2Press()) {
+						Habilidades.radar2x2(j, i);
 					}
 					
 					//reset
 					Botao.setBotaoTiroSimplesPress(false);
 					Botao.setBotaoTiroLinhaPress(false);
+					Botao.setBotaoRadar2x2Press(false);
 					if((barcoAfundou.getFramePosition() >= barcoAfundou.getFrameLength()) && somAtivo) {
 						System.out.println("flag 1");
 						barcoAfundou.close();
@@ -109,7 +112,7 @@ public class GameState extends State{
 		}else {
 			grafico.drawImage(Assets.tiroLinhaPress,826,30,null);
 		}
-		if(!Botao.getBotaoRadar2x2()) {
+		if(!Botao.getBotaoRadar2x2Press()) {
 			grafico.drawImage(Assets.radar2x2,764,92,null);
 		}else {
 			grafico.drawImage(Assets.radar2x2Press,764,92,null);
