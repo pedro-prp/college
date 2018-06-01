@@ -13,6 +13,12 @@ public class NavioPart {
 	
 	public static String checkBarcoContinua(int j,int i){
 		
+		//reset de variaveis
+		direita = false;
+		esquerda = false;
+		cima = false;
+		baixo = false;
+		
 		if((MatrixCampo.getMatrixInt(j,i) != 1) && (MatrixCampo.getMatrixInt(j,i) != 0)) {
 			//direita e esquerda
 			if(((i+1) <= 14 ) && ((i-1) >= 0)) {
@@ -20,15 +26,19 @@ public class NavioPart {
 				esquerda = MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixInt(j, i-1);
 			}
 			if(((j+1) <= 14) && ((j-1) >= 0)) {
+				System.out.println("Flag 1");
 				cima = MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixInt(j-1, i);
 				baixo = MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixInt(j+1, i);
 			}
 			
 			horizontal = direita || esquerda;
 			vertical = cima || baixo;
+			
+			//reset de variaveis
 			if(horizontal) {
 				return "horizontal";
 			}else if(vertical){
+				System.out.println("flag 2");
 				return "vertical";
 			}
 		}else if(MatrixCampo.getMatrixInt(j, i) == 1) {
@@ -75,7 +85,7 @@ public class NavioPart {
 				return true;
 			}
 		}else if(orientacao == "vertical") {
-			
+			System.out.println("flag 3");
 			cimaN = 0;
 			baixoN = 0;
 			int a = 1;
@@ -83,6 +93,7 @@ public class NavioPart {
 			while(a < MatrixCampo.getMatrixInt(j, i)) {
 				//baixo
 				if(baixo) {
+					System.out.println("flag 4");
 					if((j+a) <= 14) {
 						if(MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixSemiExplodeInt((j+a),i)) {
 							baixoN++;
