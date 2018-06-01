@@ -129,14 +129,14 @@ public class NavioPart {
 		}else if(orientacao == "vertical") {
 			int a = 1,b = 1;
 			//direita
-			if((i+a)<=14) {
+			if((j+a)<=14) {
 				while(a <= baixoN) {
 				MatrixCampo.setMatrixBooleanExplode((j+a), i);
 				MatrixCampo.setMatrixBooleanSemiExplode((j+a), i,false);
 				a++;
 				}
 			}
-			if((i-b)>=0) {
+			if((j-b)>=0) {
 				while(b <= cimaN) {
 					MatrixCampo.setMatrixBooleanExplode((j-b), i);
 					MatrixCampo.setMatrixBooleanSemiExplode((j-b), i,false);

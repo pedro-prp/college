@@ -10,6 +10,7 @@ import JogoBatalhaNaval.grafico.Assets;
 import JogoBatalhaNaval.grafico.MapGfx;
 import JogoBatalhaNaval.Jogo;
 import JogoBatalhaNaval.LoadMap;
+import JogoBatalhaNaval.Audio.AudioAssets;
 
 public class GameState extends State{	
 	public GameState() {
@@ -39,7 +40,6 @@ public class GameState extends State{
 			   		   (Jogo.getMouse().getY() > 30 && Jogo.getMouse().getY() < 82);
 			
 			if(mouseNoCampo && (Botao.getBotaotiroSimplesPress() || Botao.getBotaotiroLinhaPress())) {
-					
 					//Ações dos botões
 					if(Botao.getBotaotiroSimplesPress()) {
 						if(!MatrixCampo.getMatrixBooleanPress(j, i)) {
@@ -53,6 +53,7 @@ public class GameState extends State{
 							
 							if(explodiu) {
 								MatrixCampo.setMatrixBooleanExplode(j, i);
+								AudioAssets.barcoAfundou.start();
 							}else if(agua) {
 								MatrixCampo.setMatrixBooleanAgua(j,i);
 							}else if(barcoExplodiu) {
@@ -60,6 +61,7 @@ public class GameState extends State{
 								MatrixCampo.setMatrixBooleanExplode(j, i);
 								MatrixCampo.setMatrixBooleanSemiExplode(j, i,false);
 								NavioPart.setBarcoExplodido(j,i,orientacao);
+								AudioAssets.barcoAfundou.start();
 							}else {
 								MatrixCampo.setMatrixBooleanSemiExplode(j, i,true);
 								MatrixCampo.setMatrixSemiExplodeInt(j, i);
