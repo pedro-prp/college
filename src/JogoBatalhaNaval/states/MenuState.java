@@ -1,6 +1,9 @@
 package JogoBatalhaNaval.states;
 
 import java.awt.Graphics;
+
+import javax.swing.JFileChooser;
+
 import JogoBatalhaNaval.Jogo;
 
 public class MenuState extends State{
@@ -16,6 +19,9 @@ public class MenuState extends State{
 		//int resposta = fc.showOpenDialog(null);
 		
 		if(Jogo.getMouse().getBotao()) {
+			//JFileChooser fc = new JFileChooser();
+			//fc.setDialogTitle("jose");
+			//fc.showOpenDialog(null);
 			State.setState(Jogo.getGameState());
 			//Thread.currentThread();
 			//try {

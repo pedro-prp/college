@@ -24,8 +24,9 @@ public class GameState extends State{
 	@Override
 	public void atualiza() {
 		AudioAssets.barcoAfundou = OpenAudio.loadAudio("smw_1-up.wav");
-		 
-		if(Jogo.getMouse().getBotao()) {
+		if(GanhouJogo.Ganhou()) {
+			State.setState(Jogo.getFinalState());
+		}else if(Jogo.getMouse().getBotao()) {
 			int tam=46;
 			int i=(((Jogo.getMouse().getX()-MapGfx.deltaX)/tam));
 			int	j=(((Jogo.getMouse().getY()-MapGfx.deltaY)/tam));

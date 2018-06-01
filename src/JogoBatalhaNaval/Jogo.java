@@ -9,6 +9,7 @@ import JogoBatalhaNaval.Check.Mouse;
 import JogoBatalhaNaval.display.Tela;
 import JogoBatalhaNaval.grafico.Assets;
 import JogoBatalhaNaval.grafico.Fps;
+import JogoBatalhaNaval.states.FinalState;
 import JogoBatalhaNaval.states.GameState;
 import JogoBatalhaNaval.states.MenuState;
 import JogoBatalhaNaval.states.State;
@@ -58,6 +59,7 @@ public class Jogo implements Runnable{
 		
 		gameState = new GameState();
 		menuState = new MenuState();
+		finalState = new FinalState();
 		State.setState(menuState);
 		
 		AudioAssets.abrirJogo.start();

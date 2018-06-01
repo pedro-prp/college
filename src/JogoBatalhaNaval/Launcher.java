@@ -1,6 +1,6 @@
 package JogoBatalhaNaval;
 
-import javax.swing.JFileChooser;
+//import javax.swing.JFileChooser;
 
 public class Launcher {
 	public static void main(String[] args) {
