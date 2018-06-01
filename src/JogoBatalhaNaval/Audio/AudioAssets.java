@@ -10,7 +10,7 @@ public class AudioAssets {
 	
 	public static void initAudioAssets() {
 		abrirJogo = OpenAudio.loadAudio("smw_coin.wav");
-		barcoAfundou = OpenAudio.loadAudio("smw_1-up.wav");
+		//barcoAfundou = OpenAudio.loadAudio("smw_1-up.wav");
 		musicaDeFundo = OpenAudio.loadAudio("Velvet Happy Hour.wav");
 	}
 }

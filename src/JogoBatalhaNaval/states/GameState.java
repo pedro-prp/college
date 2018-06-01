@@ -3,6 +3,8 @@ package JogoBatalhaNaval.states;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import javax.sound.sampled.Clip;
+
 import JogoBatalhaNaval.Check.MatrixCampo;
 import JogoBatalhaNaval.Check.NavioPart;
 import JogoBatalhaNaval.Check.Botao;
@@ -11,8 +13,11 @@ import JogoBatalhaNaval.grafico.MapGfx;
 import JogoBatalhaNaval.Jogo;
 import JogoBatalhaNaval.LoadMap;
 import JogoBatalhaNaval.Audio.AudioAssets;
+import JogoBatalhaNaval.Audio.OpenAudio;
 
-public class GameState extends State{	
+public class GameState extends State{
+	private static boolean somAtivo=false;
+	private static Clip barcoAfundou;
 	public GameState() {
 		
 	}
@@ -22,8 +27,9 @@ public class GameState extends State{
 
 	@Override
 	public void atualiza() {
+		barcoAfundou = OpenAudio.loadAudio("smw_1-up.wav");
+	
 		if(Jogo.getMouse().getBotao()) {
-			
 			int tam=46;
 			int i=(((Jogo.getMouse().getX()-MapGfx.deltaX)/tam));
 			int	j=(((Jogo.getMouse().getY()-MapGfx.deltaY)/tam));
@@ -53,7 +59,9 @@ public class GameState extends State{
 							
 							if(explodiu) {
 								MatrixCampo.setMatrixBooleanExplode(j, i);
-								AudioAssets.barcoAfundou.start();
+								barcoAfundou.start();
+								somAtivo = true;
+								
 							}else if(agua) {
 								MatrixCampo.setMatrixBooleanAgua(j,i);
 							}else if(barcoExplodiu) {
@@ -61,7 +69,8 @@ public class GameState extends State{
 								MatrixCampo.setMatrixBooleanExplode(j, i);
 								MatrixCampo.setMatrixBooleanSemiExplode(j, i,false);
 								NavioPart.setBarcoExplodido(j,i,orientacao);
-								AudioAssets.barcoAfundou.start();
+								barcoAfundou.start();
+								somAtivo = true;
 							}else {
 								MatrixCampo.setMatrixBooleanSemiExplode(j, i,true);
 								MatrixCampo.setMatrixSemiExplodeInt(j, i);
@@ -85,6 +94,13 @@ public class GameState extends State{
 					//reset de seleção dos botões 
 					Botao.setBotaoTiroSimplesPress(false);
 					Botao.setBotaoTiroLinhaPress(false);
+					System.out.println(barcoAfundou.isActive());
+					if((barcoAfundou.getFramePosition() >= barcoAfundou.getFrameLength()) && somAtivo) {
+						System.out.println("flag 1");
+						barcoAfundou.close();
+						somAtivo = false;
+						
+					}
 			}else if(botaoTiroSimples) {
 				Botao.setBotaoTiroSimplesPress(true);
 			}else if(botaoTiroLinha) {

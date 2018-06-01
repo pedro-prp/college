@@ -26,7 +26,6 @@ public class NavioPart {
 				esquerda = MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixInt(j, i-1);
 			}
 			if(((j+1) <= 14) && ((j-1) >= 0)) {
-				System.out.println("Flag 1");
 				cima = MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixInt(j-1, i);
 				baixo = MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixInt(j+1, i);
 			}
@@ -38,7 +37,6 @@ public class NavioPart {
 			if(horizontal) {
 				return "horizontal";
 			}else if(vertical){
-				System.out.println("flag 2");
 				return "vertical";
 			}
 		}else if(MatrixCampo.getMatrixInt(j, i) == 1) {
@@ -85,7 +83,6 @@ public class NavioPart {
 				return true;
 			}
 		}else if(orientacao == "vertical") {
-			System.out.println("flag 3");
 			cimaN = 0;
 			baixoN = 0;
 			int a = 1;
@@ -93,7 +90,6 @@ public class NavioPart {
 			while(a < MatrixCampo.getMatrixInt(j, i)) {
 				//baixo
 				if(baixo) {
-					System.out.println("flag 4");
 					if((j+a) <= 14) {
 						if(MatrixCampo.getMatrixInt(j, i) == MatrixCampo.getMatrixSemiExplodeInt((j+a),i)) {
 							baixoN++;
