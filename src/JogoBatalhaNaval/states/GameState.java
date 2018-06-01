@@ -7,6 +7,7 @@ import javax.sound.sampled.Clip;
 
 import JogoBatalhaNaval.Check.MatrixCampo;
 import JogoBatalhaNaval.Check.NavioPart;
+import JogoBatalhaNaval.Player.Habilidades;
 import JogoBatalhaNaval.Check.Botao;
 import JogoBatalhaNaval.grafico.Assets;
 import JogoBatalhaNaval.grafico.MapGfx;
@@ -16,8 +17,8 @@ import JogoBatalhaNaval.Audio.AudioAssets;
 import JogoBatalhaNaval.Audio.OpenAudio;
 
 public class GameState extends State{
-	private static boolean somAtivo=false;
-	private static Clip barcoAfundou;
+	public static boolean somAtivo=false;
+	public static Clip barcoAfundou;
 	public GameState() {
 		
 	}
@@ -43,90 +44,40 @@ public class GameState extends State{
 							   		   (Jogo.getMouse().getY() > 30 && Jogo.getMouse().getY() < 82);
 			
 			boolean botaoTiroLinha = (Jogo.getMouse().getX() > 826 && Jogo.getMouse().getX() < 878) && 
-			   		   (Jogo.getMouse().getY() > 30 && Jogo.getMouse().getY() < 82);
+			   		   				 (Jogo.getMouse().getY() > 30 && Jogo.getMouse().getY() < 82);
+			
+			boolean botaoRadar2x2 = (Jogo.getMouse().getX() > 764 && Jogo.getMouse().getX() < 816) && 
+									 (Jogo.getMouse().getY() > 92 && Jogo.getMouse().getY() < 144);
 			
 			if(mouseNoCampo && (Botao.getBotaotiroSimplesPress() || Botao.getBotaotiroLinhaPress())) {
 					//Ações dos botões
 					if(Botao.getBotaotiroSimplesPress()) {
-						if(!MatrixCampo.getMatrixBooleanPress(j, i)) {
-							
-							MatrixCampo.setMatrixBooleanPress(j, i);
-							String orientacao = NavioPart.checkBarcoContinua(j, i);
-							
-							boolean explodiu = orientacao == "explodir";
-							boolean agua = orientacao == "agua";
-							boolean barcoExplodiu = NavioPart.checkBarcoExplodiu(j, i, orientacao);
-							
-							if(explodiu) {
-								MatrixCampo.setMatrixBooleanExplode(j, i);
-								barcoAfundou.start();
-								somAtivo = true;
-								
-							}else if(agua) {
-								MatrixCampo.setMatrixBooleanAgua(j,i);
-							}else if(barcoExplodiu) {
-								System.out.println("barquin afundou");
-								MatrixCampo.setMatrixBooleanExplode(j, i);
-								MatrixCampo.setMatrixBooleanSemiExplode(j, i,false);
-								NavioPart.setBarcoExplodido(j,i,orientacao);
-								barcoAfundou.start();
-								somAtivo = true;
-							}else {
-								MatrixCampo.setMatrixBooleanSemiExplode(j, i,true);
-								MatrixCampo.setMatrixSemiExplodeInt(j, i);
-							}
-						}else {
-							return;
-						}
+						Habilidades.tiroSimples(j,i);
 					}else if(Botao.getBotaotiroLinhaPress()) {
-						int a = 0;
-						while(a < 15) {
-							if(!MatrixCampo.getMatrixBooleanPress(j, a)) {
-								
-								MatrixCampo.setMatrixBooleanPress(j, a);
-								String orientacao = NavioPart.checkBarcoContinua(j, a);
-								
-								boolean explodiu = orientacao == "explodir";
-								boolean agua = orientacao == "agua";
-								boolean barcoExplodiu = NavioPart.checkBarcoExplodiu(j, a, orientacao);
-								
-								if(explodiu) {
-									MatrixCampo.setMatrixBooleanExplode(j, a);
-									barcoAfundou.start();
-									somAtivo = true;
-									
-								}else if(agua) {
-									MatrixCampo.setMatrixBooleanAgua(j,a);
-								}else if(barcoExplodiu) {
-									System.out.println("barquin afundou");
-									MatrixCampo.setMatrixBooleanExplode(j, a);
-									MatrixCampo.setMatrixBooleanSemiExplode(j, a,false);
-									NavioPart.setBarcoExplodido(j,a,orientacao);
-									barcoAfundou.start();
-									somAtivo = true;
-								}else {
-									MatrixCampo.setMatrixBooleanSemiExplode(j, a,true);
-									MatrixCampo.setMatrixSemiExplodeInt(j, a);
-								}
-							}
-							a++;
-						}
+						Habilidades.tiroEmLinha(j, i);
 					}
 					
-					//reset de seleção dos botões 
+					//reset
 					Botao.setBotaoTiroSimplesPress(false);
 					Botao.setBotaoTiroLinhaPress(false);
-					System.out.println(barcoAfundou.isActive());
 					if((barcoAfundou.getFramePosition() >= barcoAfundou.getFrameLength()) && somAtivo) {
 						System.out.println("flag 1");
 						barcoAfundou.close();
 						somAtivo = false;
-						
+					
 					}
 			}else if(botaoTiroSimples) {
 				Botao.setBotaoTiroSimplesPress(true);
+				Botao.setBotaoTiroLinhaPress(false);
+				Botao.setBotaoRadar2x2Press(false);
 			}else if(botaoTiroLinha) {
 				Botao.setBotaoTiroLinhaPress(true);
+				Botao.setBotaoTiroSimplesPress(false);
+				Botao.setBotaoRadar2x2Press(false);
+			}else if(botaoRadar2x2) {
+				Botao.setBotaoRadar2x2Press(true);
+				Botao.setBotaoTiroLinhaPress(false);
+				Botao.setBotaoTiroSimplesPress(false);
 			}
 		}
 		
@@ -157,6 +108,11 @@ public class GameState extends State{
 			grafico.drawImage(Assets.tiroLinha,826,30,null);
 		}else {
 			grafico.drawImage(Assets.tiroLinhaPress,826,30,null);
+		}
+		if(!Botao.getBotaoRadar2x2()) {
+			grafico.drawImage(Assets.radar2x2,764,92,null);
+		}else {
+			grafico.drawImage(Assets.radar2x2Press,764,92,null);
 		}
 	}
 }
