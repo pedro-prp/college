@@ -11,7 +11,7 @@ public class Launcher {
 		
 		Jogo jogo = new Jogo("Batalha Naval - Jogo");
 		//Jogo.path = fc.getSelectedFile().getAbsolutePath();
-		Jogo.path = "biblioteca/mapas/map_4.txt";
+		//Jogo.path = "biblioteca/mapas/map_4.txt";
 		jogo.start();
 		
 	}

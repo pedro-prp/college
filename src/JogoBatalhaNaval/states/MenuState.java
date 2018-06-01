@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import javax.swing.JFileChooser;
 
 import JogoBatalhaNaval.Jogo;
+import JogoBatalhaNaval.grafico.Assets;
 
 public class MenuState extends State{
 
@@ -19,23 +20,22 @@ public class MenuState extends State{
 		//int resposta = fc.showOpenDialog(null);
 		
 		if(Jogo.getMouse().getBotao()) {
-			//JFileChooser fc = new JFileChooser();
-			//fc.setDialogTitle("jose");
-			//fc.showOpenDialog(null);
-			State.setState(Jogo.getGameState());
-			//Thread.currentThread();
-			//try {
-			//	Thread.sleep(1000);
-			//} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-			//	e.printStackTrace();
-			//}
+			boolean botaoAbrirMapa = Jogo.getMouse().getX() > 100 && Jogo.getMouse().getX() < 400
+							 	  && Jogo.getMouse().getY() > 100 && Jogo.getMouse().getY() < 300;
+			if(botaoAbrirMapa) {
+				JFileChooser fc = new JFileChooser();
+				fc.setDialogTitle("jose");
+				fc.showOpenDialog(null);
+				Jogo.path = fc.getSelectedFile().getAbsolutePath();
+				GameState.init();
+				State.setState(Jogo.getGameState());
+			}
 		}
 	}
 
 	@Override
 	public void desenha(Graphics grafico) {
-		// TODO Auto-generated method stub
+		grafico.drawImage(Assets.botaoAbrirMapa, 100, 100,null);
 		
 	}
 	

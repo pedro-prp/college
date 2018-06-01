@@ -20,7 +20,7 @@ public class Assets {
 			campoX = sheet.crop((52),(52), largura, altura);
 			campoSemi = sheet.crop(52*2, 52, largura, altura);
 			
-			botaoAbrirMapa = LoadImage.lerImagem("biblioteca/texturas/botaoAbrirMapa.png");
+			botaoAbrirMapa = LoadImage.lerImagem("/texturas/botaoAbrirMapa.png");
 			
 			barcos[1] = sheet.crop((52*3), 0, largura, altura);
 			barcos[2] = sheet.crop((52*4), 0, largura, altura);

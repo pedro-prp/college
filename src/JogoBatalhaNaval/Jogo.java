@@ -45,9 +45,6 @@ public class Jogo implements Runnable{
 	
 	private void iniciaObjetos() {
 		Assets.init();
-		LoadMap.LerMapa(path);
-		MatrixCampo.InitCampoMatrix();
-		
 		AudioAssets.initAudioAssets();
 		
 		

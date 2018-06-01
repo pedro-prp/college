@@ -5,9 +5,11 @@ import java.awt.Graphics;
 import JogoBatalhaNaval.Player.Habilidades;
 import JogoBatalhaNaval.Check.Botao;
 import JogoBatalhaNaval.Check.GanhouJogo;
+import JogoBatalhaNaval.Check.MatrixCampo;
 import JogoBatalhaNaval.grafico.Assets;
 import JogoBatalhaNaval.grafico.MapGfx;
 import JogoBatalhaNaval.Jogo;
+import JogoBatalhaNaval.LoadMap;
 import JogoBatalhaNaval.Audio.AudioAssets;
 import JogoBatalhaNaval.Audio.OpenAudio;
 
@@ -17,8 +19,9 @@ public class GameState extends State{
 	public GameState() {
 		
 	}
-	public void init() {
-		
+	public static void init() {
+		LoadMap.LerMapa(Jogo.path);
+		MatrixCampo.InitCampoMatrix();
 	}
 
 	@Override
