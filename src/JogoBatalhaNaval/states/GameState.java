@@ -3,6 +3,7 @@ package JogoBatalhaNaval.states;
 import java.awt.Color;
 import java.awt.Graphics;
 import JogoBatalhaNaval.Player.Habilidades;
+import JogoBatalhaNaval.Player.Mana;
 import JogoBatalhaNaval.Check.Botao;
 import JogoBatalhaNaval.Check.GanhouJogo;
 import JogoBatalhaNaval.Check.MatrixCampo;
@@ -26,9 +27,10 @@ public class GameState extends State{
 
 	@Override
 	public void atualiza() {
+		System.out.println(Mana.getMana());
 		if(GanhouJogo.Ganhou()) {
 			State.setState(Jogo.getFinalState());
-		}else if(Jogo.getMouse().getBotao()) {
+		}else if(Jogo.getMouse().getBotao() && (Mana.getMana()!=0)) {
 			int tam=46;
 			int i=(((Jogo.getMouse().getX()-MapGfx.deltaX)/tam));
 			int	j=(((Jogo.getMouse().getY()-MapGfx.deltaY)/tam));
@@ -39,28 +41,37 @@ public class GameState extends State{
 			boolean mouseNoCampo = quadradoPossivel && mouseXYNaoNegativo;
 			
 			boolean botaoTiroSimples = (Jogo.getMouse().getX() > 764 && Jogo.getMouse().getX() < 816) && 
-							   		   (Jogo.getMouse().getY() > 30 && Jogo.getMouse().getY() < 82);
+							   		   (Jogo.getMouse().getY() > 30 && Jogo.getMouse().getY() < 82) 
+							   		   && Mana.getMana()>=1;
 			
 			boolean botaoTiroLinha = (Jogo.getMouse().getX() > 826 && Jogo.getMouse().getX() < 878) && 
-			   		   				 (Jogo.getMouse().getY() > 30 && Jogo.getMouse().getY() < 82);
+			   		   				 (Jogo.getMouse().getY() > 30 && Jogo.getMouse().getY() < 82)
+			   		   				 && Mana.getMana() >= 15;
 			
 			boolean botaoRadar2x2 = (Jogo.getMouse().getX() > 764 && Jogo.getMouse().getX() < 816) && 
-									 (Jogo.getMouse().getY() > 92 && Jogo.getMouse().getY() < 144);
+									 (Jogo.getMouse().getY() > 92 && Jogo.getMouse().getY() < 144)
+									 && Mana.getMana() >= 5;
 			
 			boolean botaoTiro2x2 = (Jogo.getMouse().getX() > 826 && Jogo.getMouse().getX() < 878) && 
-		   				 			(Jogo.getMouse().getY() > 92 && Jogo.getMouse().getY() < 144);
+		   				 			(Jogo.getMouse().getY() > 92 && Jogo.getMouse().getY() < 144)
+		   				 			&& Mana.getMana() >= 10;
+										
 			boolean botoes = (Botao.getBotaotiroSimplesPress() || Botao.getBotaotiroLinhaPress() || 
 								Botao.getBotaoRadar2x2Press() || Botao.getBotaoTiro2x2Press());
 			
 			if(mouseNoCampo && botoes) {
 					//Ações dos botões
 					if(Botao.getBotaotiroSimplesPress()) {
+						Mana.gastarMana(1);
 						Habilidades.tiroSimples(j,i);
 					}else if(Botao.getBotaotiroLinhaPress()) {
+						Mana.gastarMana(15);
 						Habilidades.tiroEmLinha(j, i);
 					}else if(Botao.getBotaoRadar2x2Press()) {
+						Mana.gastarMana(5);
 						Habilidades.radar2x2(j, i);
 					}else if(Botao.getBotaoTiro2x2Press()) {
+						Mana.gastarMana(10);
 						Habilidades.tiro2x2(j,i);
 					}
 					
