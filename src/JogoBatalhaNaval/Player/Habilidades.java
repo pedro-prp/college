@@ -24,7 +24,6 @@ public class Habilidades {
 				}else if(agua) {
 					MatrixCampo.setMatrixBooleanAgua(j,i);
 				}else if(barcoExplodiu) {
-					System.out.println("barquin afundou");
 					MatrixCampo.setMatrixBooleanExplode(j, i);
 					MatrixCampo.setMatrixBooleanSemiExplode(j, i,false);
 					NavioPart.setBarcoExplodido(j,i,orientacao);
@@ -59,7 +58,6 @@ public class Habilidades {
 				}else if(agua) {
 					MatrixCampo.setMatrixBooleanAgua(j,i);
 				}else if(barcoExplodiu) {
-					System.out.println("barquin afundou");
 					MatrixCampo.setMatrixBooleanExplode(j, i);
 					MatrixCampo.setMatrixBooleanSemiExplode(j, i,false);
 					NavioPart.setBarcoExplodido(j,a,orientacao);
@@ -122,7 +120,6 @@ public class Habilidades {
 							}else if(agua) {
 								MatrixCampo.setMatrixBooleanAgua(j+a,i+b);
 							}else if(barcoExplodiu) {
-								System.out.println("barquin afundou");
 								MatrixCampo.setMatrixBooleanExplode(j+a, i+b);
 								MatrixCampo.setMatrixBooleanSemiExplode(j+a, i+b,false);
 								NavioPart.setBarcoExplodido(j+a,i+b,orientacao);

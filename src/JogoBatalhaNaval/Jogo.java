@@ -5,9 +5,9 @@ import java.awt.image.BufferStrategy;
 
 import JogoBatalhaNaval.Audio.AudioAssets;
 import JogoBatalhaNaval.Check.Mouse;
+import JogoBatalhaNaval.display.Fps;
 import JogoBatalhaNaval.display.Tela;
 import JogoBatalhaNaval.grafico.Assets;
-import JogoBatalhaNaval.grafico.Fps;
 import JogoBatalhaNaval.states.FinalState;
 import JogoBatalhaNaval.states.GameState;
 import JogoBatalhaNaval.states.MenuState;

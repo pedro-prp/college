@@ -119,7 +119,6 @@ public class NavioPart {
 			int a = 1,b = 1;
 			//direita
 			if((i+a)<=14) {
-				System.out.println(direitaN);
 				while(a <= direitaN) {
 				MatrixCampo.setMatrixBooleanExplode(j, i+a);
 				MatrixCampo.setMatrixBooleanSemiExplode(j, i+a,false);

@@ -1,14 +1,14 @@
 package JogoBatalhaNaval.states;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import JogoBatalhaNaval.Player.Habilidades;
 import JogoBatalhaNaval.Player.Mana;
 import JogoBatalhaNaval.Check.Botao;
 import JogoBatalhaNaval.Check.GanhouJogo;
 import JogoBatalhaNaval.Check.MatrixCampo;
-import JogoBatalhaNaval.grafico.Assets;
+import JogoBatalhaNaval.grafico.BackgroundGfx;
 import JogoBatalhaNaval.grafico.MapGfx;
+import JogoBatalhaNaval.grafico.PainelGfx;
 import JogoBatalhaNaval.Jogo;
 import JogoBatalhaNaval.LoadMap;
 import JogoBatalhaNaval.Audio.AudioAssets;
@@ -27,7 +27,6 @@ public class GameState extends State{
 
 	@Override
 	public void atualiza() {
-		System.out.println(Mana.getMana());
 		if(GanhouJogo.Ganhou()) {
 			if(Mana.getMana() == 0) {
 				Mana.addMana(1);
@@ -86,7 +85,6 @@ public class GameState extends State{
 					Botao.setBotaoRadar2x2Press(false);
 					Botao.setBotaoTiro2x2Press(false);
 					if((AudioAssets.barcoAfundou.getFramePosition() >= AudioAssets.barcoAfundou.getFrameLength()) && somAtivo) {
-						System.out.println("flag 1");
 						AudioAssets.barcoAfundou.close();
 						AudioAssets.barcoAfundou = OpenAudio.loadAudio("smw_1-up.wav");
 						somAtivo = false;
@@ -122,40 +120,11 @@ public class GameState extends State{
 	public void desenha(Graphics grafico) {
 		
 		//desenho do background
-		grafico.setColor(Color.BLACK);
-		grafico.fillRect(0, 0, 754, 754);
-		grafico.setColor(Color.DARK_GRAY);
-		grafico.fillRect(2, 2, 750, 750);
-		grafico.setColor(Color.BLACK);
-		grafico.fillRect(((MapGfx.deltaX)-5),((MapGfx.deltaY)-5),Jogo.getLarguraCampo()+10,Jogo.getAlturaCampo()+10);
+		BackgroundGfx.desenhaBackground(grafico);
 		
 		//desenho do mapa
 		MapGfx.desenhaMap(grafico);
 		//desenho dos botoes
-		if(!Botao.getBotaotiroSimplesPress()) {
-			grafico.drawImage(Assets.tiroSimples,764, 30,null);
-		}else {
-			grafico.drawImage(Assets.tiroSimplesPress,764, 30,null);
-		}
-				
-		if(!Botao.getBotaotiroLinhaPress()) {
-			grafico.drawImage(Assets.tiroLinha,826,30,null);
-		}else {
-			grafico.drawImage(Assets.tiroLinhaPress,826,30,null);
-		}
-		if(!Botao.getBotaoRadar2x2Press()) {
-			grafico.drawImage(Assets.radar2x2,764,92,null);
-		}else {
-			grafico.drawImage(Assets.radar2x2Press,764,92,null);
-		}
-		if(!Botao.getBotaoTiro2x2Press()) {
-			grafico.drawImage(Assets.botaoTiro2x2,826,92,null);
-		}else {
-			grafico.drawImage(Assets.botaoTiro2x2Press,826,92,null);
-		}
-		grafico.setColor(Color.black);
-		grafico.fillRect(764,15, 60, 10);
-		grafico.setColor(Color.WHITE);
-		grafico.drawString("Mana: " + Integer.toString(Mana.getMana()), 765, 25);
+		PainelGfx.desenhaPainel(grafico);
 	}
 }

@@ -39,24 +39,20 @@ public class MatrixCampo {
 	}
 	
 	public static void matrixStringToBoolean() {
-		System.out.println("");
 		int x=0,y=0;
 		
 		while(x<Integer.parseInt(LoadMap.altura)) {
 			while(y < Integer.parseInt(LoadMap.largura)) {
 				
 				if(Integer.parseInt(LoadMap.matrix[x][y])!=0) {
-					System.out.print("T");
 					matrixBoolean[x][y] = true;
 				}else {
-					System.out.print("F");
 					matrixBoolean[x][y] = false;
 				}
 				y++;
 			}
 			x++;
 			y=0;
-			System.out.println("");
 		}
 	}
 	
