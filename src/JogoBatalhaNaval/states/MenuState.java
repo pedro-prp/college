@@ -15,9 +15,6 @@ public class MenuState extends State{
 	
 	@Override
 	public void atualiza() {
-		//JFileChooser fc = new JFileChooser();
-		//fc.setDialogTitle("jose");
-		//int resposta = fc.showOpenDialog(null);
 		
 		if(Jogo.getMouse().getBotao()) {
 			boolean botaoAbrirMapa = Jogo.getMouse().getX() > 100 && Jogo.getMouse().getX() < 400

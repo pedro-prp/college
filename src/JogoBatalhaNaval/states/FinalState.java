@@ -3,8 +3,6 @@ package JogoBatalhaNaval.states;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import JogoBatalhaNaval.Jogo;
-
 public class FinalState extends State{
 
 	@Override

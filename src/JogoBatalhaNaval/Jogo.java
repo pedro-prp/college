@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import JogoBatalhaNaval.Audio.AudioAssets;
-import JogoBatalhaNaval.Check.MatrixCampo;
 import JogoBatalhaNaval.Check.Mouse;
 import JogoBatalhaNaval.display.Tela;
 import JogoBatalhaNaval.grafico.Assets;

@@ -26,7 +26,6 @@ public class GameState extends State{
 
 	@Override
 	public void atualiza() {
-		AudioAssets.barcoAfundou = OpenAudio.loadAudio("smw_1-up.wav");
 		if(GanhouJogo.Ganhou()) {
 			State.setState(Jogo.getFinalState());
 		}else if(Jogo.getMouse().getBotao()) {
@@ -48,7 +47,12 @@ public class GameState extends State{
 			boolean botaoRadar2x2 = (Jogo.getMouse().getX() > 764 && Jogo.getMouse().getX() < 816) && 
 									 (Jogo.getMouse().getY() > 92 && Jogo.getMouse().getY() < 144);
 			
-			if(mouseNoCampo && (Botao.getBotaotiroSimplesPress() || Botao.getBotaotiroLinhaPress() || Botao.getBotaoRadar2x2Press())) {
+			boolean botaoTiro2x2 = (Jogo.getMouse().getX() > 826 && Jogo.getMouse().getX() < 878) && 
+		   				 			(Jogo.getMouse().getY() > 92 && Jogo.getMouse().getY() < 144);
+			boolean botoes = (Botao.getBotaotiroSimplesPress() || Botao.getBotaotiroLinhaPress() || 
+								Botao.getBotaoRadar2x2Press() || Botao.getBotaoTiro2x2Press());
+			
+			if(mouseNoCampo && botoes) {
 					//Ações dos botões
 					if(Botao.getBotaotiroSimplesPress()) {
 						Habilidades.tiroSimples(j,i);
@@ -56,15 +60,19 @@ public class GameState extends State{
 						Habilidades.tiroEmLinha(j, i);
 					}else if(Botao.getBotaoRadar2x2Press()) {
 						Habilidades.radar2x2(j, i);
+					}else if(Botao.getBotaoTiro2x2Press()) {
+						System.out.println("nerso da capitinga");
 					}
 					
 					//reset
 					Botao.setBotaoTiroSimplesPress(false);
 					Botao.setBotaoTiroLinhaPress(false);
 					Botao.setBotaoRadar2x2Press(false);
+					Botao.setBotaoTiro2x2Press(false);
 					if((AudioAssets.barcoAfundou.getFramePosition() >= AudioAssets.barcoAfundou.getFrameLength()) && somAtivo) {
 						System.out.println("flag 1");
 						AudioAssets.barcoAfundou.close();
+						AudioAssets.barcoAfundou = OpenAudio.loadAudio("smw_1-up.wav");
 						somAtivo = false;
 					
 					}
@@ -72,12 +80,20 @@ public class GameState extends State{
 				Botao.setBotaoTiroSimplesPress(true);
 				Botao.setBotaoTiroLinhaPress(false);
 				Botao.setBotaoRadar2x2Press(false);
+				Botao.setBotaoTiro2x2Press(false);
 			}else if(botaoTiroLinha) {
 				Botao.setBotaoTiroLinhaPress(true);
 				Botao.setBotaoTiroSimplesPress(false);
 				Botao.setBotaoRadar2x2Press(false);
+				Botao.setBotaoTiro2x2Press(false);
 			}else if(botaoRadar2x2) {
 				Botao.setBotaoRadar2x2Press(true);
+				Botao.setBotaoTiroLinhaPress(false);
+				Botao.setBotaoTiroSimplesPress(false);
+				Botao.setBotaoTiro2x2Press(false);
+			}else if(botaoTiro2x2) {
+				Botao.setBotaoTiro2x2Press(true);
+				Botao.setBotaoRadar2x2Press(false);
 				Botao.setBotaoTiroLinhaPress(false);
 				Botao.setBotaoTiroSimplesPress(false);
 			}
@@ -115,6 +131,11 @@ public class GameState extends State{
 			grafico.drawImage(Assets.radar2x2,764,92,null);
 		}else {
 			grafico.drawImage(Assets.radar2x2Press,764,92,null);
+		}
+		if(!Botao.getBotaoTiro2x2Press()) {
+			grafico.drawImage(Assets.botaoTiro2x2,826,92,null);
+		}else {
+			grafico.drawImage(Assets.botaoTiro2x2Press,826,92,null);
 		}
 	}
 }
