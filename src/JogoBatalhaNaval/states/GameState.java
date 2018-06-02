@@ -64,7 +64,7 @@ public class GameState extends State{
 			boolean botoes = (Botao.getBotaotiroSimplesPress() || Botao.getBotaotiroLinhaPress() || 
 								Botao.getBotaoRadar2x2Press() || Botao.getBotaoTiro2x2Press());
 			
-			if(mouseNoCampo && botoes) {
+			if(mouseNoCampo && botoes && !MatrixCampo.getMatrixBooleanPress(j, i)) {
 					//Ações dos botões
 					if(Botao.getBotaotiroSimplesPress()) {
 						Mana.gastarMana(1);
@@ -153,5 +153,9 @@ public class GameState extends State{
 		}else {
 			grafico.drawImage(Assets.botaoTiro2x2Press,826,92,null);
 		}
+		grafico.setColor(Color.black);
+		grafico.fillRect(764,15, 60, 10);
+		grafico.setColor(Color.WHITE);
+		grafico.drawString("Mana: " + Integer.toString(Mana.getMana()), 765, 25);
 	}
 }

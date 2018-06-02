@@ -1,7 +1,7 @@
 package JogoBatalhaNaval.Player;
 
 public class Mana {
-	private static int mana = 50;
+	private static int mana = 100;
 	
 	public static void gastarMana(int manaGasta) {
 		mana-=manaGasta;
