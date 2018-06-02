@@ -61,7 +61,7 @@ public class GameState extends State{
 					}else if(Botao.getBotaoRadar2x2Press()) {
 						Habilidades.radar2x2(j, i);
 					}else if(Botao.getBotaoTiro2x2Press()) {
-						System.out.println("nerso da capitinga");
+						Habilidades.tiro2x2(j,i);
 					}
 					
 					//reset
