@@ -9,4 +9,7 @@ public class Mana {
 	public static int getMana() {
 		return mana;
 	}
+	public static void addMana(int manaAdd) {
+		mana+= manaAdd;
+	}
 }

@@ -3,6 +3,8 @@ package JogoBatalhaNaval.states;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import JogoBatalhaNaval.Player.Mana;
+
 public class FinalState extends State{
 
 	@Override
@@ -13,7 +15,11 @@ public class FinalState extends State{
 
 	@Override
 	public void desenha(Graphics grafico) {
-		grafico.setColor(Color.BLACK);
+		if(Mana.getMana() == 0) {
+			grafico.setColor(Color.BLUE);
+		}else {
+			grafico.setColor(Color.BLACK);
+		}
 		grafico.fillRect(0, 0, 955,754);
 		
 	}

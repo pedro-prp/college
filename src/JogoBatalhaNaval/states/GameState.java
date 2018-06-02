@@ -29,6 +29,11 @@ public class GameState extends State{
 	public void atualiza() {
 		System.out.println(Mana.getMana());
 		if(GanhouJogo.Ganhou()) {
+			if(Mana.getMana() == 0) {
+				Mana.addMana(1);
+			}
+			State.setState(Jogo.getFinalState());
+		}else if(Mana.getMana() == 0) {
 			State.setState(Jogo.getFinalState());
 		}else if(Jogo.getMouse().getBotao() && (Mana.getMana()!=0)) {
 			int tam=46;
