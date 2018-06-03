@@ -19,8 +19,7 @@ public class FinalState extends State{
 		if(Mana.getMana() == 0) {
 			grafico.drawImage(Assets.semMana,0,0,null);
 		}else {
-			grafico.setColor(Color.BLACK);
-			grafico.fillRect(0, 0, 955,754);
+			grafico.drawImage(Assets.venceu,0,0,null);
 		}
 		
 	}
