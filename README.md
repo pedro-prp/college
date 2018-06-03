@@ -4,8 +4,8 @@
 <br/>
 Para utilização do jogo é recomendável o uso da IDE Eclipse.<br/>
 
-	Ao iniciar o Jogo, o usuario deve primeiro clicar no botão "Abrir mapa"<br/>
-	E aguardar a abertura de uma janela do JFile Chooser, logo após isso, o botão "Jogar"<br/>
+	Ao iniciar o Jogo, o usuario deve primeiro clicar no botão "Abrir mapa"
+	E aguardar a abertura de uma janela do JFile Chooser, logo após isso, o botão "Jogar"
 	será liberado.
 <br/>
 ### Identificação
