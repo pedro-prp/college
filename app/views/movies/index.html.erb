@@ -6,15 +6,14 @@
       <p><%= link_to "Sign up and review", new_user_registration_path, class: "btn btn-primary btn-lg" %></p>
     </center>
   </div>
-
-
 <% end %>
 
-
-<div class="row">\
+<div class="row">
   <% @movies.each do |movie| %>
-    <div class="col-nd-6-nd-3">
-      <%= link_to (image_tag movie.image.url(:medium), class: 'image'), movie %>
+    <div class="col-sm-6 col-md-3">
+      <div class="thumbnail">
+        <%= link_to (image_tag movie.image.url(:medium), class: 'img-resposive'), movie %>
+      </div>
     </div>
   <% end %>
 </div>
