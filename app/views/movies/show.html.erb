@@ -1,6 +1,7 @@
 <div class="panel panel-default">
-    <div class="panel-body">
-      <div class="row">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-4">
         <%= image_tag @movie.image.url(:medium) %>
         <div class="table-responsive">
           <table class="table">
@@ -30,7 +31,7 @@
           <%= link_to "write a Review", new_movie_review_path(@movie) %>
         </div>
       </div>
-      <div class="col-md-7 col-offset-1">
+      <div class="col-md-7 col-md-offset-1">
         <h1 class="review title"><%= @movie.title %></h1>
         <p><%= @movie.description %></p>
 
@@ -47,6 +48,7 @@
         <% end %>
       </div>
     </div>
+  </div>
 </div>
 
 <%= link_to 'Edit', edit_movie_path(@movie) %> |
