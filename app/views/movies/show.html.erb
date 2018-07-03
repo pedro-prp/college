@@ -30,6 +30,10 @@
           <%= link_to "write a Review", new_movie_review_path(@movie) %>
         </div>
       </div>
+      <div class="col-md-7 col-offset-1">
+        <h1 class="review title"><%= @movie.title %></h1>
+        <p><%= @movie.description %></p>
+      </div>
     </div>
 </div>
 
