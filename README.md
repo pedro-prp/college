@@ -13,4 +13,4 @@ Para utilização é necessário a instalação do Ruby.<br/>
 <br/>
 Exercício Prático apresentado na matéria de OO pelo professor Renato Sampaio e produzido em **Ruby On Rails**.<br/>
 <br/>**Aluno:** Pedro Rodrigues Pereira - **matrícula:** 17/0062686<br/>
-**Aluno:**Daniel de Sousa Oliveira Melo Veras - **matrícula:** 17/0008371</br>
+**Aluno:** Daniel de Sousa Oliveira Melo Veras - **matrícula:** 17/0008371</br>
