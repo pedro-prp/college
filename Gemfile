@@ -30,7 +30,7 @@ gem 'devise', '~> 4.2'
 gem 'paperclip', '~> 6.0'
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
 gem 'jquery-rails'
-gem 'searchkick', '~> 1.1', '>= 1.1.2'
+gem 'searchkick'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
