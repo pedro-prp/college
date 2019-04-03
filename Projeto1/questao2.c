@@ -1,6 +1,6 @@
 #include <stdio.h>
 #define MAX 10
-
+ 
 void recebe_notas(float *notas, int *apr, int n){
     for(int i = 0; i < n; i++){
         if(*(notas + i) >= 6.0)
