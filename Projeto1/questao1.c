@@ -3,12 +3,10 @@
 int fneuronio(int *ent, int *pes, int limite)
 {
     int somap = 0;
-
     for(int i = 0; i < 10; i++)
     {
         somap += (*(ent + i))* (*(pes + i));
     }
-
     if(somap >= limite) return 1;
     else return 0;
 }
