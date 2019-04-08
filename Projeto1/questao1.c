@@ -30,7 +30,6 @@ int main()
         printf("Digite o valor do peso %d: ", i);
         scanf("%d", &pesos[i]);
         if(i + 1 == 10) printf("\n");
-        // printf("%c", (i + 1 == 10 ? '\n' : ' '));
     }
 
 // leitura do limite T
