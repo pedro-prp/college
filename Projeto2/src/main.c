@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 
+void avanc_string(char *v);
+
 int main(){
 
+    // ler imagem
     FILE *f;
 
     f = fopen("DataSet/asphalt/asphalt_01.txt", "r");
@@ -16,22 +19,80 @@ int main(){
         }
     }
 
+    // pega um pixel
     int i = 1;
     int j = 1;
+    double sum = 0;
 
     int area[3][3];
+    int binario[3][3];
 
     for(int a = i-1; a < i+2; a++){
         for(int b = j-1; b < j+2;b++){
             area[a][b] = matrix[a][b];
+            sum+= area[a][b];
         }
     }
 
+    printf("%lf\n",sum/9);
+
+    // faz a matriz binaria
     for(int a = 0; a < 3;a++){
-        for(int b = 0; b < 3; b++)
-            printf("%d ",area[1][1]);
+        for(int b = 0; b < 3; b++){
+            if(area[a][b] > (sum/9))
+                binario[a][b] = 1;
+            else
+                binario[a][b] = 0;
+
+            printf("%d ",binario[a][b]);
+        }
         printf("\n");
     }
 
+    // caracol
+
+    char bin_str[9];
+    
+    bin_str[0] = (char)binario[0][0]+48;
+    bin_str[1] = (char)binario[0][1]+48;
+    bin_str[2] = (char)binario[0][2]+48;
+    bin_str[3] = (char)binario[1][2]+48;
+    bin_str[4] = (char)binario[2][2]+48;
+    bin_str[5] = (char)binario[2][1]+48;
+    bin_str[6] = (char)binario[2][0]+48;
+    bin_str[7] = (char)binario[1][0]+48;
+    bin_str[8] = (char)binario[1][1]+48;
+
+    printf("%s 1\n",bin_str);
+
+    int result_ilbp = (int) strtol(bin_str, NULL, 2);;
+    
+    for(int a = 0; a < 8;a++){
+        avanc_string(&bin_str);
+        
+        printf("%s %d %d\n",bin_str,a+2, (int) strtol(bin_str, NULL, 2));
+        
+        if((int) strtol(bin_str, NULL, 2) < result_ilbp)
+            result_ilbp = (int) strtol(bin_str, NULL, 2);
+        
+    }
+
+    printf("%d\n",result_ilbp);
+
+    
     return 0;
+}
+void avanc_string(char *v){
+    char *ptr = v;
+    char *temp = malloc(9*sizeof(char));
+
+    temp[0] = ptr[8];
+    
+    for(int i = 1; i < 9; i++){
+        temp[i] = ptr[i-1];
+    }
+    for(int i = 0; i < 9; i++){
+        *(v+i) = *(temp+i);
+    }
+    free(temp);
 }
