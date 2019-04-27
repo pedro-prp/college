@@ -19,7 +19,7 @@ double get_area_pixel(int i, int j,int *matrix, int *area){
 void set_binary_matrix(int *area,int *binario, double sum){
     for(int a = 0; a < 3;a++){
         for(int b = 0; b < 3; b++){
-            if(*(area+(a*3)+b) > (sum/9))
+            if(*(area+(a*3)+b) >= (sum/9))
                 *(binario+(a*3)+b) = 1;
             else
                 *(binario+(a*3)+b) = 0;
@@ -51,7 +51,7 @@ int get_ilbp_numb(char *bin_str){
     return result_ilbp;
 }
 
-void set_ilbp_number_vector(int *number_ilbp,int result_ilbp){
+void set_ilbp_number_vector(double *number_ilbp,int result_ilbp){
     *(number_ilbp+result_ilbp) = *(number_ilbp+result_ilbp) + 1;
 }
 

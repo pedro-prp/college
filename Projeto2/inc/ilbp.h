@@ -10,6 +10,6 @@
     void set_binary_matrix(int *area,int *binario, double sum);
     void transform_bin_caracol(char *bin_str,int *binario);
     int get_ilbp_numb(char *bin_str);
-    void set_ilbp_number_vector(int *number_ilbp,int result_ilbp);
+    void set_ilbp_number_vector(double *number_ilbp,int result_ilbp);
 
 #endif
