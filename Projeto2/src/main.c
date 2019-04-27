@@ -13,61 +13,89 @@
 
 int main(){
 
-    FILE *f;
+    double *number_ilbp_media = (double*) calloc(512,sizeof(double));
 
-    f = fopen("DataSet/asphalt/asphalt_01.txt", "r");
+    for(int p = 1; p <= 25; p++){
 
-    int *matrix = (int*) malloc(1026*1026*sizeof(int));
+        FILE *f;
+        char filename[50];
+        char number_image[10];
+        
+        if(p <= 9)
+            strcpy(filename,"DataSet/asphalt/asphalt_0");
+        else
+            strcpy(filename,"DataSet/asphalt/asphalt_");
+        
+        // number image
+        sprintf(number_image, "%d", p);
+        strcat(filename,number_image);
+        
+        // extensao
+        strcat(filename,".txt");
+        printf("%s\n",filename);
 
-    for(int i = 0 ;i < 1025; i++){
-        for(int j = 0; j < 1025; j++){
-            char c;
-            fscanf(f,"%d%c", (matrix+(i*1026)+j),&c);
+
+        f = fopen(filename, "r");
+
+        int *matrix = (int*) malloc(1026*1026*sizeof(int));
+
+        for(int i = 0 ;i < 1025; i++){
+            for(int j = 0; j < 1025; j++){
+                char c;
+                fscanf(f,"%d%c", (matrix+(i*1026)+j),&c);
+            }
         }
+
+        int *number_ilbp = (int*) calloc(512,sizeof(int));
+
+        // pega um pixel
+        for(int i = 1; i < 1024; i++){
+            for(int j = 1; j < 1024; j++){
+                // Pega area envolta dos pixels
+                int *area = (int*) malloc(3*3*sizeof(int));
+                double sum = get_area_pixel(i, j, matrix, area);
+
+                // Seta a matriz binaria
+                int *binario = (int*) malloc(3*3*sizeof(int));
+                set_binary_matrix(area, binario, sum);
+
+                // caracol
+                char *bin_str = (char*) malloc(9*sizeof(char));
+                transform_bin_caracol(bin_str, binario);
+
+                // Pega o resultado do ilbp
+                int result_ilbp = get_ilbp_numb(bin_str);
+
+                // Seta vetor ilbp resultados
+                set_ilbp_number_vector(number_ilbp,result_ilbp);
+
+                // limpa memoria
+                free(area);
+                free(bin_str);
+                free(binario);
+            }
+        }
+
+        // Print vetor ilbp
+        for(int i = 0; i < 512; i++) {
+            *(number_ilbp_media+i) += *(number_ilbp+i);
+        }
+
+        // Limpa memoria
+        free(number_ilbp);
+        free(matrix);
+
+        // Fecha arquivo
+        fclose(f);
     }
 
-    int *number_ilbp = (int*) calloc(512,sizeof(int));
-
-    // pega um pixel
-    for(int i = 1; i < 1024; i++){
-        for(int j = 1; j < 1024; j++){
-            // Pega area envolta dos pixels
-            int *area = (int*) malloc(3*3*sizeof(int));
-            double sum = get_area_pixel(i, j, matrix, area);
-
-            // Seta a matriz binaria
-            int *binario = (int*) malloc(3*3*sizeof(int));
-            set_binary_matrix(area, binario, sum);
-
-            // caracol
-            char *bin_str = (char*) malloc(9*sizeof(char));
-            transform_bin_caracol(bin_str, binario);
-
-            // Pega o resultado do ilbp
-            int result_ilbp = get_ilbp_numb(bin_str);
-
-            // Seta vetor ilbp resultados
-            set_ilbp_number_vector(number_ilbp,result_ilbp);
-
-            // limpa memoria
-            free(area);
-            free(bin_str);
-            free(binario);
-        }
-    }
-
-    // Print vetor ilbp
-    for(int i = 0; i < 512; i++)
-        if(*(number_ilbp + i) != 0)
-            printf("%d = %d\n",i,*(number_ilbp+i));
     printf("\n");
-
-    // Limpa memoria
-    free(number_ilbp);
-    free(matrix);
-
-    // Fecha arquivo
-    fclose(f);
+    for(int i = 0; i < 512; i++){
+        if(*(number_ilbp_media+i) != 0){
+            printf("[%d] = %lf\n",i,*(number_ilbp_media+i)/25);
+        }
+    }
+    
 
     return 0;
 }
