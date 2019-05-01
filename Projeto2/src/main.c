@@ -1,5 +1,5 @@
-// #include "ilbp.c"
-// #include "glcm.c"
+#include "ilbp.c"
+#include "glcm.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,7 +11,7 @@ int *sorteio_teste_treino(){
     srand(time(NULL));
     int *n = (int *)malloc(50*sizeof(int));
 
-    int x = 1, y = 0, z = 0;
+    int x = 1, y = 0;
     n[0] = rand() % 50 + 1;
 
     while(x < 50)
@@ -39,7 +39,6 @@ int *sorteio_teste_treino(){
 int salva_arquivos(int *vetor, int teste_treino, int grama_asfalto){
     char nome[20];
     char diretorio[256];
-    char linha[256];
     int i = 0;
     int tipo;
 
@@ -70,16 +69,16 @@ int salva_arquivos(int *vetor, int teste_treino, int grama_asfalto){
     FILE *arquivo = NULL;
     arquivo = fopen(nome, "wt");
 
-   int aux, aux2;
-   char temp[50];
+    int aux;
+    char temp[50];
 
    for(i = 0; i < 25; i++){
         if(vetor[i] < 10){
             aux = sprintf(temp, "%s0%d.txt\n", diretorio, vetor[i]);
-            fprintf(arquivo, temp);
+            fprintf(arquivo, "%s", temp);
         }else if(vetor[i] >= 10){
            aux = sprintf(temp, "%s%d.txt\n", diretorio, vetor[i]);
-           fprintf(arquivo, temp);
+           fprintf(arquivo, "%s", temp);
        }
    }
    fclose(arquivo);
@@ -100,7 +99,7 @@ int main()
     int grama_teste[25] = {0};
 
     // printf("Sorteio de arquivos de Treinamento!\n");
-    for(int i = 0; i < (25); ++i){
+    for(int i = 0; i < 25; ++i){
         asfalto_treino[i] = *(ordem_imagem_asfalto + i);
         grama_treino[i] = *(ordem_imagem_grama + i);
     }

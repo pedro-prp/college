@@ -1,4 +1,5 @@
 #include "ilbp.h"
+#include <math.h>
 
 double get_area_pixel(int i, int j,int *matrix, int *area){
     int lin = 0, col = 0;
