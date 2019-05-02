@@ -70,3 +70,16 @@ void avanc_string(char *v){
     }
     free(temp);
 }
+
+double distancia_euclidiana(double *number_ilbp, double *number_ilbp_media){
+    double sum = 0.0;
+
+    for(int i = 0; i < 512;i++){
+        double dif = number_ilbp_media[i] - number_ilbp[i];
+        sum += pow(dif,2);
+    }
+
+    double dist = sqrt(sum);
+
+    return dist;
+}
