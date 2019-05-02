@@ -1,5 +1,6 @@
 CC := gcc
 CFLAGS := -Wall
+CFLAGS := -lm
 
 SRCFILES := $(wildcard src/*.c)
 
