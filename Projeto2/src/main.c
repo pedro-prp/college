@@ -1,5 +1,5 @@
-#include "ilbp.c"
-#include "glcm.c"
+#include "ilbp.h"
+#include "glcm.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -84,9 +84,45 @@ int salva_arquivos(int *vetor, int teste_treino, int grama_asfalto){
    fclose(arquivo);
    return tipo;
 }
+// Fazer operações ILBP
+void ILBP(double *number_ilbp, int *image){
+    for(int i = 1; i < 1024; i++){
+        for(int j = 1; j < 1024; j++){
+            // Pega area envolta dos pixels
+            int *area = (int*) malloc(3*3*sizeof(int));
+            double sum = get_area_pixel(i, j, image, area);
+
+            // Seta a matriz binaria
+            int *binario = (int*) malloc(3*3*sizeof(int));
+            set_binary_matrix(area, binario, sum);
+
+            // Caracol
+            char *bin_str = (char*) malloc(9*sizeof(char));
+            transform_bin_caracol(bin_str, binario);
+
+            // Pega o resultado do ilbp
+            int result_ilbp = get_ilbp_numb(bin_str);
+
+            // Seta vetor ilbp resultados
+            set_ilbp_number_vector(number_ilbp, result_ilbp);
+
+            // limpa memoria
+            free(area);
+            free(bin_str);
+            free(binario);
+        }
+    }
+}
+
+
+
+
 
 int main()
 {
+    double * result_glcm = NULL;
+    result = (*double)malloc(512*sizeof(double));
+
     int * ordem_imagem_asfalto;
     int * ordem_imagem_grama;
 
@@ -118,29 +154,36 @@ int main()
     // Pega cada caminho salvo nos arquivos
     FILE *p_asphalt = fopen("treino_asphalt.txt", "r");
     FILE *p_grass = fopen("treino_grass.txt", "r");
-    char path_asphalt[30];
-    char path_grass[30];
+    char path_asphalt[31];
+    char path_grass[27];
 
-    int *asphalt_image = (int*) malloc(1026*1026*sizeof(int));
-    int *grass_image = (int*) malloc(1026*1026*sizeof(int));
+    int **asphalt_image = (int**) malloc(1026*1026*sizeof(int));
+    int **grass_image = (int**) malloc(1026*1026*sizeof(int));
 
     // Abre cada imagem
-    for(int i = 0; i < 2; i++)
+    for(int i = 0; i < 25; i++)
     {
-        fgets(path_asphalt, 30, p_asphalt);
-        fgets(path_grass, 30, p_grass);
+        fgets(path_asphalt, 31, p_asphalt);
+        fgets(path_grass, 27, p_grass);
 
         FILE *f_asphalt = fopen(path_asphalt, "r");
         FILE *f_grass = fopen(path_grass, "r");
 
     // Salva a imagem lida
-        int j = 0;
-        while(!feof(f_asphalt))
+        char c;
+
+        for(int i = 0; i < 1026; i++)
         {
-            char c;
-            fscanf(f_asphalt,"%d%c", (asphalt_image+j), &c);
-            j++;
+            for(int j = 0; j < 1026; j++)
+            {
+                fscanf(f_asphalt,"%d%c", (asphalt_image+(i*1026)+j, &c);
+                fscanf(f_grass,"%d%c", (grass_image+(i*1026)+j, &c);
+            }
         }
+
+        glcm(f_grass, result_glcm);
+
+
 
         // Dados para normalizar vetor
         int menor_asphalt = 9999999;
