@@ -156,6 +156,7 @@ int main()
     char caminho_asphalt[31];
     char caminho_grass[27];
 
+    double *media_grass = (double*) calloc(1024,sizeof(double));
     //
     //
     // TREINAMENTO GRAMA
@@ -201,12 +202,14 @@ int main()
         glcm(grass_image, freq_glcm);
 
         // Concatena vetores
-        int * vetor_grass = (int*)malloc(512*2*sizeof(int));
-
+        int * vetor_grass = (int*)malloc(536*sizeof(int));
         for(int i = 0; i < 512; i++)
         {
             *(vetor_grass + i) = freq_ilbp[i];
-            *(vetor_grass + 512 + i) = freq_glcm[i];
+        }
+            
+        for(int i = 0; i < 24; i++){    
+            *(vetor_grass + 511 + i) = freq_glcm[i];
         }
 
         // Dados para normalizar vetor
@@ -219,11 +222,9 @@ int main()
            if(*(vetor_grass+i) > maior_grass)    maior_grass = *(vetor_grass+i);
         }
 
-        double *media_grass = (double*) calloc(1024,sizeof(double));
-
         // Normalizando vetor e construindo vetor media
         for(int i = 0; i < 1024; i++){
-            *(media_grass+i) += (((*(media_grass+i)) - menor_grass) /(maior_grass - menor_grass));
+            *(media_grass+i) += (((*(vetor_grass+i)) - menor_grass) /(maior_grass - menor_grass))/25;
         }
 
         for(int i = 0; i < 1026; i++)
@@ -233,10 +234,11 @@ int main()
             free(grass_image);
             fclose(f_grass);
             free(img_grass);
-            free(vector_grass);
             free(freq_ilbp);
             free(freq_glcm);
     }
+
+    double *media_asphalt = (double*) calloc(1024,sizeof(double));
     //
     //
     // TREINAMENTO ASFALTO
@@ -282,12 +284,14 @@ int main()
         glcm(asphalt_image, freq_glcm);
 
         // Concatena vetores
-        int * vetor_asphalt = (int*)malloc(512*2*sizeof(int));
+        int * vetor_asphalt = (int*)malloc(536*sizeof(int));
 
         for(int i = 0; i < 512; i++)
         {
             *(vetor_asphalt + i) = freq_ilbp[i];
-            *(vetor_asphalt + 512 + i) = freq_glcm[i];
+        }
+        for(int i = 0; i < 24;i++){
+            *(vetor_asphalt + 511 + i) = freq_glcm[i];
         }
 
         // Dados para normalizar vetor
@@ -300,18 +304,15 @@ int main()
            if(*(vetor_asphalt+i) > maior_asphalt)    maior_asphalt = *(vetor_asphalt+i);
         }
 
-        double *media_asphalt = (double*) calloc(1024,sizeof(double));
-
         // Normalizando vetor e construindo vetor media
         for(int i = 0; i < 1024; i++){
-            *(media_asphalt+i) += (((*(media_asphalt+i)) - menor_asphalt) /(maior_asphalt - menor_asphalt));
+            *(media_asphalt+i) += (((*(vetor_asphalt+i)) - menor_asphalt) /(maior_asphalt - menor_asphalt));
         }
 
         for(int i = 0; i < 1026; i++) free(asphalt_image[i]);
         free(asphalt_image);
         fclose(f_asphalt);
         free(img_asphalt);
-        free(vector_asphalt);
         free(freq_ilbp);
         free(freq_glcm);
     }
