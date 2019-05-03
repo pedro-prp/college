@@ -54,17 +54,14 @@ void g_Right(int **image, double *result){
 }
 
 void g_Left(int **image, double *result){
-
 	int i, j, **glcm_left;
 	glcm_left = (int **)calloc(GMAX, sizeof(int *));
-
 	for (i = 0; i < GMAX; i++){
 		glcm_left[i] = (int *)calloc(GMAX, sizeof(int));
 	}
-
 	for (i = 0; i < GMAX; i++){
 		for (j = 0; j <GMAX; j++){
-			if (j != GMAX){
+			if (j != 0){
 				glcm_left[image[i][j]][image[i][j - 1]]++;
 			}
 		}

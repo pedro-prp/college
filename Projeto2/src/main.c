@@ -174,6 +174,7 @@ int main()
     char caminho_asphalt[31];
     char caminho_grass[27];
 
+    printf("TREINANDO GRAMA\n");
     media_grass = (double *)calloc(1024, sizeof(double));
     //
     //
@@ -192,6 +193,7 @@ int main()
 
         // fgets(path_grass, 27, p_grass);
         fscanf(p_grass,"%s",path_grass);
+        printf("%s\n",path_grass);
         FILE *f_grass = fopen(path_grass, "r");
 
         // Salva a imagem lida
@@ -200,7 +202,6 @@ int main()
             for (int j = 0; j < 1025; j++)
                 fscanf(f_grass, "%d%*c", &grass_image[i][j]);
         }
-
         // Aloca espaço para os vetores de resultados
         double *freq_glcm = (double *)malloc(24 * sizeof(double));
         double *freq_ilbp = (double *)malloc(512 * sizeof(double));
@@ -230,6 +231,7 @@ int main()
         for(int i = 0; i < 24; i++){
             *(vetor_grass + 511 + i) = freq_glcm[i];
         }
+
         // Dados para normalizar vetor
         int menor_grass = 9999999;
         int maior_grass = -1;
@@ -246,7 +248,8 @@ int main()
         // Normalizando vetor e construindo vetor media
         for (int i = 0; i < 536; i++)
         {
-            *(media_grass + i) += (((*(vetor_grass + i)) - menor_grass) / (maior_grass - menor_grass))/25;
+            if(*(vetor_grass+i) != 0)
+                *(media_grass + i) += (((*(vetor_grass + i)) - menor_grass) / (maior_grass - menor_grass))/25;
         }
 
         for (int i = 0; i < 1026; i++)
@@ -260,6 +263,9 @@ int main()
         free(freq_ilbp);
         free(freq_glcm);
     }
+    printf("TREINOU GRAMA\n");
+
+    printf("TREINANDO ASFALTO\n");
     media_asphalt = (double *)calloc(1024, sizeof(double));
     //
     //
@@ -278,6 +284,7 @@ int main()
 
         // fgets(path_asphalt, 27, p_asphalt);
         fscanf(p_asphalt,"%s",path_asphalt);
+        printf("%s\n",path_asphalt);
         FILE *f_asphalt = fopen(path_asphalt, "r");
 
         // Salva a imagem lida
@@ -346,7 +353,7 @@ int main()
         free(freq_ILBP);
         free(freq_glcm);
     }
-
+    printf("TREINOU ASFALTO\n");
     //
     //
     // TESTE GRAMA
