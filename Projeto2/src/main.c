@@ -354,6 +354,7 @@ int main()
         free(freq_glcm);
     }
     printf("TREINOU ASFALTO\n");
+    printf("TESTES\n");
     //
     //
     // TESTE GRAMA
@@ -371,6 +372,7 @@ int main()
 
         // fgets(caminho_grass, 27, q_grass);
         fscanf(q_grass,"%s",caminho_grass);
+        printf("%s\n",caminho_grass);
         FILE *f_grass = fopen(caminho_grass, "r");
 
         // Salva a imagem lida
@@ -381,7 +383,7 @@ int main()
         }
 
         // Aloca espaço para os vetores de resultados
-        double *freq_glcm_teste = (double *)malloc(512 * sizeof(double));
+        double *freq_glcm_teste = (double *)malloc(24 * sizeof(double));
         double *freq_ilbp_teste = (double *)malloc(512 * sizeof(double));
 
         // Adequa matriz para ser lida pelo ILBP
@@ -400,12 +402,14 @@ int main()
         glcm(grass_image_teste, freq_glcm_teste);
 
         // Concatena vetores
-        int *vetor_grass_teste = (int *)malloc(512 * 2 * sizeof(int));
+        int *vetor_grass_teste = (int *)malloc(536*sizeof(int));
 
         for (int i = 0; i < 512; i++)
         {
             *(vetor_grass_teste + i) = freq_ilbp_teste[i];
-            *(vetor_grass_teste + 512 + i) = freq_glcm_teste[i];
+        }
+        for(int i = 0; i < 24;i++){
+            *(vetor_grass_teste + 511 + i) = freq_glcm_teste[i];
         }
 
         // Dados para normalizar vetor
@@ -413,7 +417,7 @@ int main()
         int maior_grass_teste = -1;
 
         // Acha o menor e o maior número
-        for (int i = 0; i < 1024; i++)
+        for (int i = 0; i < 536; i++)
         {
             if (*(vetor_grass_teste + i) < menor_grass_teste)
                 menor_grass_teste = *(vetor_grass_teste + i);
@@ -421,12 +425,12 @@ int main()
                 maior_grass_teste = *(vetor_grass_teste + i);
         }
 
-        double *normal_grass_teste = (double *)calloc(1024, sizeof(double));
+        double *normal_grass_teste = (double *)calloc(536, sizeof(double));
 
         // Normalizando vetor
-        for (int i = 0; i < 1024; i++)
+        for (int i = 0; i < 536; i++)
         {
-            *(normal_grass_teste + i) = (((*(normal_grass_teste + i)) - menor_grass_teste) / (maior_grass_teste - menor_grass_teste));
+            *(normal_grass_teste + i) = (((*(vetor_grass_teste + i)) - menor_grass_teste) / (maior_grass_teste - menor_grass_teste));
         }
 
         double dist_grass;
@@ -467,6 +471,7 @@ int main()
 
         // fgets(caminho_asphalt, 27, q_asphalt);
         fscanf(q_grass,"%s",caminho_asphalt);
+        printf("%s\n",caminho_asphalt);
         FILE *f_asphalt = fopen(caminho_grass, "r");
 
         // Salva a imagem lida
@@ -477,7 +482,7 @@ int main()
         }
 
         // Aloca espaço para os vetores de resultados
-        double *freq_glcm_teste = (double *)malloc(512 * sizeof(double));
+        double *freq_glcm_teste = (double *)malloc(24 * sizeof(double));
         double *freq_ilbp_teste = (double *)malloc(512 * sizeof(double));
 
         // Adequa matriz para ser lida pelo ilbp
@@ -496,12 +501,14 @@ int main()
         glcm(asphalt_image_teste, freq_glcm_teste);
 
         // Concatena vetores
-        int *vetor_asphalt_teste = (int *)malloc(512 * 2 * sizeof(int));
+        int *vetor_asphalt_teste = (int *)malloc(536*sizeof(int));
 
         for (int i = 0; i < 512; i++)
         {
             *(vetor_asphalt_teste + i) = freq_ilbp_teste[i];
-            *(vetor_asphalt_teste + 512 + i) = freq_glcm_teste[i];
+        }
+        for(int i = 0; i < 24; i++){    
+            *(vetor_asphalt_teste + 511 + i) = freq_glcm_teste[i];
         }
 
         // Dados para normalizar vetor
@@ -509,7 +516,7 @@ int main()
         int maior_asphalt_teste = -1;
 
         // Acha o menor e o maior número
-        for (int i = 0; i < 1024; i++)
+        for (int i = 0; i < 536; i++)
         {
             if (*(vetor_asphalt_teste + i) < menor_asphalt_teste)
                 menor_asphalt_teste = *(vetor_asphalt_teste + i);
@@ -517,12 +524,12 @@ int main()
                 maior_asphalt_teste = *(vetor_asphalt_teste + i);
         }
 
-        double *normal_asphalt_teste = (double *)calloc(1024, sizeof(double));
+        double *normal_asphalt_teste = (double *)calloc(536, sizeof(double));
 
         // Normalizando vetor
-        for (int i = 0; i < 1024; i++)
+        for (int i = 0; i < 536; i++)
         {
-            *(normal_asphalt_teste + i) = (((*(normal_asphalt_teste + i)) - menor_asphalt_teste) / (maior_asphalt_teste - menor_asphalt_teste));
+            *(normal_asphalt_teste + i) = (((*(vetor_asphalt_teste + i)) - menor_asphalt_teste) / (maior_asphalt_teste - menor_asphalt_teste));
         }
 
         double dist_grass;
@@ -531,7 +538,7 @@ int main()
         double dist_asphalt;
         dist_asphalt = distancia_euclidiana(normal_asphalt_teste, media_asphalt);
 
-        if (dist_grass < dist_asphalt)
+        if (dist_grass > dist_asphalt)
             acertos++;
         else
             falsa_rejeicao++;
@@ -547,6 +554,10 @@ int main()
         free(freq_glcm_teste);
         fclose(f_asphalt);
     }
+
+    printf("Acertos: %lf\n",acertos);
+    printf("Falsa Rejeicao: %lf\n",falsa_rejeicao);
+    printf("Falsa Aceitacao: %lf\n",falsa_aceitacao);
 
     free(media_grass);
     free(media_asphalt);
