@@ -6,18 +6,6 @@
 #include <time.h>
 #include <unistd.h>
 
-void distancia_euclidiana(int *teste, int *media){
-	float distancia=0;
-	for(int i = 0; i<536; i++){
-		float x = 0;
-		x = media[i]-teste[i];
-		distancia+= pow(x,2);
-	}
-	distancia = sqrt(distancia);
-	return distancia;
-}
-
-
 // sorteia aleatoriamente 50 números, 25 pra teste e 25 pra treinamento
 int *sorteio_teste_treino()
 {
@@ -512,8 +500,8 @@ int main()
         {
             if (*(vetor_asphalt_teste + i) < menor_asphalt_teste)
                 menor_asphalt_teste = *(vetor_asphalt_teste + i);
-            if (*(vetor_asphalt_teste + i) > maior_ashpalt_teste)
-                maior_ashpalt_teste = *(vetor_asphalt_teste + i);
+            if (*(vetor_asphalt_teste + i) > maior_asphalt_teste)
+                maior_asphalt_teste = *(vetor_asphalt_teste + i);
         }
 
         double *normal_asphalt_teste = (double *)calloc(1024, sizeof(double));
@@ -521,7 +509,7 @@ int main()
         // Normalizando vetor
         for (int i = 0; i < 1024; i++)
         {
-            *(normal_asphalt_teste + i) = (((*(normal_asphalt_teste + i)) - menor_asphalt_teste) / (maior_ashpalt_teste - menor_asphalt_teste));
+            *(normal_asphalt_teste + i) = (((*(normal_asphalt_teste + i)) - menor_asphalt_teste) / (maior_asphalt_teste - menor_asphalt_teste));
         }
 
         double dist_grass;
