@@ -6,6 +6,18 @@
 #include <time.h>
 #include <unistd.h>
 
+distancia_euclidiana(int *teste, int *media){
+	float distancia=0;
+	for(int i = 0; i<536; i++){
+		float x = 0;
+		x = media[i]-teste[i];
+		distancia+= pow(x,2);
+	}
+	distancia = sqrt(distancia);
+	return distancia;
+}
+
+
 // sorteia aleatoriamente 50 números, 25 pra teste e 25 pra treinamento
 int *sorteio_teste_treino(){
     srand(time(NULL));
@@ -85,7 +97,7 @@ int salva_arquivos(int *vetor, int teste_treino, int grama_asfalto){
    return tipo;
 }
 // Fazer operações ILBP
-void ILBP(double *number_ilbp, int *image){
+void ilbp(double *number_ilbp, int *image){
     for(int i = 1; i < 1024; i++){
         for(int j = 1; j < 1024; j++){
             // Pega area envolta dos pixels
@@ -398,6 +410,7 @@ int main()
         else falsa_rejeicao++;
 
         for(int i = 0; i < 1026; i++) free(grass_image_teste[i]);
+        
         free(grass_image_teste);
         free(normal_grass_teste);
         free(vetor_grass_teste);
@@ -461,19 +474,19 @@ int main()
 
         // Dados para normalizar vetor
         int menor_asphalt_teste = 9999999;
-        int maior_ashpalt_teste = -1;
+        int maior_asphalt_teste = -1;
 
         // Acha o menor e o maior número
         for(int i = 0; i < 1024; i++){
            if(*(vetor_asphalt_teste+i) < menor_asphalt_teste)    menor_asphalt_teste = *(vetor_asphalt_teste+i);
-           if(*(vetor_asphalt_teste+i) > maior_ashpalt_teste)    maior_ashpalt_teste = *(vetor_asphalt_teste+i);
+           if(*(vetor_asphalt_teste+i) > maior_asphalt_teste)    maior_asphalt_teste = *(vetor_asphalt_teste+i);
         }
 
         double *normal_asphalt_teste = (double*) calloc(1024,sizeof(double));
 
         // Normalizando vetor
         for(int i = 0; i < 1024; i++){
-            *(normal_asphalt_teste+i) = (((*(normal_asphalt_teste + i)) - menor_asphalt_teste) /(maior_alphalt_teste - menor_asphalt_teste));
+            *(normal_asphalt_teste+i) = (((*(normal_asphalt_teste + i)) - menor_asphalt_teste) /(maior_asphalt_teste - menor_asphalt_teste));
         }
 
         double dist_grass;
@@ -494,7 +507,7 @@ int main()
         free(img_asphalt_teste);
         free(freq_ilbp_teste);
         free(freq_glcm_teste);
-        fclose(f_grass);
+        fclose(f_asphalt);
     }
 
     free(media_grass);
