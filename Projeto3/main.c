@@ -11,21 +11,15 @@ void printa_menu();
 //  CEP (inteiro sem sinal); e
 //  Data de nascimento (string no formato dd/mm/aaaa).
 
-struct Registro {
+struct Contato {
     char nome[100];
     char telefone[10];
     char endereco[100];
     unsigned int cep;
     char dtNascimento[10];
+    struct Contato *prox;
+    struct Contato *prev;
 
-};typedef struct Registro registro;
-
-struct Contato {
-    
-    registro dados;
-    
-    struct Contatos *prox;
-    struct Contatos *ant;
 };typedef struct Contato contato;
 
 void printa_menu(){
@@ -42,9 +36,22 @@ contato *listaVazia(){
     return NULL;
 }
 
-void *criar_contato(contato *contatos, contato*novo){
+// void criar_contato(contato *contatos, contato*novo){
     
+// }
+
+void abrir_data_base(){
+    FILE *f;
+    char c;
+    f = fopen("contatos.txt", "r");
+
+    while(!(feof(f))){
+        // Pega 1 contato
+        
+    }
+    printf("\n");
 }
+
 
 int menu(){
     int d;
@@ -62,7 +69,7 @@ int menu(){
             printf("Jose 2\n");
             break;
         case 3:
-            printf("Jose 3\n");
+            abrir_data_base();
             break;
         default:
             break;
