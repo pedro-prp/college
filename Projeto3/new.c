@@ -14,15 +14,16 @@ typedef struct Contato{
 }contato;
 
 contato *listaVazia();
+contato *pegarDadosContato();
 contato *geraElem(char *,char *,char *,char *, int);
 contato *firstRead(contato *);
 contato *adicionarContatoSort(contato *, contato *);
 contato *removerContatoString(contato *, char *);
+contato *menu(contato *, int *);
 
 char *stringToLower(char *);
 
 int contaLinha();
-int menu(contato *);
 
 void printaMenu();
 void printaString(contato *,char *);
@@ -37,7 +38,7 @@ int main(){
 
     while(flag == 0){
         printaMenu();
-        flag = menu(lista);
+        lista = menu(lista,&flag);
     }
 
     printf("\nBye World\n\n");
@@ -256,14 +257,16 @@ void printaString(contato *lista, char *elem){
     }
 }
 
-int menu(contato *lista){
+contato *menu(contato *lista, int *flag){
     char D;
-    int flag = 0;
     scanf(" %c",&D);
     char *str = (char *) malloc(101*(sizeof(char)));
     switch (D){
         case '1':
             printf("Digite os dados do novo contato:\n\n");
+            contato *new;
+            new = pegarDadosContato();
+            lista = adicionarContatoSort(lista, new);
             break;
         case '2':
             printf("Digite o nome que deseja excluir: ");
@@ -281,10 +284,46 @@ int menu(contato *lista){
         case '5':
             printf("Saindo\n");
             atualizarArquivo(lista);
-            flag = 1;
+            *flag = 1;
             break;
     }
-    return flag;
+    return lista;
+}
+
+contato *pegarDadosContato(){
+    contato *new;
+    char *nome = (char *) malloc(101*(sizeof(char)));
+    char *telefone = (char *) malloc(11*(sizeof(char)));
+    char *endereco = (char *) malloc(101*(sizeof(char)));
+    unsigned int cep = 0;
+    char *dtNascimento = (char *) malloc(101*(sizeof(char)));
+    char *trash = (char *) malloc(101*(sizeof(char)));
+
+    scanf(" %[^\n]s",nome);
+    strtok(nome, "\n");
+
+    scanf(" %[^\n]s",telefone);
+    strtok(telefone, "\n");
+
+    scanf(" %[^\n]s",endereco);
+    strtok(endereco, "\n");
+
+    scanf(" %[^\n]s",trash);
+    strtok(trash, "\n");
+    cep = (unsigned int) strtol(trash, (char **)NULL, 10);
+
+    scanf(" %[^\n]s",dtNascimento);
+    strtok(dtNascimento, "\n");
+
+    new = geraElem(nome,telefone,endereco,dtNascimento,cep);
+
+    free(nome);
+    free(telefone);
+    free(endereco);
+    free(dtNascimento);
+    free(trash);
+
+    return new;
 }
 
 void printaMenu(){
