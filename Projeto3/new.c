@@ -7,7 +7,7 @@ typedef struct Contato{
     char *nome;
     char *telefone;
     char *endereco;
-    unsigned int cep;
+    unsigned int *cep;
     char *dtNascimento;
     struct Contato *prox;
     struct Contato *ant;
@@ -29,6 +29,8 @@ void printaMenu();
 void printaString(contato *,char *);
 void printaLista(contato *);
 void atualizarArquivo(contato *);
+void freeContato(contato *);
+void freeLista(contato *);
 
 int main(){
     int flag = 0;
@@ -41,7 +43,6 @@ int main(){
         lista = menu(lista,&flag);
     }
 
-    printf("\nBye World\n\n");
     return 0;
 }
 
@@ -119,6 +120,9 @@ contato *adicionarContatoSort(contato *lista, contato *elem){
         }
 
         free(it);
+        free(str1);
+        free(str2);
+
         return lista;
     }
 }
@@ -128,12 +132,13 @@ contato *geraElem(char *nome,char *telefone,char * endereco, char *dtNascimento,
     elem->nome = (char*) malloc(101*(sizeof(char)));
     elem->telefone = (char*) malloc(11*(sizeof(char)));
     elem->endereco = (char*) malloc(101*(sizeof(char)));
+    elem->cep = (unsigned int*) malloc(sizeof(unsigned int));
     elem->dtNascimento = (char*) malloc(11*(sizeof(char)));
 
     strcpy(elem->nome, nome);
     strcpy(elem->telefone, telefone);
     strcpy(elem->endereco, endereco);
-    elem->cep = cep;
+    *elem->cep = cep;
     strcpy(elem->dtNascimento, dtNascimento);
 
     return elem;
@@ -173,15 +178,20 @@ contato *firstRead(contato *lista){
 
             fgets(nome,"%[^\n]s",f);
             strtok(nome, "\n");
+
             fgets(telefone,"%[^\n]s",f);
             strtok(telefone, "\n");
+
             fgets(endereco,"%[^\n]s",f);
             strtok(endereco, "\n");
+
             fgets(trash,"%[^\n]s",f);
             strtok(trash, "\n");
             cep = (unsigned int) strtol(trash, (char **)NULL, 10);
+
             fgets(dtNascimento,"%[^\n]s",f);
             strtok(dtNascimento, "\n");
+
             fgets(trash,"%[^\n]s",f);
             strtok(trash, "\n");
 
@@ -195,6 +205,8 @@ contato *firstRead(contato *lista){
             free(trash);
         }
 
+    }else{
+        f = fopen("contatos.txt", "w");
     }
 
     fclose(f);
@@ -203,10 +215,15 @@ contato *firstRead(contato *lista){
 
 contato *removerContatoString(contato *lista, char *elem){
     contato *it;
+    char *str1 = (char *) malloc(101*(sizeof(char)));
+    char *str2 = (char *) malloc(101*(sizeof(char)));
+
     int i = 0;
 
     for(it = lista; it != NULL; it = it->prox){
-        if(strstr(it->nome,elem) != NULL){
+        str1 = stringToLower(it->nome);
+        str2 = stringToLower(elem);
+        if(strstr(str1,str2) != NULL){
             if(i == 0){
                 
                 lista = it->prox;
@@ -228,33 +245,45 @@ contato *removerContatoString(contato *lista, char *elem){
         }
         i++;
     }
+    free(str1);
+    free(str2);
+
     return lista;
 }
 
 void printaLista(contato *lista){
+    printf("\n");
     contato *it;
     for(it = lista; it != NULL; it = it->prox){
-        printf("%s\n",it->nome);
-        printf("%s\n",it->telefone);
-        printf("%s\n",it->endereco);
-        printf("%u\n",it->cep);
-        printf("%s\n----\n",it->dtNascimento);
+        printf("(*) %s\n",it->nome);
+        printf("\t%s\n",it->telefone);
+        printf("\t%s\n",it->endereco);
+        printf("\t%u\n",*it->cep);
+        printf("\t%s\n\n",it->dtNascimento);
 
     }
 }
 
 void printaString(contato *lista, char *elem){
     contato *it;
+    char *str1 = (char *) malloc(101*(sizeof(char)));
+    char *str2 = (char *) malloc(101*(sizeof(char)));
+    printf("\n");
 
     for(it = lista; it != NULL; it = it->prox){
-        if(strstr(it->nome, elem) != NULL){
-            printf("%s\n",it->nome);
-            printf("%s\n",it->telefone);
-            printf("%s\n",it->endereco);
-            printf("%u\n",it->cep);
-            printf("%s\n----\n",it->dtNascimento);
+        str1 = stringToLower(it->nome);
+        str2 = stringToLower(elem);
+        if(strstr(str1, str2) != NULL){
+            printf("(*) %s\n",it->nome);
+            printf("\t%s\n",it->telefone);
+            printf("\t%s\n",it->endereco);
+            printf("\t%u\n",*it->cep);
+            printf("\t%s\n\n",it->dtNascimento);
         }
     }
+
+    free(str1);
+    free(str2);
 }
 
 contato *menu(contato *lista, int *flag){
@@ -269,7 +298,7 @@ contato *menu(contato *lista, int *flag){
             lista = adicionarContatoSort(lista, new);
             break;
         case '2':
-            printf("Digite o nome que deseja excluir: ");
+            printf("Digite o nome do contato que deseja excluir: ");
             scanf("%s",str);
             lista = removerContatoString(lista,str);
             break;
@@ -282,8 +311,11 @@ contato *menu(contato *lista, int *flag){
             printaLista(lista);
             break;
         case '5':
-            printf("Saindo\n");
+            printf("Saindo...\n");
+            
             atualizarArquivo(lista);
+            
+            freeLista(lista);
             *flag = 1;
             break;
     }
@@ -299,19 +331,24 @@ contato *pegarDadosContato(){
     char *dtNascimento = (char *) malloc(101*(sizeof(char)));
     char *trash = (char *) malloc(101*(sizeof(char)));
 
+    printf("Nome: ");
     scanf(" %[^\n]s",nome);
     strtok(nome, "\n");
 
+    printf("Telefone: ");
     scanf(" %[^\n]s",telefone);
     strtok(telefone, "\n");
 
+    printf("Endereço: ");
     scanf(" %[^\n]s",endereco);
     strtok(endereco, "\n");
 
+    printf("cep: ");
     scanf(" %[^\n]s",trash);
     strtok(trash, "\n");
     cep = (unsigned int) strtol(trash, (char **)NULL, 10);
 
+    printf("Data de nascimento (xx/xx/xx): ");
     scanf(" %[^\n]s",dtNascimento);
     strtok(dtNascimento, "\n");
 
@@ -349,6 +386,27 @@ char *stringToLower(char *str){
     return c;
 }
 
+void freeContato(contato *elem){
+    free(elem->nome);
+    free(elem->telefone);
+    free(elem->endereco);
+    free(elem->cep);
+    free(elem->dtNascimento);
+
+    free(elem);
+}
+
+void freeLista(contato *lista){
+    contato *it;
+    contato *aux;
+    for(it=lista; it != NULL; it = aux){
+        aux = it->prox;
+        
+        freeContato(it);
+    }
+    lista = NULL;
+}
+
 void atualizarArquivo(contato *lista){
     FILE *f;
     f = fopen("contatos.txt", "w");
@@ -365,7 +423,7 @@ void atualizarArquivo(contato *lista){
         fputs(it->endereco,f);
         fputs("\n",f);
 
-        sprintf(trash, "%u", it->cep);
+        sprintf(trash, "%u", *it->cep);
         fputs(trash,f);
         fputs("\n",f);
 
