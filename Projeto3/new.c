@@ -5,65 +5,32 @@
 
 typedef struct Contato{
     char *nome;
+    char *telefone;
+    char *endereco;
+    unsigned int cep;
+    char *dtNascimento;
     struct Contato *prox;
     struct Contato *ant;
 }contato;
 
 contato *listaVazia();
-contato *geraElem(char *);
+contato *geraElem(char *,char *,char *,char *, int);
+contato *firstRead(contato *);
 contato *adicionarContatoSort(contato *, contato *);
+int contaLinha();
 void printaLista(contato *);
 
 int main(){
 
     printf("\nHello World\n\n");
     contato *lista = (contato*) malloc(sizeof(contato));
+    
     lista = listaVazia();
 
-    contato *new;
-    char *nome = (char*) malloc(101*(sizeof(char)));
-    strcpy(nome,"jose");
-    new = geraElem(nome);
-
-    contato *new1;
-    char *nome1 = (char*) malloc(101*(sizeof(char)));
-    strcpy(nome1,"pedro");
-    new1 = geraElem(nome1);
-
-    contato *new2;
-    char *nome2 = (char*) malloc(101*(sizeof(char)));
-    strcpy(nome2,"bia");
-    new2 = geraElem(nome2);
-
-    contato *new3;
-    char *nome3 = (char*) malloc(101*(sizeof(char)));
-    strcpy(nome3,"manuela");
-    new3 = geraElem(nome3);
-
-    contato *new4;
-    char *nome4 = (char*) malloc(101*(sizeof(char)));
-    strcpy(nome4,"kamile");
-    new4 = geraElem(nome4);
-
-    contato *new5;
-    char *nome5 = (char*) malloc(101*(sizeof(char)));
-    strcpy(nome5,"zannier");
-    new5 = geraElem(nome5);
-
-    contato *new6;
-    char *nome6 = (char*) malloc(101*(sizeof(char)));
-    strcpy(nome6,"Ana");
-    new6 = geraElem(nome6);
-
-    lista = adicionarContatoSort(lista,new);
-    lista = adicionarContatoSort(lista,new1);
-    lista = adicionarContatoSort(lista,new2);
-    lista = adicionarContatoSort(lista,new3);
-    lista = adicionarContatoSort(lista,new4);
-    lista = adicionarContatoSort(lista,new5);
-    lista = adicionarContatoSort(lista,new6);
-
+    lista = firstRead(lista);
+    
     printaLista(lista);
+
 
     printf("\nBye World\n\n");
     return 0;
@@ -139,17 +106,92 @@ contato *adicionarContatoSort(contato *lista, contato *elem){
     }
 }
 
-contato *geraElem(char *nome){
+contato *geraElem(char *nome,char *telefone,char * endereco, char *dtNascimento, int cep){
     contato *elem = (contato*) malloc(sizeof(contato));
     elem->nome = (char*) malloc(101*(sizeof(char)));
+    elem->telefone = (char*) malloc(11*(sizeof(char)));
+    elem->endereco = (char*) malloc(101*(sizeof(char)));
+    elem->dtNascimento = (char*) malloc(11*(sizeof(char)));
+
     strcpy(elem->nome, nome);
+    strcpy(elem->telefone, telefone);
+    strcpy(elem->endereco, endereco);
+    elem->cep = cep;
+    strcpy(elem->dtNascimento, dtNascimento);
 
     return elem;
+}
+
+int contaLinha(){
+    FILE *f;
+    int lines = 0;
+
+    f = fopen("contatos.txt", "r");
+    if(f != NULL){
+        while(!feof(f)){
+            char c = getc(f);
+            if(c == '\n'){
+                lines++;
+            }
+        }
+    }   lines++;
+
+    return lines;
+}
+
+contato *firstRead(contato *lista){
+    FILE *f;
+    int numContatos = (contaLinha()/6);
+    
+    f = fopen("contatos.txt", "r");
+    if(f != NULL){
+        for(int i = 0; i < numContatos; i++){
+            contato *new;
+            char *nome = (char *) malloc(101*(sizeof(char)));
+            char *telefone = (char *) malloc(11*(sizeof(char)));
+            char *endereco = (char *) malloc(101*(sizeof(char)));
+            unsigned int cep;
+            char *dtNascimento = (char *) malloc(101*(sizeof(char)));
+            char *trash = (char *) malloc(101*(sizeof(char)));
+
+            fgets(nome,"%[^\n]s",f);
+            strtok(nome, "\n");
+            fgets(telefone,"%[^\n]s",f);
+            strtok(telefone, "\n");
+            fgets(endereco,"%[^\n]s",f);
+            strtok(endereco, "\n");
+            fgets(trash,"%[^\n]s",f);
+            strtok(trash, "\n");
+            cep = (unsigned int) strtol(trash, (char **)NULL, 10);
+            fgets(dtNascimento,"%[^\n]s",f);
+            strtok(dtNascimento, "\n");
+            fgets(trash,"%[^\n]s",f);
+            strtok(trash, "\n");
+
+            new = geraElem(nome,telefone,endereco,dtNascimento,cep);
+            lista = adicionarContatoSort(lista,new);
+
+            free(nome);
+            free(telefone);
+            free(endereco);
+            free(dtNascimento);
+            free(trash);
+        }
+
+    }
+
+    fclose(f);
+    return lista;
 }
 
 void printaLista(contato *lista){
     contato *it;
     for(it = lista; it != NULL; it = it->prox){
         printf("%s\n",it->nome);
+        printf("%s\n",it->telefone);
+        printf("%s\n",it->endereco);
+        printf("%u\n",it->cep);
+        printf("%s\n----\n",it->dtNascimento);
+
     }
 }
