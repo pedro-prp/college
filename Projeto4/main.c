@@ -6,17 +6,24 @@
 // constantes de tempo
 #define TEMPO_UNIDADE 5
 
+// Estruturas para tratar os voos
 typedef struct Lista {
     char *codigo;
     int combustivel;
     int tipo;
     struct Lista *prox;
-}lista;
+} lista;
 
 typedef struct Fila {
     lista *ini;
     lista *fim;
 } fila;
+
+// Estrutura para tratar as pistas
+typedef struct Pista{
+    char *modo;
+    int horarioUsado;
+} pista;
 
 
 char **lerCodigosVoos(){
@@ -172,6 +179,65 @@ lista *geraDadosAleatorios(int *num_Voos, int *num_Aprox){
     return voos;
 }
 
+
+lista *reduzCombustivel(lista *voos){
+    lista *it;
+    for(it = voos; it != NULL; it = it->prox){
+        it->combustivel--;
+    }
+
+    return voos;
+}
+
+
+lista *avancLista(lista *voos, int num){
+    lista *it = voos;
+    for(int i = 0; i < num; i++){
+        it = it->prox;
+    }
+
+    return it;
+}
+
+
+lista *definirPistas(lista *voos, int tempo, int numAprox){
+    lista *newVoos = NULL;
+    
+    // pista *pista1;
+    // pista1->horarioUsado = (tempo-1);
+    
+    // pista *pista2;
+    // pista2->horarioUsado = (tempo-1);
+    
+    // pista *pista3;
+    // pista3->horarioUsado = (tempo-1);
+    
+    lista *itAprox = voos;
+    lista *itDecolagens = avancLista(voos, (numAprox));
+
+    printf("%s\n",itDecolagens->codigo);
+
+    // while(itDecolagens != NULL){
+    //     if(pista1->horarioUsado < tempo){
+    //         itAprox = itAprox->prox;
+    //     }
+    //     else if(pista2->horarioUsado < tempo){
+    //         itAprox = itAprox->prox;
+    //     }
+    //     else if(pista3->horarioUsado < tempo){
+    //         itDecolagens = itDecolagens->prox;
+    //     }
+
+    //     reduzCombustivel(voos);
+
+    // }
+
+
+
+    return newVoos;
+}
+
+
 fila *geraFila(lista *voos){
     fila *new = (fila *) malloc(sizeof(fila));
     
@@ -193,7 +259,7 @@ int main(){
     int num_Voos,num_Aprox;
     v = geraDadosAleatorios(&num_Voos, &num_Aprox);
 
-    // int tempo = 600;
+    int tempo = 600;
 
     printaCabecalho(num_Voos,num_Aprox);
     
@@ -203,12 +269,13 @@ int main(){
         printf("\t%d - %d\n",it->tipo,it->combustivel);
     }
 
-    fila *f = geraFila(v);
+    v = definirPistas(v, tempo, num_Aprox);
+    // fila *f = geraFila(v);
 
-    printf("Dados da fila\n");
-    printf("%s",f->ini->codigo);
-    printf("\t%d - %d\n",f->ini->tipo,f->ini->combustivel);
-    printf("%s",f->fim->codigo);
-    printf("\t%d - %d\n",f->fim->tipo,f->fim->combustivel);
+    // printf("Dados da fila\n");
+    // printf("%s",f->ini->codigo);
+    // printf("\t%d - %d\n",f->ini->tipo,f->ini->combustivel);
+    // printf("%s",f->fim->codigo);
+    // printf("\t%d - %d\n",f->fim->tipo,f->fim->combustivel);
     return 0;
 }
