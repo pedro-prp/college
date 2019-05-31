@@ -52,6 +52,22 @@ void liberaMatrix(char **codigos,int size){
 }
 
 
+void printaCabecalho(int numVoos, int numAprox){
+// --------------------------------------------------------------------------------- 
+// “Aeroporto Internacional de Brasília”
+// Hora Inicial:
+// Fila de Pedidos: [código do voo – P/D – prioridade]
+// NVoos:
+// Naproximações:
+    printf("---------------------------------------------------------------------------------\n");
+    printf("“Aeroporto Internacional de Brasília”\n");    
+    printf("Fila de Pedidos: [código do voo – P/D – prioridade]\n");
+    printf("NVoos: %d\n", numVoos);
+    printf("Naproximações: %d\n", numAprox);
+    printf("---------------------------------------------------------------------------------\n");
+}
+
+
 int geraNumAleatorio(int inicio, int final){
     int numero = (rand() % (final - inicio + 1)) + inicio;
 
@@ -129,6 +145,8 @@ int main(){
 
     // // 10:00 am -> em minutos(600)
     int tempo = 600;
+
+    printaCabecalho(num_Voos,12);
 
     for(int i = 0; i < num_Voos; i++){
         printf("%s",v[i].codigo);
