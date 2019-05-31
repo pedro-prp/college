@@ -6,6 +6,7 @@
 typedef struct Lista {
     char *codigo;
     int combustivel;
+    int tipo;
     struct Lista *prox;
 }lista;
 
@@ -62,7 +63,7 @@ void geraDadosAleatorios(){
     int numAprox = geraNumAleatorio(10,(numVoos-10));
     int numDecola = (numVoos - numAprox);
     
-    printf("%d\n", numVoos);
+    printf("%d voos => %d Aproximacoes - %d Decolagens\n", numVoos,numAprox,numDecola);
 
     lista *voos = (lista *) malloc(numVoos*(sizeof(lista)));
     
@@ -87,7 +88,18 @@ void geraDadosAleatorios(){
         voos[i].codigo = (char *) malloc(8*(sizeof(char)));
         voos[i].codigo = codigos[numCodigo];
 
-        printf("%s\n",voos[i].codigo);
+        // tipo 0 - Aproximacoes
+        // tipo 1 - Decolagens
+        if(i < numAprox){
+            voos[i].tipo = 0;
+            voos[i].combustivel = geraNumAleatorio(0,12);
+        }else{
+            voos[i].tipo = 1;
+            voos[i].combustivel = 0;
+        }
+
+        printf("%s",voos[i].codigo);
+        printf("\t%d - %d\n",voos[i].tipo,voos[i].combustivel);
     }
 
 
