@@ -51,14 +51,12 @@ void liberaMatrix(char **codigos,int size){
     free(codigos);
 }
 
+void *listaVazia(){
+    return NULL;
+}
+
 
 void printaCabecalho(int numVoos, int numAprox){
-// --------------------------------------------------------------------------------- 
-// “Aeroporto Internacional de Brasília”
-// Hora Inicial:
-// Fila de Pedidos: [código do voo – P/D – prioridade]
-// NVoos:
-// Naproximações:
     printf("---------------------------------------------------------------------------------\n");
     printf("“Aeroporto Internacional de Brasília”\n");    
     printf("Fila de Pedidos: [código do voo – P/D – prioridade]\n");
@@ -74,8 +72,62 @@ int geraNumAleatorio(int inicio, int final){
     return numero;
 }
 
+lista *geraVoo(char **codigos,int numCodigo, int i, int numAprox, int numVoos){
+    lista *new = (lista *) malloc(sizeof(lista));
+    
+    new->codigo = (char *) malloc(10*(sizeof(char)));
+    strcpy(new->codigo, codigos[numCodigo]);
 
-lista *geraDadosAleatorios(int *num_Voos){
+
+    if(i < (numVoos - numAprox)){
+        new->tipo = 1;
+        new->combustivel = 0;
+    }else{
+        new->tipo = 0;
+        new->combustivel = geraNumAleatorio(0,12);
+    }
+
+    new->prox = NULL;
+
+    return new;
+}
+
+lista *insereLista(lista *l, lista *new){
+    if(l == NULL){
+        return new;
+    }
+
+    new->prox = l;
+
+    return new;
+}
+
+
+lista *ordenaAproxPorComb(lista *voos, int numAprox, int numVoos){
+    for(int i = 0; i < numAprox; i++){
+        lista *it = voos;
+        for(int j = 0; j < (numAprox-1); j++){
+            if(it->combustivel > it->prox->combustivel){
+                char *aux = (char *) malloc(10*(sizeof(char)));
+                int combAux;
+
+                strcpy(aux, it->codigo);
+                strcpy(it->codigo, it->prox->codigo);
+                strcpy(it->prox->codigo, aux);
+
+                combAux = it->combustivel;
+                it->combustivel = it->prox->combustivel;
+                it->prox->combustivel = combAux;
+            }
+            it=it->prox;
+        }
+    }
+
+    return voos;
+}
+
+
+lista *geraDadosAleatorios(int *num_Voos, int *num_Aprox){
     srand(time(NULL));
 
     int numVoos = geraNumAleatorio(20,64);
@@ -83,25 +135,23 @@ lista *geraDadosAleatorios(int *num_Voos){
     int numDecola = (numVoos - numAprox);
 
     *(num_Voos) = numVoos;
+    *(num_Aprox) = numAprox;
     
     printf("%d voos => %d Aproximacoes - %d Decolagens\n", numVoos,numAprox,numDecola);
 
-    lista *voos = (lista *) malloc(numVoos*(sizeof(lista)));
+    lista *voos = listaVazia();
     
     int *codigosUsados = (int *) calloc(64, sizeof(int));
 
     char **codigos = lerCodigosVoos();
-
-    // for(int i = 0; i < 64; i ++){
-    //     printf("%d - %s\n",i,codigos[i]);
-    // }
 
     // sorteia codigo voos e combustivel
     for(int i = 0; i < numVoos; i++){
         // sortei codigo
         int flag = 0;
         int numCodigo;
-        
+        lista *newVoo;
+
         while(flag == 0){
             numCodigo = geraNumAleatorio(0,63);
             if(codigosUsados[numCodigo] == 0){
@@ -109,25 +159,12 @@ lista *geraDadosAleatorios(int *num_Voos){
                 flag = 1;
             }
         }
+        
+        newVoo = geraVoo(codigos, numCodigo, i, numAprox, numVoos);
+        voos = insereLista(voos, newVoo);
 
-        // printf("%d - %d - ",i,numCodigo);
-
-        voos[i].codigo = (char *) malloc(10*(sizeof(char)));
-        strcpy(voos[i].codigo, codigos[numCodigo]);
-
-        // tipo 0 - Aproximacoes
-        // tipo 1 - Decolagens
-        if(i < numAprox){
-            voos[i].tipo = 0;
-            voos[i].combustivel = geraNumAleatorio(0,12);
-        }else{
-            voos[i].tipo = 1;
-            voos[i].combustivel = 0;
-        }
-
-        // printf("%d %s",i,voos[i].codigo);
-        // printf("\t%d - %d\n",voos[i].tipo,voos[i].combustivel);
     }
+    voos = ordenaAproxPorComb(voos, numAprox, numVoos);
 
     liberaMatrix(codigos,64);
     free(codigosUsados);
@@ -138,19 +175,17 @@ lista *geraDadosAleatorios(int *num_Voos){
 
 int main(){
     lista *v;
-    int num_Voos;
-    v = geraDadosAleatorios(&num_Voos);
+    int num_Voos,num_Aprox;
+    v = geraDadosAleatorios(&num_Voos, &num_Aprox);
 
-    // printf("%d\n",num_Voos);
-
-    // // 10:00 am -> em minutos(600)
     int tempo = 600;
 
-    printaCabecalho(num_Voos,12);
-
-    for(int i = 0; i < num_Voos; i++){
-        printf("%s",v[i].codigo);
-        printf("\t%d - %d\n",v[i].tipo,v[i].combustivel);
+    printaCabecalho(num_Voos,num_Aprox);
+    
+    lista *it;
+    for(it = v; it != NULL; it = it->prox){
+        printf("%s",it->codigo);
+        printf("\t%d - %d\n",it->tipo,it->combustivel);
     }
 
     return 0;
