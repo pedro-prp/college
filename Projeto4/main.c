@@ -103,7 +103,7 @@ lista *insereLista(lista *l, lista *new){
 }
 
 
-lista *ordenaAproxPorComb(lista *voos, int numAprox, int numVoos){
+lista *ordenaAproxPorComb(lista *voos, int numAprox){
     for(int i = 0; i < numAprox; i++){
         lista *it = voos;
         for(int j = 0; j < (numAprox-1); j++){
@@ -164,12 +164,27 @@ lista *geraDadosAleatorios(int *num_Voos, int *num_Aprox){
         voos = insereLista(voos, newVoo);
 
     }
-    voos = ordenaAproxPorComb(voos, numAprox, numVoos);
+    voos = ordenaAproxPorComb(voos, numAprox);
 
     liberaMatrix(codigos,64);
     free(codigosUsados);
 
     return voos;
+}
+
+fila *geraFila(lista *voos){
+    fila *new = (fila *) malloc(sizeof(fila));
+    
+    // inicio
+    new->ini = voos;
+    
+    // final
+    lista *it;
+    for(it = voos; it != NULL; it = it->prox){
+        new->fim = it;
+    }
+
+    return new;
 }
 
 
@@ -178,7 +193,7 @@ int main(){
     int num_Voos,num_Aprox;
     v = geraDadosAleatorios(&num_Voos, &num_Aprox);
 
-    int tempo = 600;
+    // int tempo = 600;
 
     printaCabecalho(num_Voos,num_Aprox);
     
@@ -188,5 +203,12 @@ int main(){
         printf("\t%d - %d\n",it->tipo,it->combustivel);
     }
 
+    fila *f = geraFila(v);
+
+    printf("Dados da fila\n");
+    printf("%s",f->ini->codigo);
+    printf("\t%d - %d\n",f->ini->tipo,f->ini->combustivel);
+    printf("%s",f->fim->codigo);
+    printf("\t%d - %d\n",f->fim->tipo,f->fim->combustivel);
     return 0;
 }
