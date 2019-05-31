@@ -3,6 +3,9 @@
 #include <time.h>
 #include <string.h>
 
+// constantes de tempo
+#define TEMPO_UNIDADE 5
+
 typedef struct Lista {
     char *codigo;
     int combustivel;
@@ -27,14 +30,14 @@ char **lerCodigosVoos(){
     }
 
     for(int i = 0; i < 64; i++){
-        codigos[i] = (char *) malloc(8*(sizeof(char)));
+        codigos[i] = (char *) malloc(10*(sizeof(char)));
         
         if(codigos == NULL){
             printf("Erro de alocação\n");
             exit(-1);
         }
 
-        fscanf(f,"%s",codigos[i]);
+        fscanf(f," %s",codigos[i]);
     }
     fclose(f);
     return codigos;
@@ -56,12 +59,14 @@ int geraNumAleatorio(int inicio, int final){
 }
 
 
-void geraDadosAleatorios(){
+lista *geraDadosAleatorios(int *num_Voos){
     srand(time(NULL));
 
     int numVoos = geraNumAleatorio(20,64);
     int numAprox = geraNumAleatorio(10,(numVoos-10));
     int numDecola = (numVoos - numAprox);
+
+    *(num_Voos) = numVoos;
     
     printf("%d voos => %d Aproximacoes - %d Decolagens\n", numVoos,numAprox,numDecola);
 
@@ -70,6 +75,10 @@ void geraDadosAleatorios(){
     int *codigosUsados = (int *) calloc(64, sizeof(int));
 
     char **codigos = lerCodigosVoos();
+
+    // for(int i = 0; i < 64; i ++){
+    //     printf("%d - %s\n",i,codigos[i]);
+    // }
 
     // sorteia codigo voos e combustivel
     for(int i = 0; i < numVoos; i++){
@@ -85,8 +94,10 @@ void geraDadosAleatorios(){
             }
         }
 
-        voos[i].codigo = (char *) malloc(8*(sizeof(char)));
-        voos[i].codigo = codigos[numCodigo];
+        // printf("%d - %d - ",i,numCodigo);
+
+        voos[i].codigo = (char *) malloc(10*(sizeof(char)));
+        strcpy(voos[i].codigo, codigos[numCodigo]);
 
         // tipo 0 - Aproximacoes
         // tipo 1 - Decolagens
@@ -98,23 +109,31 @@ void geraDadosAleatorios(){
             voos[i].combustivel = 0;
         }
 
-        printf("%s",voos[i].codigo);
-        printf("\t%d - %d\n",voos[i].tipo,voos[i].combustivel);
+        // printf("%d %s",i,voos[i].codigo);
+        // printf("\t%d - %d\n",voos[i].tipo,voos[i].combustivel);
     }
-
-
 
     liberaMatrix(codigos,64);
     free(codigosUsados);
+
+    return voos;
 }
-// Constantes 
+
 
 int main(){
+    lista *v;
+    int num_Voos;
+    v = geraDadosAleatorios(&num_Voos);
 
-    char **codigos = lerCodigosVoos();
+    // printf("%d\n",num_Voos);
 
-    liberaMatrix(codigos,64);
-    geraDadosAleatorios();
+    // // 10:00 am -> em minutos(600)
+    int tempo = 600;
+
+    for(int i = 0; i < num_Voos; i++){
+        printf("%s",v[i].codigo);
+        printf("\t%d - %d\n",v[i].tipo,v[i].combustivel);
+    }
 
     return 0;
 }
