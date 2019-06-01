@@ -9,8 +9,12 @@
 // Estruturas para tratar os voos
 typedef struct Lista {
     char *codigo;
+    char *status;
     int combustivel;
     int tipo;
+    int processo;
+    int horainicio;
+    int horafinal;
     struct Lista *prox;
 } lista;
 
@@ -21,8 +25,8 @@ typedef struct Fila {
 
 // Estrutura para tratar as pistas
 typedef struct Pista{
-    char *modo;
     int horarioUsado;
+    int emUso;
 } pista;
 
 
@@ -91,8 +95,14 @@ lista *geraVoo(char **codigos,int numCodigo, int i, int numAprox, int numVoos){
         new->combustivel = 0;
     }else{
         new->tipo = 0;
-        new->combustivel = geraNumAleatorio(0,12);
+        // new->combustivel = geraNumAleatorio(0,12);
+        new->combustivel = 0;
     }
+
+    new->processo = 0;
+    new->horainicio = -1;
+    new->horafinal = -1;
+    new->status = (char *) malloc(100*(sizeof(char)));
 
     new->prox = NULL;
 
@@ -183,10 +193,57 @@ lista *geraDadosAleatorios(int *num_Voos, int *num_Aprox){
 lista *reduzCombustivel(lista *voos){
     lista *it;
     for(it = voos; it != NULL; it = it->prox){
-        it->combustivel--;
+        if(it->processo == 0){
+            it->combustivel--;
+            if(it->combustivel < 0){
+                strcpy(it->status, "CAIU");
+                it->processo = 1;
+            }
+        }
     }
 
     return voos;
+}
+
+
+lista *checaCombustivel(lista *voos){
+    lista *it;
+    printf("debug 1\n");
+    for(it = voos; it != NULL; it = it->prox){
+        printf("debug 2\n");
+        if((it->combustivel < 0) && (it->processo == 0)){
+            printf("debug 3\n");
+            strcpy(it->status, "ALERTA CRÍTICO, AERONAVE IRÁ CAIR");
+            it->processo = 1;
+        }
+    }
+
+    return voos;
+}
+
+int checaEmergencia(lista *voos){
+    int cont = 0;
+    lista *it;
+    for(it = voos; it != NULL; it = it->prox){
+        if(it->combustivel == 0 && it->processo == 1){
+            cont++;
+        }
+    }
+
+    return cont;
+}
+
+
+pista *pistaStart(int tempo){
+    pista *p = (pista *) malloc(sizeof(pista));
+    if(p == NULL){
+        printf("Erro de alocacao\n");
+        exit(-1);
+    }
+
+    p->horarioUsado = (tempo-1);
+    
+    return p;
 }
 
 
@@ -200,41 +257,94 @@ lista *avancLista(lista *voos, int num){
 }
 
 
-lista *definirPistas(lista *voos, int tempo, int numAprox){
+lista *checaVoos(lista *voos, int tempo){
+    lista *it;
+    for(it = voos; it != NULL; it = it->prox){
+        if(it->tipo == 0){
+            if(it->horafinal <= tempo){
+                if(it->processo == 0){
+                    it->processo = 1;
+                    strcpy(it->status,"aeronave pousou");
+                }
+            }
+        }else{
+            if(it->horafinal <= tempo){
+                if(it->processo == 0){
+                    it->processo = 1;
+                    strcpy(it->status,"“aeronave decolou”");
+                }
+            }
+        }
+    }
+
+    return voos;
+}
+
+
+lista *definirPistas(lista *voos, int tempo, int numVoos, int numAprox){
     lista *newVoos = NULL;
+    int tempoAux;
     
-    // pista *pista1;
-    // pista1->horarioUsado = (tempo-1);
-    
-    // pista *pista2;
-    // pista2->horarioUsado = (tempo-1);
-    
-    // pista *pista3;
-    // pista3->horarioUsado = (tempo-1);
+    pista *pistaA = pistaStart(tempo);
+    pista *pistaB = pistaStart(tempo);
+    pista *pistaC = pistaStart(tempo);
     
     lista *itAprox = voos;
     lista *itDecolagens = avancLista(voos, (numAprox));
 
-    printf("%s\n",itDecolagens->codigo);
+    tempoAux = tempo + (10*TEMPO_UNIDADE);
+    
+    while(numVoos > 0){
 
-    // while(itDecolagens != NULL){
-    //     if(pista1->horarioUsado < tempo){
-    //         itAprox = itAprox->prox;
-    //     }
-    //     else if(pista2->horarioUsado < tempo){
-    //         itAprox = itAprox->prox;
-    //     }
-    //     else if(pista3->horarioUsado < tempo){
-    //         itDecolagens = itDecolagens->prox;
-    //     }
+        int Emergencia = checaEmergencia(voos);
 
-    //     reduzCombustivel(voos);
+        if(itAprox->tipo == 1){
+            break;
+        }
 
-    // }
+        if(pistaA->horarioUsado < tempo){
+            lista *aux = itAprox;
+            itAprox = itAprox->prox;
+            if(aux->processo == 0){
+                if(aux->tipo == 0){
+                    aux->horainicio = tempo;
+                    aux->horafinal = tempo+20;
+                    pistaA->horarioUsado = tempo+20;
+                }
+            }
+        }
+        
+        if(pistaB->horarioUsado < tempo){
+            lista *aux = itAprox;
+            itAprox = itAprox->prox;
+            if(aux->processo == 0){
+                if(aux->tipo == 0){
+                    pistaB->horarioUsado = tempo+20;
+                }
+            }
+        }
+        
+        // if(pistaC->horarioUsado < tempo){
+        //     if(Emergencia >= 3){
+        //         printf("pousar\n");
+        //     }else{
+        //         itDecolagens = itDecolagens->prox;
+        //     }
+        // }
 
+        if(tempo == tempoAux){
+            voos = reduzCombustivel(voos);
+            tempoAux = tempo + (10*TEMPO_UNIDADE);
+            
+        }
 
+        voos = checaCombustivel(voos);
+        voos = checaVoos(voos, tempo);
 
-    return newVoos;
+        tempo+=TEMPO_UNIDADE;
+    }
+
+    return voos;
 }
 
 
@@ -262,20 +372,13 @@ int main(){
     int tempo = 600;
 
     printaCabecalho(num_Voos,num_Aprox);
-    
+
+    v = definirPistas(v, tempo, num_Voos, num_Aprox);
     lista *it;
-    for(it = v; it != NULL; it = it->prox){
+        for(it = v; it != NULL; it = it->prox){
         printf("%s",it->codigo);
-        printf("\t%d - %d\n",it->tipo,it->combustivel);
+        printf("\t%d - %d %s\n",it->tipo,it->combustivel,it->status);
     }
 
-    v = definirPistas(v, tempo, num_Aprox);
-    // fila *f = geraFila(v);
-
-    // printf("Dados da fila\n");
-    // printf("%s",f->ini->codigo);
-    // printf("\t%d - %d\n",f->ini->tipo,f->ini->combustivel);
-    // printf("%s",f->fim->codigo);
-    // printf("\t%d - %d\n",f->fim->tipo,f->fim->combustivel);
     return 0;
 }
