@@ -43,6 +43,7 @@ lista *geraVoo(char **,int, int, int);
 lista *insereLista(lista *, lista *);
 fila *insereInicioFila(fila *, lista *);
 lista *copiaElemento(lista *);
+lista *ordenaLista(lista *, int);
 fila *ordenaAproxPorComb(lista *);
 fila *geraDadosAleatorios(int *, int *);
 lista *reduzCombustivel(lista *);
@@ -50,7 +51,7 @@ int checaNumVoos(lista *);
 int checaEmergencia(lista *);
 pista *pistaStart(int);
 lista *checaVoos(lista *, int);
-lista *definirPistas(lista *, lista *, lista *,int);
+lista *definirPistas(lista *, lista *, lista *,int, int);
 fila *geraFila(lista *);
 
 
@@ -90,10 +91,57 @@ void *listaVazia(){
     return NULL;
 }
 
+// lista *ordenaAproxPorComb(lista *voos, int numAprox, int numVoos){
+//     for(int i = 0; i < numAprox; i++){
+//         lista *it = voos;
+//         for(int j = 0; j < (numAprox-1); j++){
+//             if(it->combustivel > it->prox->combustivel){
+//                 char *aux = (char *) malloc(10*(sizeof(char)));
+//                 int combAux;
+
+//                 strcpy(aux, it->codigo);
+//                 strcpy(it->codigo, it->prox->codigo);
+//                 strcpy(it->prox->codigo, aux);
+
+//                 combAux = it->combustivel;
+//                 it->combustivel = it->prox->combustivel;
+//                 it->prox->combustivel = combAux;
+//             }
+//             it=it->prox;
+//         }
+//     }
+
+//     return voos;
+// }
+
+lista *ordenaLista(lista *voos, int numAprox){
+    for(int i = 0; i < numAprox; i++){
+        lista *it = voos;
+        for(int j = 0; j < (numAprox-1); j++){
+            if(it->combustivel > it->prox->combustivel){
+                char *aux = (char *) malloc(10*(sizeof(char)));
+                int combAux;
+
+                strcpy(aux, it->codigo);
+                strcpy(it->codigo, it->prox->codigo);
+                strcpy(it->prox->codigo, aux);
+
+                combAux = it->combustivel;
+                it->combustivel = it->prox->combustivel;
+                it->prox->combustivel = combAux;
+            }
+            it=it->prox;
+        }
+    }
+
+    return voos;
+}
+
 
 void printaCabecalho(int numVoos, int numAprox, lista *voos){
     printf("---------------------------------------------------------------------------------\n");
-    printf("“Aeroporto Internacional de Brasília”\n");    
+    printf("“Aeroporto Internacional de Brasília”\n");
+    printf("Hora Inicial: 10:00\n");
     printf("Fila de Pedidos:\n");
     lista *it;
     for(it = voos; it != NULL; it = it->prox){
@@ -111,6 +159,7 @@ void printaCabecalho(int numVoos, int numAprox, lista *voos){
     }
     printf("NVoos: %d\n", numVoos);
     printf("Naproximações: %d\n", numAprox);
+    printf("NDecolagens: %d\n",(numVoos-numAprox));
     printf("---------------------------------------------------------------------------------\n");
 }
 
@@ -411,7 +460,7 @@ lista *checaVoos(lista *voos, int tempo){
 }
 
 
-lista *definirPistas(lista *voos,lista *aprox, lista *decolagens, int tempo){
+lista *definirPistas(lista *voos,lista *aprox, lista *decolagens, int tempo, int numAprox){
     
     pista *pistaA = pistaStart(tempo);
     pista *pistaB = pistaStart(tempo);
@@ -420,6 +469,9 @@ lista *definirPistas(lista *voos,lista *aprox, lista *decolagens, int tempo){
     int tempoAux = tempo + (10*TEMPO_UNIDADE);
     int num = 1;
     int num2;
+    int emergencias;
+    aprox = ordenaLista(aprox, numAprox);
+
     lista *itAprox = aprox;
     lista *itDecolagens = decolagens;
     
@@ -427,10 +479,12 @@ lista *definirPistas(lista *voos,lista *aprox, lista *decolagens, int tempo){
         num = checaNumVoos(aprox);
         num2 = checaNumVoos(decolagens);
         
-        printf("%d <-> %d\n",num,num2);
+        // printf("%d <-> %d\n",num,num2);
 
         aprox = checaVoos(aprox, tempo);
         decolagens = checaVoos(decolagens, tempo);
+
+        emergencias = checaEmergencia(aprox);
 
         if(pistaA->horarioUsado < tempo){
             if(checaNumVoos(aprox) == 0){
@@ -490,7 +544,20 @@ lista *definirPistas(lista *voos,lista *aprox, lista *decolagens, int tempo){
         }
 
         if(pistaC->horarioUsado < tempo){
-            if(itDecolagens != NULL){
+            if(emergencias > 2){
+                if(itAprox != NULL){
+                    if(itAprox->processo == 0){
+                        itAprox->horainicio = tempo;
+                        itAprox->horafinal = tempo+20;
+                        pistaC->horarioUsado = tempo+20;
+                        strcpy(itAprox->pista, "Pista C");
+                        itAprox = itAprox->prox;
+                    }else{
+                        itAprox = itAprox->prox;
+                    }
+                }
+            }
+            else if(itDecolagens != NULL){
                 if(itDecolagens->processo == 0){
                     itDecolagens->horainicio = tempo;
                     itDecolagens->horafinal = tempo+10;
@@ -536,6 +603,7 @@ int main(){
     fila *v;
     fila *a;
     fila *d;
+    int h,m;
     // lista **p;
     int num_Voos,num_Aprox;
 
@@ -543,17 +611,38 @@ int main(){
     a = geraFilaAprox(v->ini);
     d = geraFilaDecolagens(v->ini);
     
-    v->ini = definirPistas(v->ini, a->ini, d->ini, 600);
+    v->ini = definirPistas(v->ini, a->ini, d->ini, 600, num_Aprox);
 
-    // lista *it;
-    // for(it = a->ini; it != NULL; it = it->prox){
-    //     printf("(*) - %s\n",it->codigo);
-    // }
+    lista *it;
+    lista *itAprox = a->ini;
+    lista *itDeco = d->ini;
 
-    // lista *dt;
-    // for(dt = d->ini; dt != NULL; dt = dt->prox){
-    //     printf("(#) - %s\n",dt->codigo);
-    // }
+    printf("Listagem de eventos:\n\n");
+    for(it = v->ini; it != NULL; it = it->prox){
+        if(itAprox != NULL){
+            if(strcmp(itAprox->pista,"Pista C") == 0){
+                printf("ALERTA GERAL DE DESVIO DE AERONAVE\n\n");
+            }
+            printf("Código do voo: %s\n",itAprox->codigo);
+            printf("Status: %s\n",itAprox->status);
+            h = (itAprox->horainicio/60);
+            m = itAprox->horainicio%60;
+            printf("Horário do início do procedimento: %02d:%02d\n",h,m);
+            printf("Número da pista: %s\n\n",itAprox->pista);
+
+            itAprox = itAprox->prox;
+        }
+        if(itDeco != NULL){
+            printf("Código do voo: %s\n",itDeco->codigo);
+            printf("Status: %s\n",itDeco->status);
+            h = (itDeco->horainicio/60);
+            m = itDeco->horainicio%60;
+            printf("Horário do início do procedimento: %02d:%02d\n",h,m);
+            printf("Número da pista: %s\n\n",itDeco->pista);
+
+            itDeco = itDeco->prox;
+        }
+    }
     
 
     // Free filas
