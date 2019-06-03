@@ -416,9 +416,6 @@ lista *definirPistas(lista *voos,lista *aprox, lista *decolagens, int tempo){
     pista *pistaA = pistaStart(tempo);
     pista *pistaB = pistaStart(tempo);
     pista *pistaC = pistaStart(tempo);
-    
-    // lista *itAprox = voos;
-    // lista *itDecolagens = avancLista(voos, (numAprox));
 
     int tempoAux = tempo + (10*TEMPO_UNIDADE);
     int num = 1;
@@ -426,62 +423,68 @@ lista *definirPistas(lista *voos,lista *aprox, lista *decolagens, int tempo){
     lista *itAprox = aprox;
     lista *itDecolagens = decolagens;
     
-    while(itAprox != NULL || itDecolagens != NULL){
+    while((checaNumVoos(aprox) + checaNumVoos(decolagens)) > 0){
         num = checaNumVoos(aprox);
         num2 = checaNumVoos(decolagens);
+        
         printf("%d <-> %d\n",num,num2);
 
         aprox = checaVoos(aprox, tempo);
         decolagens = checaVoos(decolagens, tempo);
 
         if(pistaA->horarioUsado < tempo){
-
-            if(itAprox == NULL){
-                printf("%d\n",itDecolagens->processo);
-                if(itDecolagens->processo == 0){
-                    itDecolagens->horainicio = tempo;
-                    itDecolagens->horafinal = tempo+10;
-                    pistaA->horarioUsado = tempo+10;
-                    strcpy(itDecolagens->pista, "Pista A");
-                    itDecolagens = itDecolagens->prox;
-                }else{
-                    itDecolagens = itDecolagens->prox;
+            if(checaNumVoos(aprox) == 0){
+                if(itDecolagens != NULL){
+                    if(itDecolagens->processo == 0){
+                        itDecolagens->horainicio = tempo;
+                        itDecolagens->horafinal = tempo+10;
+                        pistaA->horarioUsado = tempo+10;
+                        strcpy(itDecolagens->pista, "Pista A");
+                        itDecolagens = itDecolagens->prox;
+                    }else{
+                        itDecolagens = itDecolagens->prox;
+                    }
                 }
             }else{
-                if(itAprox->processo == 0){
-                    itAprox->horainicio = tempo;
-                    itAprox->horafinal = tempo+20;
-                    pistaA->horarioUsado = tempo+20;
-                    strcpy(itAprox->pista, "Pista A");
-                    itAprox = itAprox->prox;
-                }else{
-                    itAprox = itAprox->prox;
+                if(itAprox != NULL){
+                    if(itAprox->processo == 0){
+                        itAprox->horainicio = tempo;
+                        itAprox->horafinal = tempo+20;
+                        pistaA->horarioUsado = tempo+20;
+                        strcpy(itAprox->pista, "Pista A");
+                        itAprox = itAprox->prox;
+                    }else{
+                        itAprox = itAprox->prox;
+                    }
                 }
             }
         }
 
         if(pistaB->horarioUsado < tempo){
 
-            if(itAprox == NULL){
-                printf("%d\n",itDecolagens->processo);
-                if(itDecolagens->processo == 0){
-                    itDecolagens->horainicio = tempo;
-                    itDecolagens->horafinal = tempo+10;
-                    pistaB->horarioUsado = tempo+10;
-                    strcpy(itDecolagens->pista, "Pista B");
-                    itDecolagens = itDecolagens->prox;
-                }else{
-                    itDecolagens = itDecolagens->prox;
+            if(checaNumVoos(aprox) == 0){
+                if(itDecolagens != NULL){
+                    if(itDecolagens->processo == 0){
+                        itDecolagens->horainicio = tempo;
+                        itDecolagens->horafinal = tempo+10;
+                        pistaB->horarioUsado = tempo+10;
+                        strcpy(itDecolagens->pista, "Pista B");
+                        itDecolagens = itDecolagens->prox;
+                    }else{
+                        itDecolagens = itDecolagens->prox;
+                    }
                 }
             }else{
-                if(itAprox->processo == 0){
-                    itAprox->horainicio = tempo;
-                    itAprox->horafinal = tempo+20;
-                    pistaB->horarioUsado = tempo+20;
-                    strcpy(itAprox->pista, "Pista B");
-                    itAprox = itAprox->prox;
-                }else{
-                    itAprox = itAprox->prox;
+                if(itAprox != NULL){
+                    if(itAprox->processo == 0){
+                        itAprox->horainicio = tempo;
+                        itAprox->horafinal = tempo+20;
+                        pistaB->horarioUsado = tempo+20;
+                        strcpy(itAprox->pista, "Pista B");
+                        itAprox = itAprox->prox;
+                    }else{
+                        itAprox = itAprox->prox;
+                    }
                 }
             }
         }
@@ -499,8 +502,6 @@ lista *definirPistas(lista *voos,lista *aprox, lista *decolagens, int tempo){
                 }
             }
         }
-        
-
 
         if(tempo == tempoAux){
             aprox = reduzCombustivel(aprox);
@@ -510,12 +511,6 @@ lista *definirPistas(lista *voos,lista *aprox, lista *decolagens, int tempo){
 
         tempo+=TEMPO_UNIDADE;
     }
-
-    // v[0] = (lista *) malloc(sizeof(lista));
-    // v[0] = aprox;
-
-    // v[1] = (lista *) malloc(sizeof(lista));
-    // v[1] = decolagens;
 
     return voos;
 }
@@ -541,7 +536,7 @@ int main(){
     fila *v;
     fila *a;
     fila *d;
-    lista **p;
+    // lista **p;
     int num_Voos,num_Aprox;
 
     v = geraDadosAleatorios(&num_Voos, &num_Aprox);
