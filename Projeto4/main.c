@@ -67,10 +67,24 @@ void *listaVazia(){
 }
 
 
-void printaCabecalho(int numVoos, int numAprox){
+void printaCabecalho(int numVoos, int numAprox, lista *voos){
     printf("---------------------------------------------------------------------------------\n");
     printf("“Aeroporto Internacional de Brasília”\n");    
-    printf("Fila de Pedidos: [código do voo – P/D – prioridade]\n");
+    printf("Fila de Pedidos:\n");
+    lista *it;
+    for(it = voos; it != NULL; it = it->prox){
+        printf("\t\t[%s - ",it->codigo);
+        if(it->tipo == 0){
+            printf("A - ");
+            if(it->combustivel == 0){
+                printf("ALTA]\n");
+            }else{
+                printf("BAIXA]\n");
+            }
+        }else{
+            printf("D - BAIXA]\n");
+        }
+    }
     printf("NVoos: %d\n", numVoos);
     printf("Naproximações: %d\n", numAprox);
     printf("---------------------------------------------------------------------------------\n");
@@ -83,21 +97,15 @@ int geraNumAleatorio(int inicio, int final){
     return numero;
 }
 
-lista *geraVoo(char **codigos,int numCodigo, int i, int numAprox, int numVoos){
+lista *geraVoo(char **codigos,int numCodigo, int i, int numAprox, int numVoos, int combustivel, int tipo){
     lista *new = (lista *) malloc(sizeof(lista));
     
     new->codigo = (char *) malloc(10*(sizeof(char)));
     strcpy(new->codigo, codigos[numCodigo]);
 
 
-    if(i < (numVoos - numAprox)){
-        new->tipo = 1;
-        new->combustivel = 0;
-    }else{
-        new->tipo = 0;
-        // new->combustivel = geraNumAleatorio(0,12);
-        new->combustivel = 0;
-    }
+    new->combustivel = combustivel;
+    new->tipo = tipo;
 
     new->processo = 0;
     new->horainicio = -1;
@@ -120,36 +128,80 @@ lista *insereLista(lista *l, lista *new){
 }
 
 
-lista *ordenaAproxPorComb(lista *voos, int numAprox){
-    for(int i = 0; i < numAprox; i++){
-        lista *it = voos;
-        for(int j = 0; j < (numAprox-1); j++){
-            if(it->combustivel > it->prox->combustivel){
-                char *aux = (char *) malloc(10*(sizeof(char)));
-                int combAux;
+fila *insereInicioFila(fila *f, lista *it){
+    if(f->ini == NULL){
+        f->ini = it;
+        f->fim = it;
 
-                strcpy(aux, it->codigo);
-                strcpy(it->codigo, it->prox->codigo);
-                strcpy(it->prox->codigo, aux);
-
-                combAux = it->combustivel;
-                it->combustivel = it->prox->combustivel;
-                it->prox->combustivel = combAux;
-            }
-            it=it->prox;
-        }
+        return f;
     }
 
-    return voos;
+    it->prox = f->ini;
+    f->ini = it;
+
+    return f;
 }
 
 
-lista *geraDadosAleatorios(int *num_Voos, int *num_Aprox){
+fila *insereFinalFila(fila *f, lista *it){
+    if(f->fim == NULL){
+        f = insereInicioFila(f, it);
+
+        return f;
+    }
+    
+    f->fim->prox = it;
+    it->prox = NULL;
+    f->fim = f->fim->prox;
+
+    return f;
+}
+
+
+lista *copiaElemento(lista *it){
+    lista *aux = (lista *) malloc(sizeof(lista));
+
+    aux->codigo = it->codigo;
+    aux->status = it->status;
+    aux->combustivel = it->combustivel;
+    aux->tipo = it->tipo;
+    aux->processo = it->processo;
+    aux->horainicio = it->horainicio;
+    aux->horafinal = it->horafinal;
+    aux->prox = NULL;
+
+    return aux;
+}
+
+
+fila *ordenaAproxPorComb(lista *voos, int numAprox){
+    
+    lista *it;
+    fila *newVoos =  (fila *) malloc(sizeof(fila));
+    newVoos->ini = NULL;
+    newVoos->fim = NULL;
+
+    for(it = voos; it != NULL; it = it->prox){
+        lista *aux = copiaElemento(it);
+        
+        if(it->combustivel == 0 && it->tipo == 0){
+            newVoos = insereInicioFila(newVoos, aux);
+        }else{
+            newVoos = insereFinalFila(newVoos, aux);
+        }
+    }
+    return newVoos;
+}
+
+
+fila *geraDadosAleatorios(int *num_Voos, int *num_Aprox){
     srand(time(NULL));
 
     int numVoos = geraNumAleatorio(20,64);
     int numAprox = geraNumAleatorio(10,(numVoos-10));
     int numDecola = (numVoos - numAprox);
+    int contAprox = 0;
+    int contDeco = 0;
 
     *(num_Voos) = numVoos;
     *(num_Aprox) = numAprox;
@@ -176,17 +228,35 @@ lista *geraDadosAleatorios(int *num_Voos, int *num_Aprox){
                 flag = 1;
             }
         }
-        
-        newVoo = geraVoo(codigos, numCodigo, i, numAprox, numVoos);
+        int tipo = geraNumAleatorio(0,1);
+        int combustivel;
+        if(tipo == 0 && (contAprox < numAprox)){
+            combustivel = geraNumAleatorio(0,12);
+            contAprox++;
+        }else if(tipo == 0 && (contAprox >= numAprox)){
+            tipo = 1;
+            combustivel = 0;
+            contDeco++;
+        }else if(tipo == 1 && (contDeco < numDecola)){
+            combustivel = 0;
+            contDeco++;
+        }else{
+            tipo = 0;
+            combustivel = geraNumAleatorio(0,12);
+            contAprox++;
+        }
+
+        newVoo = geraVoo(codigos, numCodigo, i, numAprox, numVoos, combustivel, tipo);
         voos = insereLista(voos, newVoo);
 
     }
-    voos = ordenaAproxPorComb(voos, numAprox);
+    printaCabecalho(numVoos,numAprox, voos);
+    fila *newVoos = ordenaAproxPorComb(voos, numAprox);
 
     liberaMatrix(codigos,64);
     free(codigosUsados);
 
-    return voos;
+    return newVoos;
 }
 
 
@@ -247,105 +317,104 @@ pista *pistaStart(int tempo){
 }
 
 
-lista *avancLista(lista *voos, int num){
-    lista *it = voos;
-    for(int i = 0; i < num; i++){
-        it = it->prox;
-    }
+// lista *avancLista(lista *voos, int num){
+//     lista *it = voos;
+//     for(int i = 0; i < num; i++){
+//         it = it->prox;
+//     }
 
-    return it;
-}
-
-
-lista *checaVoos(lista *voos, int tempo){
-    lista *it;
-    for(it = voos; it != NULL; it = it->prox){
-        if(it->tipo == 0){
-            if(it->horafinal <= tempo){
-                if(it->processo == 0){
-                    it->processo = 1;
-                    strcpy(it->status,"aeronave pousou");
-                }
-            }
-        }else{
-            if(it->horafinal <= tempo){
-                if(it->processo == 0){
-                    it->processo = 1;
-                    strcpy(it->status,"“aeronave decolou”");
-                }
-            }
-        }
-    }
-
-    return voos;
-}
+//     return it;
+// }
 
 
-lista *definirPistas(lista *voos, int tempo, int numVoos, int numAprox){
-    lista *newVoos = NULL;
-    int tempoAux;
+// lista *checaVoos(lista *voos, int tempo){
+//     lista *it;
+//     for(it = voos; it != NULL; it = it->prox){
+//         if(it->tipo == 0){
+//             if(it->horafinal <= tempo){
+//                 if(it->processo == 0){
+//                     it->processo = 1;
+//                     strcpy(it->status,"aeronave pousou");
+//                 }
+//             }
+//         }else{
+//             if(it->horafinal <= tempo){
+//                 if(it->processo == 0){
+//                     it->processo = 1;
+//                     strcpy(it->status,"“aeronave decolou”");
+//                 }
+//             }
+//         }
+//     }
+
+//     return voos;
+// }
+
+
+// lista *definirPistas(lista *voos, int tempo, int numVoos, int numAprox){
+//     int tempoAux;
     
-    pista *pistaA = pistaStart(tempo);
-    pista *pistaB = pistaStart(tempo);
-    pista *pistaC = pistaStart(tempo);
+//     pista *pistaA = pistaStart(tempo);
+//     pista *pistaB = pistaStart(tempo);
+//     pista *pistaC = pistaStart(tempo);
     
-    lista *itAprox = voos;
-    lista *itDecolagens = avancLista(voos, (numAprox));
+//     lista *itAprox = voos;
+//     lista *itDecolagens = avancLista(voos, (numAprox));
 
-    tempoAux = tempo + (10*TEMPO_UNIDADE);
+//     tempoAux = tempo + (10*TEMPO_UNIDADE);
     
-    while(numVoos > 0){
+//     while(numVoos > 0){
 
-        int Emergencia = checaEmergencia(voos);
+//         int Emergencia = checaEmergencia(voos);
 
-        if(itAprox->tipo == 1){
-            break;
-        }
+//         if(itAprox->tipo == 1){
+//             break;
+//         }
 
-        if(pistaA->horarioUsado < tempo){
-            lista *aux = itAprox;
-            itAprox = itAprox->prox;
-            if(aux->processo == 0){
-                if(aux->tipo == 0){
-                    aux->horainicio = tempo;
-                    aux->horafinal = tempo+20;
-                    pistaA->horarioUsado = tempo+20;
-                }
-            }
-        }
+//         if(pistaA->horarioUsado < tempo){
+//             lista *aux = itAprox;
+//             itAprox = itAprox->prox;
+//             if(aux->processo == 0){
+//                 if(aux->tipo == 0){
+//                     aux->horainicio = tempo;
+//                     aux->horafinal = tempo+20;
+//                     pistaA->horarioUsado = tempo+20;
+//                 }
+//             }
+//         }
         
-        if(pistaB->horarioUsado < tempo){
-            lista *aux = itAprox;
-            itAprox = itAprox->prox;
-            if(aux->processo == 0){
-                if(aux->tipo == 0){
-                    pistaB->horarioUsado = tempo+20;
-                }
-            }
-        }
+//         if(pistaB->horarioUsado < tempo){
+//             lista *aux = itAprox;
+//             itAprox = itAprox->prox;
+//             if(aux->processo == 0){
+//                 if(aux->tipo == 0){
+//                     pistaB->horarioUsado = tempo+20;
+//                 }
+//             }
+//         }
         
-        // if(pistaC->horarioUsado < tempo){
-        //     if(Emergencia >= 3){
-        //         printf("pousar\n");
-        //     }else{
-        //         itDecolagens = itDecolagens->prox;
-        //     }
-        // }
+//         // if(pistaC->horarioUsado < tempo){
+//         //     if(Emergencia >= 3){
+//         //         printf("pousar\n");
+//         //     }else{
+//         //         itDecolagens = itDecolagens->prox;
+//         //     }
+//         // }
 
-        if(tempo == tempoAux){
-            voos = reduzCombustivel(voos);
-            tempoAux = tempo + (10*TEMPO_UNIDADE);
+//         if(tempo == tempoAux){
+//             voos = reduzCombustivel(voos);
+//             tempoAux = tempo + (10*TEMPO_UNIDADE);
             
-        }
+//         }
 
-        voos = checaCombustivel(voos);
-        voos = checaVoos(voos, tempo);
+//         voos = checaCombustivel(voos);
+//         voos = checaVoos(voos, tempo);
 
-        tempo+=TEMPO_UNIDADE;
-    }
+//         tempo+=TEMPO_UNIDADE;
+//     }
 
-    return voos;
-}
+//     return voos;
+// }
 
 
 fila *geraFila(lista *voos){
@@ -365,20 +434,17 @@ fila *geraFila(lista *voos){
 
 
 int main(){
-    lista *v;
+    fila *v;
     int num_Voos,num_Aprox;
     v = geraDadosAleatorios(&num_Voos, &num_Aprox);
 
-    int tempo = 600;
-
-    printaCabecalho(num_Voos,num_Aprox);
-
-    v = definirPistas(v, tempo, num_Voos, num_Aprox);
-    lista *it;
-        for(it = v; it != NULL; it = it->prox){
-        printf("%s",it->codigo);
-        printf("\t%d - %d %s\n",it->tipo,it->combustivel,it->status);
-    }
+    // int tempo = 600;
+    // v = definirPistas(v, tempo, num_Voos, num_Aprox);
+    // lista *it;
+    // for(it = v->ini; it != NULL; it = it->prox){
+    //     printf("%s",it->codigo);
+    //     printf("\t%d - %d %s\n",it->tipo,it->combustivel,it->status);
+    // }
 
     return 0;
 }
