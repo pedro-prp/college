@@ -264,9 +264,9 @@ lista *reduzCombustivel(lista *voos){
     lista *it;
     for(it = voos; it != NULL; it = it->prox){
         if(it->processo == 0){
-            it->combustivel--;
-            if(it->combustivel < 0){
-                strcpy(it->status, "CAIU");
+            it->combustivel-=1;
+            if(it->combustivel < 0 && it->tipo == 0){
+                strcpy(it->status, "ALERTA CRÍTICO, AERONAVE IRÁ CAIR");
                 it->processo = 1;
             }
         }
@@ -275,21 +275,18 @@ lista *reduzCombustivel(lista *voos){
     return voos;
 }
 
-
-lista *checaCombustivel(lista *voos){
+int checaNumVoos(lista *voos){
+    int cont = 0;
     lista *it;
-    printf("debug 1\n");
     for(it = voos; it != NULL; it = it->prox){
-        printf("debug 2\n");
-        if((it->combustivel < 0) && (it->processo == 0)){
-            printf("debug 3\n");
-            strcpy(it->status, "ALERTA CRÍTICO, AERONAVE IRÁ CAIR");
-            it->processo = 1;
+        if(it->processo == 0){
+            cont++;
         }
     }
-
-    return voos;
+    
+    return cont;
 }
+
 
 int checaEmergencia(lista *voos){
     int cont = 0;
@@ -351,70 +348,72 @@ pista *pistaStart(int tempo){
 // }
 
 
-// lista *definirPistas(lista *voos, int tempo, int numVoos, int numAprox){
-//     int tempoAux;
+void definirPistas(lista *voos, int tempo, int numVoos, int numAprox){
     
-//     pista *pistaA = pistaStart(tempo);
-//     pista *pistaB = pistaStart(tempo);
-//     pista *pistaC = pistaStart(tempo);
+    pista *pistaA = pistaStart(tempo);
+    // pista *pistaB = pistaStart(tempo);
+    // pista *pistaC = pistaStart(tempo);
     
-//     lista *itAprox = voos;
-//     lista *itDecolagens = avancLista(voos, (numAprox));
+    // lista *itAprox = voos;
+    // lista *itDecolagens = avancLista(voos, (numAprox));
 
-//     tempoAux = tempo + (10*TEMPO_UNIDADE);
+    int tempoAux = tempo + (10*TEMPO_UNIDADE);
+    int num = checaNumVoos(voos);
     
-//     while(numVoos > 0){
+    while(num > 0){
+        num = checaNumVoos(voos);
+        printf("%d\n",num);
 
-//         int Emergencia = checaEmergencia(voos);
+        // int Emergencia = checaEmergencia(voos);
 
-//         if(itAprox->tipo == 1){
-//             break;
-//         }
+        // if(itAprox->tipo == 1){
+        //     break;
+        // }
 
-//         if(pistaA->horarioUsado < tempo){
-//             lista *aux = itAprox;
-//             itAprox = itAprox->prox;
-//             if(aux->processo == 0){
-//                 if(aux->tipo == 0){
-//                     aux->horainicio = tempo;
-//                     aux->horafinal = tempo+20;
-//                     pistaA->horarioUsado = tempo+20;
-//                 }
-//             }
-//         }
+        // if(pistaA->horarioUsado < tempo){
+        //     lista *aux = itAprox;
+        //     itAprox = itAprox->prox;
+        //     if(aux->processo == 0){
+        //         if(aux->tipo == 0){
+        //             aux->horainicio = tempo;
+        //             aux->horafinal = tempo+20;
+        //             pistaA->horarioUsado = tempo+20;
+        //         }
+        //     }
+        // }
         
-//         if(pistaB->horarioUsado < tempo){
-//             lista *aux = itAprox;
-//             itAprox = itAprox->prox;
-//             if(aux->processo == 0){
-//                 if(aux->tipo == 0){
-//                     pistaB->horarioUsado = tempo+20;
-//                 }
-//             }
-//         }
+        // if(pistaB->horarioUsado < tempo){
+        //     lista *aux = itAprox;
+        //     itAprox = itAprox->prox;
+        //     if(aux->processo == 0){
+        //         if(aux->tipo == 0){
+        //             pistaB->horarioUsado = tempo+20;
+        //         }
+        //     }
+        // }
         
-//         // if(pistaC->horarioUsado < tempo){
-//         //     if(Emergencia >= 3){
-//         //         printf("pousar\n");
-//         //     }else{
-//         //         itDecolagens = itDecolagens->prox;
-//         //     }
-//         // }
+        // // if(pistaC->horarioUsado < tempo){
+        // //     if(Emergencia >= 3){
+        // //         printf("pousar\n");
+        // //     }else{
+        // //         itDecolagens = itDecolagens->prox;
+        // //     }
+        // // }
 
-//         if(tempo == tempoAux){
-//             voos = reduzCombustivel(voos);
-//             tempoAux = tempo + (10*TEMPO_UNIDADE);
-            
-//         }
+        if(tempo == tempoAux){
+            voos = reduzCombustivel(voos);
+            tempoAux = tempo + (10*TEMPO_UNIDADE);
+        }
 
-//         voos = checaCombustivel(voos);
-//         voos = checaVoos(voos, tempo);
 
-//         tempo+=TEMPO_UNIDADE;
-//     }
+        // voos = checaCombustivel(voos);
+        // // voos = checaVoos(voos, tempo);
 
-//     return voos;
-// }
+        tempo+=TEMPO_UNIDADE;
+    }
+
+    // return voos;
+}
 
 
 fila *geraFila(lista *voos){
@@ -438,8 +437,8 @@ int main(){
     int num_Voos,num_Aprox;
     v = geraDadosAleatorios(&num_Voos, &num_Aprox);
 
-    // int tempo = 600;
-    // v = definirPistas(v, tempo, num_Voos, num_Aprox);
+    int tempo = 600;
+    definirPistas(v->ini, tempo, num_Voos, num_Aprox);
     // lista *it;
     // for(it = v->ini; it != NULL; it = it->prox){
     //     printf("%s",it->codigo);
