@@ -10,7 +10,8 @@ typedef struct ArvoreBinaria{
 } arvore;
 
 // biblioteca
-arvore *LoadTreeFromFile(char *);
+arvore *loadTreeFromFile(char *);
+void showTree(arvore *);
 
 
 
@@ -18,6 +19,7 @@ arvore *LoadTreeFromFile(char *);
 arvore *arvoreVazia();
 arvore *alocaNo(int);
 arvore *insereElem(arvore *,int);
+arvore *insereVector(arvore *, double *);
 double *leituraDeArquivo(FILE *);
 double checaDecimal(double);
 
@@ -27,10 +29,30 @@ int main(){
     char in[100];
     scanf("%s",in);
 
-    LoadTreeFromFile(in);
+    loadTreeFromFile(in);
 
     return 0;
 }
+
+
+arvore *loadTreeFromFile(char *path){
+    arvore *arv = arvoreVazia();
+    double *vector;    
+    
+    FILE *f;  
+    f = fopen(path,"r");
+    if(f == NULL){
+        printf("Erro de leitura\n");
+        exit(-1);
+    }
+    vector = leituraDeArquivo(f);
+
+    arv = insereVector(arv, vector);
+
+    fclose(f);
+    return arv;
+}
+
 
 arvore *arvoreVazia(){
     return NULL;
@@ -38,6 +60,11 @@ arvore *arvoreVazia(){
 
 arvore *alocaNo(int info){
     arvore *arv = (arvore *) malloc(sizeof(arvore));
+
+    if(arv == NULL){
+        printf("Erro de alocacao\n");
+        exit(-1);
+    }
     
     arv->info = info;
     arv->filhoDir = NULL;
@@ -47,6 +74,7 @@ arvore *alocaNo(int info){
 }
 
 arvore *insereElem(arvore *raiz,int info){
+    printf("%d\n",info);
     if(info < raiz->info){
         if(raiz->filhoEsq == NULL){
             arvore *elem = alocaNo(info);
@@ -67,29 +95,17 @@ arvore *insereElem(arvore *raiz,int info){
     return raiz;
 }
 
-arvore *LoadTreeFromFile(char *path){
-    arvore *arv = arvoreVazia();
-    double *vector;    
-    
-    FILE *f;  
-    f = fopen(path,"r");
-    if(f == NULL){
-        printf("Erro de leitura\n");
-        exit(-1);
-    }
-    vector = leituraDeArquivo(f);
 
-    // Raiz
-    arv = alocaNo(1);
+arvore *insereVector(arvore *arv, double *vector){
+    arv = alocaNo(vector[0]);
 
-    // filhos
     for(int i = 1; checaDecimal(vector[i]) == 0.0; i++){
         arv = insereElem(arv,vector[i]);
     }
-
-    fclose(f);
+    
     return arv;
 }
+
 
 double *leituraDeArquivo(FILE *f){
     int cont=0;
