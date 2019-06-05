@@ -16,7 +16,8 @@ arvore *LoadTreeFromFile(char *);
 
 // funções auxiliares para funcionamento da biblioteca
 arvore *arvoreVazia();
-arvore *alocaNo(int info);
+arvore *alocaNo(int);
+arvore *insereElem(arvore *,int);
 double *leituraDeArquivo(FILE *);
 double checaDecimal(double);
 
@@ -45,6 +46,27 @@ arvore *alocaNo(int info){
     return arv;
 }
 
+arvore *insereElem(arvore *raiz,int info){
+    if(info < raiz->info){
+        if(raiz->filhoEsq == NULL){
+            arvore *elem = alocaNo(info);
+            raiz->filhoEsq = elem;
+        }else{
+            raiz->filhoEsq = insereElem(raiz->filhoEsq, info);
+        }
+    }
+    else{
+        if(raiz->filhoDir == NULL){
+            arvore *elem = alocaNo(info);
+            raiz->filhoDir = elem;
+        }else{
+            raiz->filhoDir = insereElem(raiz->filhoDir, info);
+        }
+    }
+
+    return raiz;
+}
+
 arvore *LoadTreeFromFile(char *path){
     arvore *arv = arvoreVazia();
     double *vector;    
@@ -58,12 +80,11 @@ arvore *LoadTreeFromFile(char *path){
     vector = leituraDeArquivo(f);
 
     // Raiz
-    arv = alocaNo(vector[0]);
+    arv = alocaNo(1);
 
-    printf("Raiz: %d\n",arv->info);
-
+    // filhos
     for(int i = 1; checaDecimal(vector[i]) == 0.0; i++){
-        printf("%.0lf\n",vector[i]);
+        arv = insereElem(arv,vector[i]);
     }
 
     fclose(f);
