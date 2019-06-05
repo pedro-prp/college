@@ -11,8 +11,9 @@ typedef struct ArvoreBinaria{
 
 // biblioteca
 arvore *loadTreeFromFile(char *);
-void showTree(arvore *);
-
+// void showTree(arvore *);
+int getHeight(arvore *);
+void isFull(arvore *);
 
 
 // funções auxiliares para funcionamento da biblioteca
@@ -20,6 +21,7 @@ arvore *arvoreVazia();
 arvore *alocaNo(int);
 arvore *insereElem(arvore *,int);
 arvore *insereVector(arvore *, double *);
+int getSize(arvore *);
 double *leituraDeArquivo(FILE *);
 double checaDecimal(double);
 
@@ -29,7 +31,13 @@ int main(){
     char in[100];
     scanf("%s",in);
 
-    loadTreeFromFile(in);
+    arvore *arv;
+
+    arv = loadTreeFromFile(in);
+    int tam = getSize(arv);
+    int altura = getHeight(arv);
+
+    printf("%d %d\n",tam,altura);
 
     return 0;
 }
@@ -50,7 +58,39 @@ arvore *loadTreeFromFile(char *path){
     arv = insereVector(arv, vector);
 
     fclose(f);
+    
     return arv;
+}
+
+int getHeight(arvore *arv){
+    // caso a arvore esteja vazia
+    if(arv == NULL){
+        return 0;
+    }
+    // caso não esteja vazia
+    else{
+        // sub arvores dos filhos
+        int esquerda = getHeight(arv->filhoEsq);
+        int direita = getHeight(arv->filhoDir);
+
+        if(esquerda > direita){
+            return (esquerda+1);
+        }else{
+            return (direita+1);
+        }
+    }
+}
+
+
+int getSize(arvore *arv){
+    // arvore vazia
+    if(arv == NULL){
+        return 0;
+    }
+    // pega tamanho pela esquerda e direita
+    else{
+        return getSize(arv->filhoEsq) + 1 + getSize(arv->filhoDir);
+    }
 }
 
 
@@ -74,7 +114,6 @@ arvore *alocaNo(int info){
 }
 
 arvore *insereElem(arvore *raiz,int info){
-    printf("%d\n",info);
     if(info < raiz->info){
         if(raiz->filhoEsq == NULL){
             arvore *elem = alocaNo(info);
