@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 typedef struct ArvoreBinaria{
     int info;
@@ -38,6 +39,8 @@ int main(){
     int altura = getHeight(arv);
 
     printf("%d %d\n",tam,altura);
+
+    isFull(arv);
 
     return 0;
 }
@@ -78,6 +81,18 @@ int getHeight(arvore *arv){
         }else{
             return (direita+1);
         }
+    }
+}
+
+
+void isFull(arvore *arv){
+    int height = getHeight(arv);
+    int size = getSize(arv);
+
+    if((pow(2,height) - 1) == size){
+        printf("Árvore cheia\n");
+    }else{
+        printf("Árvore não cheia\n");
     }
 }
 
