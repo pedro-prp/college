@@ -13,6 +13,7 @@ typedef struct ArvoreBinaria{
 // biblioteca
 arvore *loadTreeFromFile(char *);
 // void showTree(arvore *);
+arvore *removeValue(arvore *, info);
 void searchValue(arvore *, int);
 int getHeight(arvore *);
 void isFull(arvore *);
@@ -24,6 +25,7 @@ arvore *alocaNo(int);
 arvore *insereElem(arvore *,int);
 arvore *insereVector(arvore *, double *);
 arvore *searchInTree(arvore *,int, arvore *);
+double *getVectorInOrder(arvore *);
 int getSize(arvore *);
 double *leituraDeArquivo(FILE *);
 double checaDecimal(double);
@@ -35,17 +37,10 @@ int main(){
     scanf("%s",in);
 
     arvore *arv;
-    arvore *search = alocaNo(10);
 
     arv = loadTreeFromFile(in);
-    int tam = getSize(arv);
-    int altura = getHeight(arv);
 
-    // printf("%d %d\n",tam,altura);
-
-    searchValue(arv,35);
-
-    // isFull(arv);
+    searchValue(arv,26);
 
     return 0;
 }
@@ -102,6 +97,45 @@ void searchValue(arvore *arv, int info){
             printf("Elemento encontrado: %d\n",father->filhoEsq->info);
             printf("Elemento Pai: %d\n",father->info);
             printf("Elemento Irmão: %d\n",father->filhoDir->info);
+        }
+    }
+}
+
+
+arvore *removeValue(arvore *arv, info){
+    arvore *father = alocaNo(1);
+    arvore *elem;
+    father = searchInTree(arv,info);
+
+    if(father->filhoDir == info){
+        elem = father->filhoDir;
+
+        if(elem->filhoDir == NULL && elem->filhoEsq == NULL){
+            father->filhoDir = NULL;
+            free(elem);
+        }else if(elem->filhoEsq == NULL){
+            father->filhoDir = elem->filhoDir;
+            free(elem); 
+        }else if(elem->filhoDir == NULL){
+            father->filhoDir = elem->filhoEsq;
+            free(elem);
+        }else{
+            printf("Ainda não implementado\n");
+        }
+    }else{
+        elem = father->filhoEsq;
+
+        if(elem->filhoDir == NULL && elem->filhoEsq == NULL){
+            father->filhoEsq = NULL;
+            free(elem);
+        }else if(elem->filhoEsq == NULL){
+            father->filhoEsq = elem->filhoDir;
+            free(elem); 
+        }else if(elem->filhoDir == NULL){
+            father->filhoEsq = elem->filhoEsq;
+            free(elem);
+        }else{
+            printf("Ainda não implementado\n");
         }
     }
 }
@@ -218,6 +252,11 @@ arvore *insereVector(arvore *arv, double *vector){
     
     return arv;
 }
+
+
+// double *getVectorInOrder(arvore *){
+
+// }
 
 
 double *leituraDeArquivo(FILE *f){
