@@ -56,11 +56,14 @@ int main(){
     
     setStrInOrder(arv,str);
     printf("%s\n",str);
+    memset(str,0,strlen(str));
 
-    arv = removeValue(arv,50);
-    // for(int i =0; i < 10; i++){
-    //     printf("%d ",vector[i]);
-    // }
+    arv = removeValue(arv,90);
+    printf("passou do remove\n");
+
+    setStrInOrder(arv,str);
+    printf("%s\n",str);
+    memset(str,0,strlen(str));
 
     free(str);
 
@@ -140,7 +143,12 @@ arvore *removeValue(arvore *arv, int info){
     arvore *aux = alocaNo(1);
     arvore *elem;
     father = searchInTree(arv,info,NULL);
-    printf("b - %d\n",father->info);
+
+    if(father == NULL){
+        printf("Elemento não encontrado\n");
+
+        return arv;
+    }
 
     if(father->filhoDir->info == info){
         elem = father->filhoDir;
@@ -155,8 +163,6 @@ arvore *removeValue(arvore *arv, int info){
             father->filhoDir = elem->filhoEsq;
             free(elem);
         }else{
-            printf("semi implementado\n");
-            printf("debug 1\n");
 
             int sucessor = getSucessor(arv,info);
 
@@ -183,8 +189,6 @@ arvore *removeValue(arvore *arv, int info){
             father->filhoEsq = elem->filhoEsq;
             free(elem);
         }else{
-            printf("semi implementado\n");
-            printf("debug 1\n");
 
             int sucessor = getSucessor(arv,info);
 
@@ -204,22 +208,26 @@ arvore *removeValue(arvore *arv, int info){
 }
 
 arvore *removeRoot(arvore *arv){
+    if(arv->filhoDir == NULL && arv->filhoEsq)
+        return NULL;
+    else if(arv->filhoEsq == NULL)
+        return arv->filhoDir;
+    else if(arv->filhoDir == NULL)
+        return arv->filhoEsq;
+
     arvore *fatherSucessor = alocaNo(1);
     arvore *sucessorArv = alocaNo(1);
     arvore *aux = alocaNo(1);
 
     int sucessor = getSucessor(arv, arv->info);
-    printf("passou sucessor\n");
 
     fatherSucessor = searchInTree(arv,sucessor,NULL);
-    printf("passou search tree\n");
     
     sucessorArv = fatherSucessor->filhoEsq;
     aux = fatherSucessor->filhoEsq->filhoDir;
 
     sucessorArv->filhoDir = arv->filhoDir;
     sucessorArv->filhoEsq = arv->filhoEsq;
-    printf("passou new root\n");
 
     fatherSucessor->filhoEsq = aux;
     free(arv);
@@ -286,6 +294,10 @@ int getSucessor(arvore *arv, int info){
 arvore *searchInTree(arvore *arv,int info, arvore *father){
     if(arv == NULL){
         return arv;
+    }
+
+    if(arv->info!= info && arv->filhoDir == NULL && arv->filhoEsq == NULL){
+        return NULL;
     }
 
     if(arv->info == info){
