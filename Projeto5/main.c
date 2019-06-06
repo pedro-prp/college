@@ -13,7 +13,7 @@ typedef struct ArvoreBinaria{
 // biblioteca
 arvore *loadTreeFromFile(char *);
 // void showTree(arvore *);
-arvore *removeValue(arvore *, info);
+arvore *removeValue(arvore *, int info);
 void searchValue(arvore *, int);
 int getHeight(arvore *);
 void isFull(arvore *);
@@ -25,8 +25,10 @@ arvore *alocaNo(int);
 arvore *insereElem(arvore *,int);
 arvore *insereVector(arvore *, double *);
 arvore *searchInTree(arvore *,int, arvore *);
-double *getVectorInOrder(arvore *);
+arvore *removeRoot(arvore *);
+void setStrInOrder(arvore *, char *);
 int getSize(arvore *);
+int getSucessor(arvore *, int);
 double *leituraDeArquivo(FILE *);
 double checaDecimal(double);
 
@@ -38,9 +40,29 @@ int main(){
 
     arvore *arv;
 
-    arv = loadTreeFromFile(in);
+    printf("a\n");
 
-    searchValue(arv,26);
+    arv = loadTreeFromFile(in);
+    
+    printf("a\n");
+    
+    char *str = (char *) calloc(100,sizeof(char));
+
+    setStrInOrder(arv,str);
+    printf("%s\n",str);
+    memset(str,0,strlen(str));
+
+    arv = removeValue(arv,50);
+    
+    setStrInOrder(arv,str);
+    printf("%s\n",str);
+
+    arv = removeValue(arv,50);
+    // for(int i =0; i < 10; i++){
+    //     printf("%d ",vector[i]);
+    // }
+
+    free(str);
 
     return 0;
 }
@@ -102,12 +124,25 @@ void searchValue(arvore *arv, int info){
 }
 
 
-arvore *removeValue(arvore *arv, info){
-    arvore *father = alocaNo(1);
-    arvore *elem;
-    father = searchInTree(arv,info);
+arvore *removeValue(arvore *arv, int info){
+    if(arv->info == info){
+        printf("c\n");
+        arvore *newArv = alocaNo(1);
+        newArv = removeRoot(arv);
 
-    if(father->filhoDir == info){
+        printf("   %d  \n",newArv->info);
+        printf("%d - %d\n",newArv->filhoEsq->info, newArv->filhoDir->info);
+
+        return newArv;
+    }
+    
+    arvore *father = alocaNo(1);
+    arvore *aux = alocaNo(1);
+    arvore *elem;
+    father = searchInTree(arv,info,NULL);
+    printf("b - %d\n",father->info);
+
+    if(father->filhoDir->info == info){
         elem = father->filhoDir;
 
         if(elem->filhoDir == NULL && elem->filhoEsq == NULL){
@@ -120,7 +155,20 @@ arvore *removeValue(arvore *arv, info){
             father->filhoDir = elem->filhoEsq;
             free(elem);
         }else{
-            printf("Ainda não implementado\n");
+            printf("semi implementado\n");
+            printf("debug 1\n");
+
+            int sucessor = getSucessor(arv,info);
+
+            aux = searchInTree(arv,sucessor,NULL);
+            
+            if(aux->filhoDir->info == sucessor){
+                father->filhoDir = aux->filhoDir;
+            }else{
+                father->filhoEsq = aux->filhoEsq;
+            }
+
+            free(elem);
         }
     }else{
         elem = father->filhoEsq;
@@ -135,11 +183,105 @@ arvore *removeValue(arvore *arv, info){
             father->filhoEsq = elem->filhoEsq;
             free(elem);
         }else{
-            printf("Ainda não implementado\n");
+            printf("semi implementado\n");
+            printf("debug 1\n");
+
+            int sucessor = getSucessor(arv,info);
+
+            aux = searchInTree(arv,sucessor, NULL);
+            
+            if(aux->filhoDir->info == sucessor){
+                father->filhoEsq = aux->filhoDir;
+            }else{
+                father->filhoEsq = aux->filhoEsq;
+            }
+
+            free(elem);
         }
     }
+
+    return arv;
 }
 
+arvore *removeRoot(arvore *arv){
+    arvore *fatherSucessor = alocaNo(1);
+    arvore *sucessorArv = alocaNo(1);
+    arvore *aux = alocaNo(1);
+
+    int sucessor = getSucessor(arv, arv->info);
+    printf("passou sucessor\n");
+
+    fatherSucessor = searchInTree(arv,sucessor,NULL);
+    printf("passou search tree\n");
+    
+    sucessorArv = fatherSucessor->filhoEsq;
+    aux = fatherSucessor->filhoEsq->filhoDir;
+
+    sucessorArv->filhoDir = arv->filhoDir;
+    sucessorArv->filhoEsq = arv->filhoEsq;
+    printf("passou new root\n");
+
+    fatherSucessor->filhoEsq = aux;
+    free(arv);
+    
+    return sucessorArv;
+}
+
+int getSucessor(arvore *arv, int info){
+    char *str = (char *) calloc(((getSize(arv)*10)+getSize(arv)+1),sizeof(char));
+    char *aux = (char *) calloc(11,sizeof(char));
+    char *charToString = (char *) calloc(2,sizeof(char));
+    char *number = (char *) calloc(11,sizeof(char));
+
+    if(str == NULL){
+        printf("Erro de alocação\n");
+        exit(-1);
+    }
+
+    setStrInOrder(arv,str);
+
+    for(int i = 0; i < (int)strlen(str); i++){
+        
+        while(str[i] != '*'){
+
+            charToString[0] = str[i];
+            charToString[1] = '\0';
+
+            strcat(aux,charToString);
+            i++;
+
+            memset(charToString,0,strlen(charToString));
+        }
+
+        sprintf(number, "%d", info);
+
+        if(strcmp(number,aux) == 0){
+            printf("debug\n");
+            i++;
+            memset(aux,0,strlen(aux));
+            while(str[i] != '*'){
+                charToString[0] = str[i];
+                charToString[1] = '\0';
+
+                strcat(aux,charToString);
+                i++;
+
+                memset(charToString,0,strlen(charToString));
+            }
+
+            return (int) strtol(aux, (char **)NULL, 10);
+        }
+
+        memset(aux,0,strlen(aux));
+        memset(number,0,strlen(number));
+    }
+
+    free(str);
+    free(aux);
+    free(number);
+
+    return 1;
+}
 
 arvore *searchInTree(arvore *arv,int info, arvore *father){
     if(arv == NULL){
@@ -254,9 +396,24 @@ arvore *insereVector(arvore *arv, double *vector){
 }
 
 
-// double *getVectorInOrder(arvore *){
+void setStrInOrder(arvore *arv, char *str){ 
 
-// }
+    char *aux = (char *) calloc(10,sizeof(char));
+
+    if (arv == NULL)
+        return; 
+  
+    setStrInOrder(arv->filhoEsq, str); 
+
+    // copia elementos para a string
+    sprintf(aux,"%d",arv->info);
+    strcat(str,aux);
+    strcat(str,"*");
+
+    setStrInOrder(arv->filhoDir, str);
+
+    free(aux);
+}
 
 
 double *leituraDeArquivo(FILE *f){
