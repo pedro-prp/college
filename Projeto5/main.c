@@ -72,21 +72,25 @@ arvore *loadTreeFromFile(char *path){
 
 
 void searchValue(arvore *arv, int info){
-    arvore *father = alocaNo(1);
-
-    father = searchInTree(arv, info, arvoreVazia());
-
-    if(father == NULL){
-        printf("Elemento não encontrado\n");
+    if(arv->info == info){
+        printf("Elemento encontrado na raiz: %d\n",arv->info);
     }else{
-        if(father->filhoDir->info == info){
-            printf("Elemento encontrado: %d\n",father->filhoDir->info);
-            printf("Elemento Pai: %d\n",father->info);
-            printf("Elemento Irmão: %d\n",father->filhoEsq->info);
+    
+        arvore *father = alocaNo(1);
+        father = searchInTree(arv, info, arvoreVazia());
+
+        if(father == NULL){
+            printf("Elemento não encontrado\n");
         }else{
-            printf("Elemento encontrado: %d\n",father->filhoEsq->info);
-            printf("Elemento Pai: %d\n",father->info);
-            printf("Elemento Irmão: %d\n",father->filhoDir->info);
+            if(father->filhoDir->info == info){
+                printf("Elemento encontrado: %d\n",father->filhoDir->info);
+                printf("Elemento Pai: %d\n",father->info);
+                printf("Elemento Irmão: %d\n",father->filhoEsq->info);
+            }else{
+                printf("Elemento encontrado: %d\n",father->filhoEsq->info);
+                printf("Elemento Pai: %d\n",father->info);
+                printf("Elemento Irmão: %d\n",father->filhoDir->info);
+            }
         }
     }
 }
