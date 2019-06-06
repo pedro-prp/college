@@ -13,6 +13,7 @@ typedef struct ArvoreBinaria{
 // biblioteca
 arvore *loadTreeFromFile(char *);
 // void showTree(arvore *);
+void searchValue(arvore *, int);
 int getHeight(arvore *);
 void isFull(arvore *);
 
@@ -22,6 +23,7 @@ arvore *arvoreVazia();
 arvore *alocaNo(int);
 arvore *insereElem(arvore *,int);
 arvore *insereVector(arvore *, double *);
+arvore *searchInTree(arvore *,int, arvore *);
 int getSize(arvore *);
 double *leituraDeArquivo(FILE *);
 double checaDecimal(double);
@@ -33,14 +35,17 @@ int main(){
     scanf("%s",in);
 
     arvore *arv;
+    arvore *search = alocaNo(10);
 
     arv = loadTreeFromFile(in);
     int tam = getSize(arv);
     int altura = getHeight(arv);
 
-    printf("%d %d\n",tam,altura);
+    // printf("%d %d\n",tam,altura);
 
-    isFull(arv);
+    searchValue(arv,37);
+
+    // isFull(arv);
 
     return 0;
 }
@@ -64,6 +69,45 @@ arvore *loadTreeFromFile(char *path){
     
     return arv;
 }
+
+
+void searchValue(arvore *arv, int info){
+    arvore *father = alocaNo(1);
+
+    father = searchInTree(arv, info, arvoreVazia());
+
+    if(father == NULL){
+        printf("Elemento não encontrado\n");
+    }else{
+        if(father->filhoDir->info == info){
+            printf("Elemento encontrado: %d\n",father->filhoDir->info);
+            printf("Elemento Pai: %d\n",father->info);
+            printf("Elemento Irmão: %d\n",father->filhoEsq->info);
+        }else{
+            printf("Elemento encontrado: %d\n",father->filhoEsq->info);
+            printf("Elemento Pai: %d\n",father->info);
+            printf("Elemento Irmão: %d\n",father->filhoDir->info);
+        }
+    }
+}
+
+
+arvore *searchInTree(arvore *arv,int info, arvore *father){
+    if(arv == NULL){
+        return arv;
+    }
+
+    if(arv->info == info){
+        return father;
+    }else{
+        if(info < arv->info){
+            return searchInTree(arv->filhoEsq, info, arv);
+        }else{
+            return searchInTree(arv->filhoDir, info, arv);
+        }
+    }
+}
+
 
 int getHeight(arvore *arv){
     // caso a arvore esteja vazia
