@@ -43,7 +43,7 @@ int main(){
 
     // printf("%d %d\n",tam,altura);
 
-    searchValue(arv,37);
+    searchValue(arv,35);
 
     // isFull(arv);
 
@@ -74,23 +74,34 @@ arvore *loadTreeFromFile(char *path){
 void searchValue(arvore *arv, int info){
     if(arv->info == info){
         printf("Elemento encontrado na raiz: %d\n",arv->info);
-    }else{
+        return;
+    }
     
-        arvore *father = alocaNo(1);
-        father = searchInTree(arv, info, arvoreVazia());
+    arvore *father = alocaNo(1);
+    father = searchInTree(arv, info, arvoreVazia());
 
-        if(father == NULL){
-            printf("Elemento não encontrado\n");
+    if(father == NULL){
+        printf("Elemento não encontrado\n");
+        return;
+    }
+
+    if(father->filhoEsq == NULL){
+        printf("Elemento encontrado: %d\n",father->filhoDir->info);
+        printf("Elemento Pai: %d\n",father->info);
+        printf("Elemento Irmão: não possui\n");
+    }else if(father->filhoDir == NULL){
+        printf("Elemento encontrado: %d\n",father->filhoEsq->info);
+        printf("Elemento Pai: %d\n",father->info);
+        printf("Elemento Irmão: não possui\n");
+    }else{
+        if(father->filhoDir->info == info){
+            printf("Elemento encontrado: %d\n",father->filhoDir->info);
+            printf("Elemento Pai: %d\n",father->info);
+            printf("Elemento Irmão: %d\n",father->filhoEsq->info);
         }else{
-            if(father->filhoDir->info == info){
-                printf("Elemento encontrado: %d\n",father->filhoDir->info);
-                printf("Elemento Pai: %d\n",father->info);
-                printf("Elemento Irmão: %d\n",father->filhoEsq->info);
-            }else{
-                printf("Elemento encontrado: %d\n",father->filhoEsq->info);
-                printf("Elemento Pai: %d\n",father->info);
-                printf("Elemento Irmão: %d\n",father->filhoDir->info);
-            }
+            printf("Elemento encontrado: %d\n",father->filhoEsq->info);
+            printf("Elemento Pai: %d\n",father->info);
+            printf("Elemento Irmão: %d\n",father->filhoDir->info);
         }
     }
 }
