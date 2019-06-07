@@ -12,7 +12,10 @@ typedef struct ArvoreBinaria{
 
 // biblioteca
 arvore *loadTreeFromFile(char *);
-// void showTree(arvore *);
+void showTree(arvore *);
+void printPostorder(arvore *);
+void printInOrder(arvore *);
+void printPreorder(arvore *);
 arvore *removeValue(arvore *, int info);
 void searchValue(arvore *, int);
 int getHeight(arvore *);
@@ -26,11 +29,37 @@ arvore *insereElem(arvore *,int);
 arvore *insereVector(arvore *, double *);
 arvore *searchInTree(arvore *,int, arvore *);
 arvore *removeRoot(arvore *);
+int **getColunas(arvore *);
 void setStrInOrder(arvore *, char *);
+void printElemPreOrder(arvore *arv);
+void printElemPostOrder(arvore *arv);
+void printElemInOrder(arvore *arv);
 int getSize(arvore *);
 int getSucessor(arvore *, int);
 double *leituraDeArquivo(FILE *);
 double checaDecimal(double);
+
+
+// void padding ( char ch, int n ){
+//   int i;
+  
+//   for ( i = 0; i < n; i++ )
+//     putchar ( ch );
+// }
+
+// void structure (arvore *root, int level ){
+//   int i;
+  
+//   if ( root == NULL ) {
+//     padding ( '\t', level );
+//     puts ( "~" );
+//   } else {
+//     structure ( root->filhoDir, level + 1 );
+//     padding ( '\t', level );
+//     printf ( "%d\n", root->info );
+//     structure ( root->filhoEsq, level + 1 );
+//   }
+// }
 
 
 int main(){
@@ -39,33 +68,13 @@ int main(){
     scanf("%s",in);
 
     arvore *arv;
-
-    printf("a\n");
-
     arv = loadTreeFromFile(in);
-    
-    printf("a\n");
-    
-    char *str = (char *) calloc(100,sizeof(char));
 
-    setStrInOrder(arv,str);
-    printf("%s\n",str);
-    memset(str,0,strlen(str));
+    // showTree(arv);
 
-    arv = removeValue(arv,50);
-    
-    setStrInOrder(arv,str);
-    printf("%s\n",str);
-    memset(str,0,strlen(str));
-
-    arv = removeValue(arv,90);
-    printf("passou do remove\n");
-
-    setStrInOrder(arv,str);
-    printf("%s\n",str);
-    memset(str,0,strlen(str));
-
-    free(str);
+    printPreorder(arv);
+    printInOrder(arv);
+    printPostorder(arv);
 
     return 0;
 }
@@ -88,6 +97,89 @@ arvore *loadTreeFromFile(char *path){
     fclose(f);
     
     return arv;
+}
+
+
+void showTree(arvore *arv){
+    FILE *f;
+    f = fopen("aux.txt", "w");
+
+    int lines = getHeight(arv);
+
+    for(int i = 0; i < lines; i++){
+        for(int j=0; j < i; j++){
+            fprintf(f," ");
+        }
+        fprintf(f,"%d",arv->info);
+        for(int j=0; j < i; j++){
+            fprintf(f," ");
+        }
+        fprintf(f,"\n");
+    }
+
+}
+
+
+void printElemPostOrder(arvore *arv){
+    if(arv == NULL)
+        return;
+
+    printElemPostOrder(arv->filhoEsq);
+
+    printElemPostOrder(arv->filhoDir);
+
+    printf("%d ",arv->info);
+}
+
+
+void printPostorder(arvore *arv){
+    printf("PostOrder: ");
+
+    printElemPostOrder(arv);
+
+    printf("\n");
+}
+
+
+void printElemInOrder(arvore *arv){
+    if(arv == NULL)
+        return;
+
+    printElemInOrder(arv->filhoEsq);
+
+    printf("%d ",arv->info);
+
+    printElemInOrder(arv->filhoDir);
+}
+
+
+void printElemPreOrder(arvore *arv){
+    if(arv == NULL)
+        return;
+
+    printf("%d ",arv->info);
+
+    printElemPreOrder(arv->filhoEsq);
+
+    printElemPreOrder(arv->filhoDir);
+}
+
+
+void printPreorder(arvore *arv){
+    printf("PreOrder: ");
+
+    printElemPreOrder(arv);
+
+    printf("\n");
+}
+
+
+void printInOrder(arvore *arv){
+    printf("InOrder: ");
+
+    printElemInOrder(arv);
+
+    printf("\n");
 }
 
 
@@ -129,12 +221,8 @@ void searchValue(arvore *arv, int info){
 
 arvore *removeValue(arvore *arv, int info){
     if(arv->info == info){
-        printf("c\n");
         arvore *newArv = alocaNo(1);
         newArv = removeRoot(arv);
-
-        printf("   %d  \n",newArv->info);
-        printf("%d - %d\n",newArv->filhoEsq->info, newArv->filhoDir->info);
 
         return newArv;
     }
@@ -264,7 +352,6 @@ int getSucessor(arvore *arv, int info){
         sprintf(number, "%d", info);
 
         if(strcmp(number,aux) == 0){
-            printf("debug\n");
             i++;
             memset(aux,0,strlen(aux));
             while(str[i] != '*'){
