@@ -36,68 +36,12 @@ void setStrInOrder(arvore *, char *);
 void printElemPreOrder(arvore *);
 void printElemPostOrder(arvore *);
 void printElemInOrder(arvore *);
-void utilShowTree(arvore *, int);
+int buildStrTree(arvore *, int, int, int, char **);
 int getSize(arvore *);
 int getSucessor(arvore *, int);
 double *leituraDeArquivo(FILE *);
 double checaDecimal(double);
 
-///////// teste print
-int _print_t(arvore *tree, int is_left, int offset, int depth, char **s)
-{
-    char b[20];
-    int width = 5;
-
-    if (!tree) 
-        return 0;
-
-    sprintf(b, "(%03d)", tree->info);
-
-    int left  = _print_t(tree->filhoEsq,  1, offset,depth + 1, s);
-    int right = _print_t(tree->filhoDir, 0, offset + left + width, depth + 1, s);
-
-    for (int i = 0; i < width; i++)
-        s[2 * depth][offset + left + i] = b[i];
-
-    if (depth && is_left) {
-
-        for (int i = 0; i < width + right; i++)
-            s[2 * depth - 1][offset + left + width/2 + i] = '-';
-
-        s[2 * depth - 1][offset + left + width/2] = '+';
-        s[2 * depth - 1][offset + left + width + right + width/2] = '+';
-
-    } else if (depth && !is_left) {
-
-        for (int i = 0; i < left + width; i++)
-            s[2 * depth - 1][offset - width/2 + i] = '-';
-
-        s[2 * depth - 1][offset + left + width/2] = '+';
-        s[2 * depth - 1][offset - width/2 - 1] = '+';
-    }
-
-    return left + width + right;
-}
-
-void print_t(arvore *tree)
-{
-    char **str = (char **) calloc(getHeight(tree)*2+1,sizeof(char *));
-
-    for (int i = 0; i < getHeight(tree)*2; i++){
-        str[i] = calloc(255,sizeof(char));
-        sprintf(str[i], "%80s", " ");
-    }
-
-    // printf("passou\n");
-
-    _print_t(tree, 0, 0, 0, str);
-
-    for (int i = 0; i < getHeight(tree)*2; i++)
-        printf("%s\n", str[i]);
-}
-
-
-//////  adasdasdasdsa
 
 int main(){
 
@@ -108,11 +52,15 @@ int main(){
     arv = loadTreeFromFile(in);
 
     // showTree(arv);
-    print_t(arv);
+    showTree(arv);
 
-    // arv = removeValue(arv,50);
+    arv = removeValue(arv,50);
 
-    // showTree(arv);
+    showTree(arv);
+
+    arv = removeValue(arv,70);
+
+    showTree(arv);
 
     return 0;
 }
@@ -138,28 +86,36 @@ arvore *loadTreeFromFile(char *path){
 }
 
 
-void showTree(arvore *arv){
-    utilShowTree(arv,0);
-    // printf("\n");
-}
+void showTree(arvore *tree){
+    printf("+");
+    for(int i = 0; i < 78; i++){
+        printf("-");
+    }printf("+\n");
 
-void utilShowTree(arvore *arv, int space){
-    if(arv == NULL){
-        return;
+    printf("|\t\t\t\tÁrvore binária\t\t\t\t       |\n");
+
+    printf("+");
+    for(int i = 0; i < 78; i++){
+        printf("-");
+    }printf("+\n");
+
+    char **str = (char **) calloc(getHeight(tree)*2+1,sizeof(char *));
+
+    for (int i = 0; i < getHeight(tree)*2; i++){
+        str[i] = calloc(255,sizeof(char));
+        sprintf(str[i], "%80s", " ");
     }
+    
+    buildStrTree(tree, 0, 0, 0, str);
 
-    space+=5;
-
-    utilShowTree(arv->filhoDir,space);
-
-    printf("\n");
-    for(int i = 5; i < space; i++){
-        printf(" ");
+    for (int i = 0; i < getHeight(tree)*2; i++){
+        printf("%s\n", str[i]);
+        free(str[i]);
     }
-
-    printf("%d\n",arv->info);
-
-    utilShowTree(arv->filhoEsq,space);
+    free(str);
+    for(int i = 0; i < 80; i++){
+        printf("-");
+    }printf("\n");
 }
 
 
@@ -524,6 +480,42 @@ arvore *insereElem(arvore *raiz,int info){
     }
 
     return raiz;
+}
+
+
+int buildStrTree(arvore *arv, int temEsq, int desloc, int tam, char **s){
+    // char b[20];
+    char *aux = (char *) calloc(10,sizeof(char));
+    int espaco = 5;
+
+    if (!arv) 
+        return 0;
+
+    sprintf(aux, "|%03d|", arv->info);
+
+    int subArvEsq  = buildStrTree(arv->filhoEsq,  1, desloc,tam + 1, s);
+    int subArvDir = buildStrTree(arv->filhoDir, 0, desloc + subArvEsq + espaco, tam + 1, s);
+
+    for(int i = 0; i < espaco; i++)
+        s[2 * tam][desloc + subArvEsq + i] = aux[i];
+
+    if(tam && temEsq){
+        for (int i = 0; i < espaco + subArvDir; i++)
+            s[2 * tam - 1][desloc + subArvEsq + espaco/2 + i] = '-';
+
+        s[2 * tam - 1][desloc + subArvEsq + espaco/2] = '+';
+        s[2 * tam - 1][desloc + subArvEsq + espaco + subArvDir + espaco/2] = '+';
+
+    }else if (tam && !temEsq){
+        for (int i = 0; i < subArvEsq + espaco; i++)
+            s[2 * tam - 1][desloc - espaco/2 + i] = '-';
+
+        s[2 * tam - 1][desloc + subArvEsq + espaco/2] = '+';
+        s[2 * tam - 1][desloc - espaco/2 - 1] = '+';
+    }
+
+    free(aux);
+    return (subArvEsq + espaco + subArvDir);
 }
 
 
