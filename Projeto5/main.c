@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <stdbool.h>
 
 #define COUNT 5;
 
@@ -37,6 +38,7 @@ void printElemPreOrder(arvore *);
 void printElemPostOrder(arvore *);
 void printElemInOrder(arvore *);
 int buildStrTree(arvore *, int, int, int, char **);
+int checaArvBalanceada(arvore *);
 int getSize(arvore *);
 int getSucessor(arvore *, int);
 double *leituraDeArquivo(FILE *);
@@ -51,16 +53,13 @@ int main(){
     arvore *arv;
     arv = loadTreeFromFile(in);
 
-    // showTree(arv);
-    showTree(arv);
+    int balance = checaArvBalanceada(arv);
 
-    arv = removeValue(arv,50);
-
-    showTree(arv);
-
-    arv = removeValue(arv,70);
-
-    showTree(arv);
+    if(balance == 1){
+        printf("Balanceada\n");
+    }else{
+        printf("Desbalanceada\n");
+    }
 
     return 0;
 }
@@ -439,6 +438,27 @@ int getSize(arvore *arv){
     else{
         return getSize(arv->filhoEsq) + 1 + getSize(arv->filhoDir);
     }
+}
+
+
+int checaArvBalanceada(arvore *arv){
+    if(arv == NULL){
+        return 1;
+    }
+
+    // pegar diferenças de altura
+    int dirHeight = getHeight(arv->filhoDir);
+    int esqHeight = getHeight(arv->filhoEsq);
+
+    int diferenca = abs(dirHeight - esqHeight);
+
+    if(diferenca <= 1){
+        if(checaArvBalanceada(arv->filhoDir) && checaArvBalanceada(arv->filhoEsq)){
+                return 1;
+           }
+    }
+
+    return 0;
 }
 
 
