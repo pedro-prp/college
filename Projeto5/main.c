@@ -4,6 +4,8 @@
 #include <string.h>
 #include <math.h>
 
+#define COUNT 5;
+
 typedef struct ArvoreBinaria{
     int info;
     struct ArvoreBinaria *filhoDir;
@@ -31,36 +33,71 @@ arvore *searchInTree(arvore *,int, arvore *);
 arvore *removeRoot(arvore *);
 int **getColunas(arvore *);
 void setStrInOrder(arvore *, char *);
-void printElemPreOrder(arvore *arv);
-void printElemPostOrder(arvore *arv);
-void printElemInOrder(arvore *arv);
+void printElemPreOrder(arvore *);
+void printElemPostOrder(arvore *);
+void printElemInOrder(arvore *);
+void utilShowTree(arvore *, int);
 int getSize(arvore *);
 int getSucessor(arvore *, int);
 double *leituraDeArquivo(FILE *);
 double checaDecimal(double);
 
+///////// teste print
+int _print_t(arvore *tree, int is_left, int offset, int depth, char **s)
+{
+    char b[20];
+    int width = 5;
 
-// void padding ( char ch, int n ){
-//   int i;
-  
-//   for ( i = 0; i < n; i++ )
-//     putchar ( ch );
-// }
+    if (!tree) 
+        return 0;
 
-// void structure (arvore *root, int level ){
-//   int i;
-  
-//   if ( root == NULL ) {
-//     padding ( '\t', level );
-//     puts ( "~" );
-//   } else {
-//     structure ( root->filhoDir, level + 1 );
-//     padding ( '\t', level );
-//     printf ( "%d\n", root->info );
-//     structure ( root->filhoEsq, level + 1 );
-//   }
-// }
+    sprintf(b, "(%03d)", tree->info);
 
+    int left  = _print_t(tree->filhoEsq,  1, offset,depth + 1, s);
+    int right = _print_t(tree->filhoDir, 0, offset + left + width, depth + 1, s);
+
+    for (int i = 0; i < width; i++)
+        s[2 * depth][offset + left + i] = b[i];
+
+    if (depth && is_left) {
+
+        for (int i = 0; i < width + right; i++)
+            s[2 * depth - 1][offset + left + width/2 + i] = '-';
+
+        s[2 * depth - 1][offset + left + width/2] = '+';
+        s[2 * depth - 1][offset + left + width + right + width/2] = '+';
+
+    } else if (depth && !is_left) {
+
+        for (int i = 0; i < left + width; i++)
+            s[2 * depth - 1][offset - width/2 + i] = '-';
+
+        s[2 * depth - 1][offset + left + width/2] = '+';
+        s[2 * depth - 1][offset - width/2 - 1] = '+';
+    }
+
+    return left + width + right;
+}
+
+void print_t(arvore *tree)
+{
+    char **str = (char **) calloc(getHeight(tree)*2+1,sizeof(char *));
+
+    for (int i = 0; i < getHeight(tree)*2; i++){
+        str[i] = calloc(255,sizeof(char));
+        sprintf(str[i], "%80s", " ");
+    }
+
+    // printf("passou\n");
+
+    _print_t(tree, 0, 0, 0, str);
+
+    for (int i = 0; i < getHeight(tree)*2; i++)
+        printf("%s\n", str[i]);
+}
+
+
+//////  adasdasdasdsa
 
 int main(){
 
@@ -71,10 +108,11 @@ int main(){
     arv = loadTreeFromFile(in);
 
     // showTree(arv);
+    print_t(arv);
 
-    printPreorder(arv);
-    printInOrder(arv);
-    printPostorder(arv);
+    // arv = removeValue(arv,50);
+
+    // showTree(arv);
 
     return 0;
 }
@@ -101,22 +139,27 @@ arvore *loadTreeFromFile(char *path){
 
 
 void showTree(arvore *arv){
-    FILE *f;
-    f = fopen("aux.txt", "w");
+    utilShowTree(arv,0);
+    // printf("\n");
+}
 
-    int lines = getHeight(arv);
-
-    for(int i = 0; i < lines; i++){
-        for(int j=0; j < i; j++){
-            fprintf(f," ");
-        }
-        fprintf(f,"%d",arv->info);
-        for(int j=0; j < i; j++){
-            fprintf(f," ");
-        }
-        fprintf(f,"\n");
+void utilShowTree(arvore *arv, int space){
+    if(arv == NULL){
+        return;
     }
 
+    space+=5;
+
+    utilShowTree(arv->filhoDir,space);
+
+    printf("\n");
+    for(int i = 5; i < space; i++){
+        printf(" ");
+    }
+
+    printf("%d\n",arv->info);
+
+    utilShowTree(arv->filhoEsq,space);
 }
 
 
