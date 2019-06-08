@@ -83,6 +83,258 @@ arvore *loadTreeFromFile(char *path){
 }
 
 
+void showTree(arvore *arv){
+    if(arv == NULL){
+        printf("Árvore vazia\n");
+        return;
+    }
+
+
+    printf("+");
+    for(int i = 0; i < 78; i++){
+        printf("-");
+    }printf("+\n");
+
+    printf("|\t\t\t\tÁrvore binária\t\t\t\t       |\n");
+
+    printf("+");
+    for(int i = 0; i < 78; i++){
+        printf("-");
+    }printf("+\n");
+
+    char **str = (char **) calloc(getHeight(arv)*2+1,sizeof(char *));
+
+    for (int i = 0; i < getHeight(arv)*2; i++){
+        str[i] = calloc(255,sizeof(char));
+        sprintf(str[i], "%80s", " ");
+    }
+    
+    buildStrTree(arv, 0, 0, 0, str);
+
+    for (int i = 0; i < getHeight(arv)*2; i++){
+        printf("%s\n", str[i]);
+        free(str[i]);
+    }
+    free(str);
+    for(int i = 0; i < 80; i++){
+        printf("-");
+    }printf("\n");
+}
+
+
+void isFull(arvore *arv){
+    if(arv == NULL){
+        printf("Árvore vazia\n");
+        return;
+    }
+
+    int height = getHeight(arv);
+    int size = getSize(arv);
+
+    if((pow(2,height) - 1) == size){
+        printf("Árvore cheia\n");
+    }else{
+        printf("Árvore não cheia\n");
+    }
+}
+
+
+void searchValue(arvore *arv, int info){
+    if(arv ==  NULL){
+        printf("Árvore ainda não lida\n");
+        return;        
+    }
+
+    if(arv->info == info){
+        printf("Elemento encontrado na raiz: %d\n",arv->info);
+        return;
+    }
+    
+    arvore *father = alocaNo(1);
+    father = searchInTree(arv, info, arvoreVazia());
+
+    if(father == NULL){
+        printf("Elemento não encontrado\n");
+        return;
+    }
+
+    if(father->filhoEsq == NULL){
+        printf("Elemento encontrado: %d\n",father->filhoDir->info);
+        printf("Elemento Pai: %d\n",father->info);
+        printf("Elemento Irmão: não possui\n");
+    }else if(father->filhoDir == NULL){
+        printf("Elemento encontrado: %d\n",father->filhoEsq->info);
+        printf("Elemento Pai: %d\n",father->info);
+        printf("Elemento Irmão: não possui\n");
+    }else{
+        if(father->filhoDir->info == info){
+            printf("Elemento encontrado: %d\n",father->filhoDir->info);
+            printf("Elemento Pai: %d\n",father->info);
+            printf("Elemento Irmão: %d\n",father->filhoEsq->info);
+        }else{
+            printf("Elemento encontrado: %d\n",father->filhoEsq->info);
+            printf("Elemento Pai: %d\n",father->info);
+            printf("Elemento Irmão: %d\n",father->filhoDir->info);
+        }
+    }
+}
+
+
+int getHeight(arvore *arv){
+    // caso a arvore esteja vazia
+    if(arv == NULL){
+        return 0;
+    }
+    // caso não esteja vazia
+    else{
+        // sub arvores dos filhos
+        int esquerda = getHeight(arv->filhoEsq);
+        int direita = getHeight(arv->filhoDir);
+
+        if(esquerda > direita){
+            return (esquerda+1);
+        }else{
+            return (direita+1);
+        }
+    }
+}
+
+
+arvore *removeValue(arvore *arv, int info){
+    if(arv == NULL){
+        printf("Árvore ainda não lida\n");
+        return arv;
+    }
+
+
+    if(arv->info == info){
+        arv = removeRoot(arv);
+        
+        printf("Elemento removido com sucesso\n");
+        return arv;
+    }
+    
+    arvore *father = alocaNo(1);
+    arvore *aux = alocaNo(1);
+    arvore *elem;
+    father = searchInTree(arv,info,NULL);
+
+    if(father == NULL){
+        printf("Elemento não encontrado\n");
+
+        return arv;
+    }
+
+    if(father->filhoDir->info == info){
+        elem = father->filhoDir;
+
+        if(elem->filhoDir == NULL && elem->filhoEsq == NULL){
+            father->filhoDir = NULL;
+            free(elem);
+        }else if(elem->filhoEsq == NULL){
+            father->filhoDir = elem->filhoDir;
+            free(elem); 
+        }else if(elem->filhoDir == NULL){
+            father->filhoDir = elem->filhoEsq;
+            free(elem);
+        }else{
+
+            int sucessor = getSucessor(arv,info);
+
+            aux = searchInTree(arv,sucessor,NULL);
+            
+            if(aux->filhoDir->info == sucessor){
+                father->filhoDir = aux->filhoDir;
+            }else{
+                father->filhoEsq = aux->filhoEsq;
+            }
+
+            free(elem);
+        }
+    }else{
+        elem = father->filhoEsq;
+
+        if(elem->filhoDir == NULL && elem->filhoEsq == NULL){
+            father->filhoEsq = NULL;
+            free(elem);
+        }else if(elem->filhoEsq == NULL){
+            father->filhoEsq = elem->filhoDir;
+            free(elem); 
+        }else if(elem->filhoDir == NULL){
+            father->filhoEsq = elem->filhoEsq;
+            free(elem);
+        }else{
+
+            int sucessor = getSucessor(arv,info);
+
+            aux = searchInTree(arv,sucessor, NULL);
+            
+            if(aux->filhoDir->info == sucessor){
+                father->filhoEsq = aux->filhoDir;
+            }else{
+                father->filhoEsq = aux->filhoEsq;
+            }
+
+            free(elem);
+        }
+    }
+    printf("Elemento removido com sucesso\n");
+
+    return arv;
+}
+
+
+void printInOrder(arvore *arv){
+    printf("InOrder: ");
+
+    printElemInOrder(arv);
+
+    printf("\n");
+}
+
+
+void printPreorder(arvore *arv){
+    printf("PreOrder: ");
+
+    printElemPreOrder(arv);
+
+    printf("\n");
+}
+
+
+void printPostorder(arvore *arv){
+    printf("PostOrder: ");
+
+    printElemPostOrder(arv);
+
+    printf("\n");
+}
+
+
+arvore *balanceTree(arvore *arv){
+    if(checaArvBalanceada(arv) == 1){
+        printf("Árvore já balanceada\n");
+        return arv;
+    }else{
+        arv = transfBackbone(arv);
+
+        int size = getSize(arv);
+        int auxFolhas = (1 << ((int) floor(log(size+1)/log(2)))) - 1;
+
+        arv = desfazBackbone(arv, (size - auxFolhas));
+
+        while (auxFolhas > 1){
+            auxFolhas = auxFolhas/2;
+            arv = desfazBackbone(arv,auxFolhas);
+        }
+
+        printf("Árvore balanceada com sucesso\n");
+    }
+
+    return arv;
+}
+
+
 void rodarDir(arvore *avo,arvore *pai,arvore *filho){
     if(avo != NULL){
         if(avo->filhoEsq == pai){
@@ -166,69 +418,6 @@ arvore *desfazBackbone(arvore *arv, int number){
 }
 
 
-arvore *balanceTree(arvore *arv){
-    if(checaArvBalanceada(arv) == 1){
-        printf("Árvore já balanceada\n");
-        return arv;
-    }else{
-        arv = transfBackbone(arv);
-
-        int size = getSize(arv);
-        int auxFolhas = (1 << ((int) floor(log(size+1)/log(2)))) - 1;
-
-        arv = desfazBackbone(arv, (size - auxFolhas));
-
-        while (auxFolhas > 1){
-            auxFolhas = auxFolhas/2;
-            arv = desfazBackbone(arv,auxFolhas);
-        }
-
-        printf("Árvore balanceada com sucesso\n");
-    }
-
-    return arv;
-}
-
-
-void showTree(arvore *arv){
-    if(arv == NULL){
-        printf("Árvore vazia\n");
-        return;
-    }
-
-
-    printf("+");
-    for(int i = 0; i < 78; i++){
-        printf("-");
-    }printf("+\n");
-
-    printf("|\t\t\t\tÁrvore binária\t\t\t\t       |\n");
-
-    printf("+");
-    for(int i = 0; i < 78; i++){
-        printf("-");
-    }printf("+\n");
-
-    char **str = (char **) calloc(getHeight(arv)*2+1,sizeof(char *));
-
-    for (int i = 0; i < getHeight(arv)*2; i++){
-        str[i] = calloc(255,sizeof(char));
-        sprintf(str[i], "%80s", " ");
-    }
-    
-    buildStrTree(arv, 0, 0, 0, str);
-
-    for (int i = 0; i < getHeight(arv)*2; i++){
-        printf("%s\n", str[i]);
-        free(str[i]);
-    }
-    free(str);
-    for(int i = 0; i < 80; i++){
-        printf("-");
-    }printf("\n");
-}
-
-
 void printElemPostOrder(arvore *arv){
     if(arv == NULL)
         return;
@@ -238,15 +427,6 @@ void printElemPostOrder(arvore *arv){
     printElemPostOrder(arv->filhoDir);
 
     printf("%d ",arv->info);
-}
-
-
-void printPostorder(arvore *arv){
-    printf("PostOrder: ");
-
-    printElemPostOrder(arv);
-
-    printf("\n");
 }
 
 
@@ -274,63 +454,6 @@ void printElemPreOrder(arvore *arv){
 }
 
 
-void printPreorder(arvore *arv){
-    printf("PreOrder: ");
-
-    printElemPreOrder(arv);
-
-    printf("\n");
-}
-
-
-void printInOrder(arvore *arv){
-    printf("InOrder: ");
-
-    printElemInOrder(arv);
-
-    printf("\n");
-}
-
-
-void searchValue(arvore *arv, int info){
-    if(arv ==  NULL){
-        printf("Árvore ainda não lida\n");
-        return;        
-    }
-
-    if(arv->info == info){
-        printf("Elemento encontrado na raiz: %d\n",arv->info);
-        return;
-    }
-    
-    arvore *father = alocaNo(1);
-    father = searchInTree(arv, info, arvoreVazia());
-
-    if(father == NULL){
-        printf("Elemento não encontrado\n");
-        return;
-    }
-
-    if(father->filhoEsq == NULL){
-        printf("Elemento encontrado: %d\n",father->filhoDir->info);
-        printf("Elemento Pai: %d\n",father->info);
-        printf("Elemento Irmão: não possui\n");
-    }else if(father->filhoDir == NULL){
-        printf("Elemento encontrado: %d\n",father->filhoEsq->info);
-        printf("Elemento Pai: %d\n",father->info);
-        printf("Elemento Irmão: não possui\n");
-    }else{
-        if(father->filhoDir->info == info){
-            printf("Elemento encontrado: %d\n",father->filhoDir->info);
-            printf("Elemento Pai: %d\n",father->info);
-            printf("Elemento Irmão: %d\n",father->filhoEsq->info);
-        }else{
-            printf("Elemento encontrado: %d\n",father->filhoEsq->info);
-            printf("Elemento Pai: %d\n",father->info);
-            printf("Elemento Irmão: %d\n",father->filhoDir->info);
-        }
-    }
-}
 
 
 void printMenu(){
@@ -435,88 +558,6 @@ arvore *menu(int d,arvore *arv){
 }
 
 
-arvore *removeValue(arvore *arv, int info){
-    if(arv == NULL){
-        printf("Árvore ainda não lida\n");
-        return arv;
-    }
-
-
-    if(arv->info == info){
-        arvore *newArv = alocaNo(1);
-        newArv = removeRoot(arv);
-
-        return newArv;
-    }
-    
-    arvore *father = alocaNo(1);
-    arvore *aux = alocaNo(1);
-    arvore *elem;
-    father = searchInTree(arv,info,NULL);
-
-    if(father == NULL){
-        printf("Elemento não encontrado\n");
-
-        return arv;
-    }
-
-    if(father->filhoDir->info == info){
-        elem = father->filhoDir;
-
-        if(elem->filhoDir == NULL && elem->filhoEsq == NULL){
-            father->filhoDir = NULL;
-            free(elem);
-        }else if(elem->filhoEsq == NULL){
-            father->filhoDir = elem->filhoDir;
-            free(elem); 
-        }else if(elem->filhoDir == NULL){
-            father->filhoDir = elem->filhoEsq;
-            free(elem);
-        }else{
-
-            int sucessor = getSucessor(arv,info);
-
-            aux = searchInTree(arv,sucessor,NULL);
-            
-            if(aux->filhoDir->info == sucessor){
-                father->filhoDir = aux->filhoDir;
-            }else{
-                father->filhoEsq = aux->filhoEsq;
-            }
-
-            free(elem);
-        }
-    }else{
-        elem = father->filhoEsq;
-
-        if(elem->filhoDir == NULL && elem->filhoEsq == NULL){
-            father->filhoEsq = NULL;
-            free(elem);
-        }else if(elem->filhoEsq == NULL){
-            father->filhoEsq = elem->filhoDir;
-            free(elem); 
-        }else if(elem->filhoDir == NULL){
-            father->filhoEsq = elem->filhoEsq;
-            free(elem);
-        }else{
-
-            int sucessor = getSucessor(arv,info);
-
-            aux = searchInTree(arv,sucessor, NULL);
-            
-            if(aux->filhoDir->info == sucessor){
-                father->filhoEsq = aux->filhoDir;
-            }else{
-                father->filhoEsq = aux->filhoEsq;
-            }
-
-            free(elem);
-        }
-    }
-
-    return arv;
-}
-
 arvore *removeRoot(arvore *arv){
     if(arv->filhoDir == NULL && arv->filhoEsq)
         return NULL;
@@ -542,7 +583,6 @@ arvore *removeRoot(arvore *arv){
     fatherSucessor->filhoEsq = aux;
     free(arv);
     
-    printf("Elemento removido com sucesso\n");
     return sucessorArv;
 }
 
@@ -618,43 +658,6 @@ arvore *searchInTree(arvore *arv,int info, arvore *father){
         }else{
             return searchInTree(arv->filhoDir, info, arv);
         }
-    }
-}
-
-
-int getHeight(arvore *arv){
-    // caso a arvore esteja vazia
-    if(arv == NULL){
-        return 0;
-    }
-    // caso não esteja vazia
-    else{
-        // sub arvores dos filhos
-        int esquerda = getHeight(arv->filhoEsq);
-        int direita = getHeight(arv->filhoDir);
-
-        if(esquerda > direita){
-            return (esquerda+1);
-        }else{
-            return (direita+1);
-        }
-    }
-}
-
-
-void isFull(arvore *arv){
-    if(arv == NULL){
-        printf("Árvore vazia\n");
-        return;
-    }
-
-    int height = getHeight(arv);
-    int size = getSize(arv);
-
-    if((pow(2,height) - 1) == size){
-        printf("Árvore cheia\n");
-    }else{
-        printf("Árvore não cheia\n");
     }
 }
 
