@@ -5,8 +5,6 @@
 #include <math.h>
 #include <stdbool.h>
 
-#define COUNT 5;
-
 typedef struct ArvoreBinaria{
     int info;
     struct ArvoreBinaria *filhoDir;
@@ -26,6 +24,8 @@ void isFull(arvore *);
 
 
 // funções auxiliares para funcionamento da biblioteca
+arvore *menu(int,arvore *);
+void printMenu();
 arvore *arvoreVazia();
 arvore *alocaNo(int);
 arvore *insereElem(arvore *,int);
@@ -46,20 +46,14 @@ double checaDecimal(double);
 
 
 int main(){
-
-    char in[100];
-    scanf("%s",in);
-
-    arvore *arv;
-    arv = loadTreeFromFile(in);
-
-    int balance = checaArvBalanceada(arv);
-
-    if(balance == 1){
-        printf("Balanceada\n");
-    }else{
-        printf("Desbalanceada\n");
+    int d=-1;
+    arvore *arv = arvoreVazia();
+    while(d!=11){
+        printMenu();
+        scanf(" %d",&d);
+        arv = menu(d,arv);
     }
+
 
     return 0;
 }
@@ -85,7 +79,13 @@ arvore *loadTreeFromFile(char *path){
 }
 
 
-void showTree(arvore *tree){
+void showTree(arvore *arv){
+    if(arv == NULL){
+        printf("Árvore vazia\n");
+        return;
+    }
+
+
     printf("+");
     for(int i = 0; i < 78; i++){
         printf("-");
@@ -98,16 +98,16 @@ void showTree(arvore *tree){
         printf("-");
     }printf("+\n");
 
-    char **str = (char **) calloc(getHeight(tree)*2+1,sizeof(char *));
+    char **str = (char **) calloc(getHeight(arv)*2+1,sizeof(char *));
 
-    for (int i = 0; i < getHeight(tree)*2; i++){
+    for (int i = 0; i < getHeight(arv)*2; i++){
         str[i] = calloc(255,sizeof(char));
         sprintf(str[i], "%80s", " ");
     }
     
-    buildStrTree(tree, 0, 0, 0, str);
+    buildStrTree(arv, 0, 0, 0, str);
 
-    for (int i = 0; i < getHeight(tree)*2; i++){
+    for (int i = 0; i < getHeight(arv)*2; i++){
         printf("%s\n", str[i]);
         free(str[i]);
     }
@@ -182,6 +182,11 @@ void printInOrder(arvore *arv){
 
 
 void searchValue(arvore *arv, int info){
+    if(arv ==  NULL){
+        printf("Árvore ainda não lida\n");
+        return;        
+    }
+
     if(arv->info == info){
         printf("Elemento encontrado na raiz: %d\n",arv->info);
         return;
@@ -217,7 +222,108 @@ void searchValue(arvore *arv, int info){
 }
 
 
+void printMenu(){
+    printf("+--------------------------------------------------------------------------------+\n");
+    printf("|                      Biblioteca arvore binária                                 |\n");
+    printf("+--------------------------------------------------------------------------------+\n");
+    printf("|   1.  Ler Árvore de um arquivo                                                  |\n");
+    printf("|   2.  Printar Árvore                                                            |\n");
+    printf("|   3.  Verificar Árvore cheia                                                    |\n");
+    printf("|   4.  Procurar elemento                                                         |\n");
+    printf("|   5.  Pegar altura da Árvore                                                    |\n");
+    printf("|   6.  Remover um elemento                                                       |\n");
+    printf("|   7.  Printar travessia InOrder                                                 |\n");
+    printf("|   8.  Printar travessia PreOrder                                                |\n");
+    printf("|   9.  Printar travessia PostOrder                                               |\n");
+    printf("|   10. Balancear Árvore                                                         |\n");
+    printf("|   11. Sair                                                                     |\n");
+    printf("+--------------------------------------------------------------------------------+\n");
+}
+
+
+arvore *menu(int d,arvore *arv){
+    switch(d){
+        case 1:{
+            char *str = (char *) malloc(100*sizeof(char));
+            
+            printf("Arquivo: ");
+            scanf("%s",str);
+            
+            arv = loadTreeFromFile(str);
+            printf("\nÁrvore lida com sucesso\n");
+
+            free(str);
+            break;
+        }
+        case 2:
+            if(arv != NULL)
+                showTree(arv);
+            else{
+                printf("Árvore ainda não lida\n");
+            }
+            
+            break;
+        case 3:
+            isFull(arv);
+            break;
+        case 4:{
+            int info;
+            
+            printf("Elemento a ser buscado: ");
+            scanf("%d",&info);
+
+            searchValue(arv, info);
+            break;
+        }
+        case 5:{
+            int height = getHeight(arv);
+            if(height == 0){
+                printf("Árvore vazia\n");
+            }else{
+                printf("Altura: %d\n",height);
+            }
+
+            break;
+        }
+        case 6:{
+            int info;
+            printf("Elemento a ser removido: ");
+            scanf("%d",&info);
+            
+            arv = removeValue(arv,info);
+            break;
+        }   
+        case 7:
+            printInOrder(arv);
+            break;
+        case 8:
+            printPreorder(arv);
+            break;
+        case 9:
+            printPostorder(arv);
+            break;
+        case 10:
+            printf("Não implementado\n");
+            break;
+        case 11:
+            printf("Saindo...\n");
+            break;
+        default:
+            printf("Opção inválida\n");
+            break;
+    }
+
+    return arv;
+}
+
+
 arvore *removeValue(arvore *arv, int info){
+    if(arv == NULL){
+        printf("Árvore ainda não lida\n");
+        return arv;
+    }
+
+
     if(arv->info == info){
         arvore *newArv = alocaNo(1);
         newArv = removeRoot(arv);
@@ -418,6 +524,11 @@ int getHeight(arvore *arv){
 
 
 void isFull(arvore *arv){
+    if(arv == NULL){
+        printf("Árvore vazia\n");
+        return;
+    }
+
     int height = getHeight(arv);
     int size = getSize(arv);
 
