@@ -21,6 +21,7 @@ arvore *removeValue(arvore *, int info);
 void searchValue(arvore *, int);
 int getHeight(arvore *);
 void isFull(arvore *);
+arvore *balanceTree(arvore *);
 
 
 // funções auxiliares para funcionamento da biblioteca
@@ -32,6 +33,11 @@ arvore *insereElem(arvore *,int);
 arvore *insereVector(arvore *, double *);
 arvore *searchInTree(arvore *,int, arvore *);
 arvore *removeRoot(arvore *);
+arvore *setArvBackBone(arvore *, arvore *, arvore*);
+void rodarDir(arvore *,arvore *,arvore *);
+void rodarEsq(arvore *,arvore *,arvore *);
+arvore *desfazBackbone(arvore *, int);
+arvore *transfBackbone(arvore *);
 int **getColunas(arvore *);
 void setStrInOrder(arvore *, char *);
 void printElemPreOrder(arvore *);
@@ -67,7 +73,7 @@ arvore *loadTreeFromFile(char *path){
     f = fopen(path,"r");
     if(f == NULL){
         printf("Erro de leitura\n");
-        exit(-1);
+        return NULL;
     }
     vector = leituraDeArquivo(f);
 
@@ -75,6 +81,113 @@ arvore *loadTreeFromFile(char *path){
 
     fclose(f);
     
+    return arv;
+}
+
+
+void rodarDir(arvore *avo,arvore *pai,arvore *filho){
+    if(avo != NULL){
+        if(avo->filhoEsq == pai){
+            avo->filhoEsq = filho;
+        }else{
+            avo->filhoDir = filho;
+        }
+    }
+
+    pai->filhoEsq = filho->filhoDir;
+    filho->filhoDir = pai;
+}
+
+
+void rodarEsq(arvore *avo,arvore *pai,arvore *filho){
+    if(avo != NULL){
+        if(avo->filhoEsq == pai){
+            avo->filhoEsq = filho;
+        }else{
+            avo->filhoDir = filho;
+        }
+    }
+
+    pai->filhoDir = filho->filhoEsq;
+    filho->filhoEsq = pai;
+}
+
+
+arvore *transfBackbone(arvore *raiz){
+
+    arvore *avo = arvoreVazia();
+    arvore *pai = arvoreVazia();
+    arvore *filho = raiz;
+
+    while(filho != NULL){
+        if(filho->filhoEsq){
+            if(filho == raiz){
+                raiz = filho->filhoEsq;
+            }
+
+            pai = filho;
+            filho = filho->filhoEsq;
+            rodarDir(avo,pai,filho);
+        }else{
+            avo = filho;
+            filho = filho->filhoDir;
+        }
+    }
+
+    return raiz;
+}
+
+arvore *desfazBackbone(arvore *arv, int number){
+
+    arvore *avo = arvoreVazia();
+    arvore *pai = arvoreVazia();
+    arvore *filho = arvoreVazia();
+
+    while(number > 0){
+        for(int i = 0; i <= 1; i++){
+            avo = pai;
+            pai = filho;
+
+            if(filho){
+                filho = filho->filhoDir;
+            }else if(pai == NULL){
+                filho = arv;
+            }
+        }
+
+        if(pai == arv){
+            arv = filho;
+        }
+
+        rodarEsq(avo,pai,filho);
+        number--;
+    }
+
+
+    return arv;
+}
+
+
+arvore *balanceTree(arvore *arv){
+    if(checaArvBalanceada(arv) == 1){
+        printf("Árvore já balanceada\n");
+        return arv;
+    }else{
+        arv = transfBackbone(arv);
+
+        int size = getSize(arv);
+        int auxFolhas = (1 << ((int) floor(log(size+1)/log(2)))) - 1;
+
+        arv = desfazBackbone(arv, (size - auxFolhas));
+
+        while (auxFolhas > 1){
+            auxFolhas = auxFolhas/2;
+            arv = desfazBackbone(arv,auxFolhas);
+        }
+
+        printf("Árvore balanceada com sucesso\n");
+    }
+
     return arv;
 }
 
@@ -250,7 +363,9 @@ arvore *menu(int d,arvore *arv){
             scanf("%s",str);
             
             arv = loadTreeFromFile(str);
-            printf("\nÁrvore lida com sucesso\n");
+            if(arv != NULL){
+                printf("\nÁrvore lida com sucesso\n");
+            }
 
             free(str);
             break;
@@ -303,7 +418,11 @@ arvore *menu(int d,arvore *arv){
             printPostorder(arv);
             break;
         case 10:
-            printf("Não implementado\n");
+            if(arv != NULL)
+                arv = balanceTree(arv);
+            else{
+                printf("Árvore ainda não lida\n");
+            }
             break;
         case 11:
             printf("Saindo...\n");
@@ -424,6 +543,7 @@ arvore *removeRoot(arvore *arv){
     fatherSucessor->filhoEsq = aux;
     free(arv);
     
+    printf("Elemento removido com sucesso\n");
     return sucessorArv;
 }
 
