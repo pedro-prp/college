@@ -14,35 +14,33 @@ typedef struct ArvoreBinaria{
 // biblioteca
 arvore *loadTreeFromFile(char *);
 void showTree(arvore *);
-void printPostorder(arvore *);
-void printInOrder(arvore *);
-void printPreorder(arvore *);
-arvore *removeValue(arvore *, int info);
+void isFull(arvore *);
 void searchValue(arvore *, int);
 int getHeight(arvore *);
-void isFull(arvore *);
+arvore *removeValue(arvore *, int info);
+void printInOrder(arvore *);
+void printPreorder(arvore *);
+void printPostorder(arvore *);
 arvore *balanceTree(arvore *);
-
 
 // funções auxiliares para funcionamento da biblioteca
 arvore *menu(int,arvore *);
-void printMenu();
 arvore *arvoreVazia();
 arvore *alocaNo(int);
 arvore *insereElem(arvore *,int);
 arvore *insereVector(arvore *, double *);
 arvore *searchInTree(arvore *,int, arvore *);
 arvore *removeRoot(arvore *);
-arvore *setArvBackBone(arvore *, arvore *, arvore*);
+arvore *transfBackbone(arvore *);
+arvore *desfazBackbone(arvore *, int);
+void printMenu();
 void rodarDir(arvore *,arvore *,arvore *);
 void rodarEsq(arvore *,arvore *,arvore *);
-arvore *desfazBackbone(arvore *, int);
-arvore *transfBackbone(arvore *);
-int **getColunas(arvore *);
 void setStrInOrder(arvore *, char *);
 void printElemPreOrder(arvore *);
 void printElemPostOrder(arvore *);
 void printElemInOrder(arvore *);
+void liberaArv(arvore *);
 int buildStrTree(arvore *, int, int, int, char **);
 int checaArvBalanceada(arvore *);
 int getSize(arvore *);
@@ -426,6 +424,7 @@ arvore *menu(int d,arvore *arv){
             break;
         case 11:
             printf("Saindo...\n");
+            liberaArv(arv);
             break;
         default:
             printf("Opção inválida\n");
@@ -830,4 +829,17 @@ double checaDecimal(double d){
     double result = d - (int)d;
     
     return result;
+}
+
+
+void liberaArv(arvore *arv){
+    if(arv != NULL){
+        liberaArv(arv->filhoEsq);
+        liberaArv(arv->filhoDir);
+
+        arv->filhoEsq = NULL;
+        arv->filhoDir = NULL;
+
+        free(arv);
+    }
 }
