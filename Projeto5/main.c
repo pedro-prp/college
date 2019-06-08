@@ -559,12 +559,18 @@ arvore *menu(int d,arvore *arv){
 
 
 arvore *removeRoot(arvore *arv){
-    if(arv->filhoDir == NULL && arv->filhoEsq)
+    if(arv->filhoDir == NULL && arv->filhoEsq == NULL)
         return NULL;
-    else if(arv->filhoEsq == NULL)
-        return arv->filhoDir;
-    else if(arv->filhoDir == NULL)
-        return arv->filhoEsq;
+    else if(arv->filhoEsq == NULL){
+        arvore *newArv = arv->filhoDir;
+        free(arv);
+        return newArv;
+    }
+    else if(arv->filhoDir == NULL){
+        arvore *newArv = arv->filhoEsq;
+        free(arv);
+        return newArv;
+    }
 
     arvore *fatherSucessor = alocaNo(1);
     arvore *sucessorArv = alocaNo(1);
