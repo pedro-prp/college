@@ -1,4 +1,7 @@
-// Projeto 5
+// Projeto 5 - EDA 1 - Mendelson
+// Nome: Pedro Rodrigues Pereira 
+// Matrícula: 17/0062686
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
