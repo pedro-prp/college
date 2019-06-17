@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include "neurais.h"
 
 
@@ -186,14 +185,3 @@ int main()
 //     }
 //
 //     fclose(arquivo_teste_asfalto);
-=======
-#include <stdio.h>
-#include <stdlib.h>
-
-int main(){
-
-    printf("Teste Makefile\n");
->>>>>>> 8d7376fd6cccefb500ebdd11c41faf51d7cfb28d
-
-    return 0;
-}
