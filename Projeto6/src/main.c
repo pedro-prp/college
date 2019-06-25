@@ -705,9 +705,9 @@ int main(int argc, char *argv[])
 
     neuroniosPorCamada = malloc(NUMERO_DE_CAMADAS * sizeof(int));
     neuroniosPorCamada[0] = 536;
-    //neuroniosPorCamada[1] = atoi(argv[1]);
-    printf("\t Digite o numero de neuronios da camada oculta desejado: ");
-    scanf("%d", &neuroniosPorCamada[1]);
+    neuroniosPorCamada[1] = atoi(argv[1]);
+    //printf("\t Digite o numero de neuronios da camada oculta desejado: ");
+    //scanf("%d", &neuroniosPorCamada[1]);
     neuroniosPorCamada[2] = 1;
 
     printf("\t Rede Neural Feed-Foward com 3 Camadas:\n\n");

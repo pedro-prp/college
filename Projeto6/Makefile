@@ -14,4 +14,4 @@ clean:
 	rm -rf obj/*
 	rm -rf bin/*
 run:
-	bin/app
+	bin/app $(ARG)
