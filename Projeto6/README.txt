@@ -5,5 +5,4 @@ Alunos:  Rafaella Junqueira       16/0142628
 
 Para compilar o projeto, é necessario:
 abrir a pasta no terminal e utilizar o comando: make
-e para executar, utilizar o comando: make run
-aguarde para a instrução de inserção da quantidade de neurônios desejados. 
+e para executar, utilizar o comando: make run ARG=<neuronios desejados para a camada oculta>
