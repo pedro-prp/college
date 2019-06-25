@@ -12,7 +12,7 @@
 //parser sorteia arquivos para treino e teste
 void parser()
 {
-    printf("\t Arquivos ja sorteados e vetorizados!\n\t Separando arquivos para teste e treino..\n\n");
+    printf("\t Os arquivos foram preparados!\n\t Iniciando o processamento...\n\n");
     FILE *testeAG;
     FILE *treinoAG;
     FILE *asphalt;
