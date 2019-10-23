@@ -5,6 +5,8 @@
 int menu();
 
 void printa_menu();
+contato *listaVazia();
+contato *abrir_data_base(int *num_contatos);
 
 
 //  Nome completo (string de até 100 caracteres);
