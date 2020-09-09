@@ -1,0 +1,1 @@
+import re; backward_string_by_word = lambda text: ''.join(str[-1::-1] for str in re.split(r'(\s+)', text))
