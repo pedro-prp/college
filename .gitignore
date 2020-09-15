@@ -1,1 +1,7 @@
 *.vscode/
+*/prog
+Projeto4/readme.txt
+*.DS_Store
+.vscode/
+*/in.txt
+*/out.txt
