@@ -5,3 +5,5 @@ Projeto4/readme.txt
 .vscode/
 */in.txt
 */out.txt
+bin/main
+.DS_Store
