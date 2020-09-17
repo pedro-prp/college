@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *.vscode/
 */prog
 Projeto4/readme.txt
@@ -7,3 +8,9 @@ Projeto4/readme.txt
 */out.txt
 bin/main
 .DS_Store
+=======
+bin
+.DS_Store
+src/.DS_Store
+src/JogoBatalhaNaval/.DS_Store
+>>>>>>> 481c3d5436d4d8c6c11f1ec8c533529e97660074

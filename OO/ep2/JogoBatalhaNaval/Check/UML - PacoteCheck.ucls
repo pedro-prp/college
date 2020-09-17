@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="JogoBatalhaNaval.Check.GanhouJogo" project="EP2" 
+    file="/EP2/src/JogoBatalhaNaval/Check/GanhouJogo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="123" x="721" y="-120"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="JogoBatalhaNaval.Check.NavioPart" project="EP2" 
+    file="/EP2/src/JogoBatalhaNaval/Check/NavioPart.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="353" width="253" x="884" y="-120"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="JogoBatalhaNaval.Check.Mouse" project="EP2" 
+    file="/EP2/src/JogoBatalhaNaval/Check/Mouse.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="317" width="213" x="1177" y="-120"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="JogoBatalhaNaval.Check.MatrixCampo" project="EP2" 
+    file="/EP2/src/JogoBatalhaNaval/Check/MatrixCampo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="569" width="298" x="1430" y="-120"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="JogoBatalhaNaval.Check.Botao" project="EP2" 
+    file="/EP2/src/JogoBatalhaNaval/Check/Botao.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="299" width="243" x="1768" y="-120"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

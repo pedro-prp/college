@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="JogoBatalhaNaval.grafico.SpriteSheet" project="EP2" 
+    file="/EP2/src/JogoBatalhaNaval/grafico/SpriteSheet.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="200" x="618" y="-95"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="JogoBatalhaNaval.grafico.LoadImage" project="EP2" 
+    file="/EP2/src/JogoBatalhaNaval/grafico/LoadImage.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="204" x="858" y="-95"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="JogoBatalhaNaval.grafico.MapGfx" project="EP2" 
+    file="/EP2/src/JogoBatalhaNaval/grafico/MapGfx.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="137" width="177" x="1102" y="-95"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="JogoBatalhaNaval.grafico.PainelGfx" project="EP2" 
+    file="/EP2/src/JogoBatalhaNaval/grafico/PainelGfx.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="187" x="1319" y="-95"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="JogoBatalhaNaval.grafico.BackgroundGfx" project="EP2" 
+    file="/EP2/src/JogoBatalhaNaval/grafico/BackgroundGfx.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="101" width="218" x="1546" y="-95"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="JogoBatalhaNaval.grafico.Assets" project="EP2" 
+    file="/EP2/src/JogoBatalhaNaval/grafico/Assets.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="479" width="212" x="1804" y="-95"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
