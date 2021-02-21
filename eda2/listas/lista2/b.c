@@ -50,14 +50,13 @@ void printV(Item *v, int s) {
 }
 
 int main(){
-    int n, x;
+    int n;
     scanf("%d", &n);
 
     Item *v = malloc(sizeof(Item) * n);
 
     for(int i = 0; i < n; i++){
-        scanf("%d", &x);
-        v[i] = x;
+        scanf("%d", &v[i]);
     }
 
     mergeSort(v, 0, (n-1));

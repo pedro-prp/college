@@ -50,18 +50,25 @@ void printV(Item *v, int s) {
 }
 
 int main(){
-    int n, x;
-    scanf("%d", &n);
+    int n, size = 0;
 
-    Item *v = malloc(sizeof(Item) * n);
+    Item *v = malloc(sizeof(Item) * 8 * 100000);
 
-    for(int i = 0; i < n; i++){
-        scanf("%d", &x);
-        v[i] = x;
+    for(int i = 0; i < 8; i++){
+        scanf("%d", &n);
+
+        if(n != 0){
+
+            for(int j = size; j < (n+size); j++)
+                scanf("%d", &v[j]);
+            
+            merge(v, 0, (size-1), (size+n-1));
+            size += n;
+
+        }
     }
 
-    mergeSort(v, 0, (n-1));
-    printV(v, (n-1));
+    printV(v, size-1);
 
     free(v);
     return 0;
