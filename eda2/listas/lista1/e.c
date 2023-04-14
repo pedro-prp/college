@@ -1,46 +1,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define Item int
-#define key(a) (a)
-#define less(a, b) (key(a) < key(b))
-#define exch(a, b) {Item t = a; a = b; b = t;}
-#define cmpexch(a, b) { if less(a, b) exch(a, b);}
+typedef struct celula {
+	int dado;
+	struct celula *prox;
+} celula;
 
-void printV(Item *v, int s) {
-    for(int i = 0; i <= s; i++)
-        printf("%d%c", v[i], (i < s? ' ' : '\n'));
-}
+void mescla_listas (celula *l1, celula *l2, celula *l3){
+    celula *it1 = l1->prox;
+    celula *it2 = l2->prox;
 
-void InsertSort(Item *v, int l, int r){
-    for(int i = r; i > l; i--){
-        cmpexch(v[i], v[i-1]);
-    }
-    
-
-    for(int i = l+2; i <= r; i++){
-        int j = i; Item tmp = v[j];
-
-        while(less(tmp, v[j-1])){
-            v[j] = v[j-1];
-            j--;
+    while(it1 != NULL && it2 != NULL){
+        if(it1->dado > it2->dado){
+            l3->prox = it2;
+            it2 = it2->prox;
+        } else {
+            l3->prox = it1;
+            it1 = it1->prox;
         }
 
-        v[j] = tmp;
+        l3 = l3->prox;
+    }
 
+    if(it1 != NULL){
+        l3->prox = it1;
+    }
+    if(it2 != NULL){
+        l3->prox = it2;
     }
 }
 
+// int main(){
 
-int main(){
-    int r = 0;
-    Item * v = malloc(sizeof(Item) * 1000);
-
-    while(scanf("%d", &v[size]) == 1){
-        size++;
-    }
-
-    InsertSort(v, 0, (size-1));
-    printV(v, (size-1));
-    return 0;
-}
+//     return 0;
+// }
